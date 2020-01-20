@@ -1,0 +1,48 @@
+pipeline {
+    agent {
+        label "master"
+    }
+    parameters {
+        choice(name: "STAGE", choices: ["intg", "staging", "prod"], description: "The stage you are building the front end for")
+    }
+    stages {
+        stage("Build") {
+            agent {
+                ecs {
+                    inheritFrom "transfer-frontend"
+                }
+            }
+            steps {
+                sh "sbt assembly"
+                sh "mv target/scala-2.12/tdr*.jar target/scala-2.12/tdr.jar"
+                stash includes: "target/scala-2.12/tdr.jar", name: "tdr-jar"
+            }
+        }
+        stage("Invoke lambda") {
+            agent {
+                ecs {
+                    inheritFrom "aws"
+                    taskrole "arn:aws:iam::${env.MANAGEMENT_ACCOUNT}:role/TDRJenkinsNodeLambdaRole${params.STAGE.capitalize()}"
+                }
+            }
+            steps {
+                script {
+                    unstash "tdr-jar"
+                    def accountNumber = getAccountNumberFromStage()
+                    sh "python /deploy_lambda.py ${accountNumber} ${params.STAGE} tdr-database-migrations-${params.STAGE} ./target/scala-2.12/tdr.jar"
+                    slackSend color: "good", message: "The database migration lambda has been run", channel: "#tdr"
+                }
+            }
+        }
+    }
+}
+
+def getAccountNumberFromStage() {
+    def stageToAccountMap = [
+            "intg": env.INTG_ACCOUNT,
+            "staging": env.STAGING_ACCOUNT,
+            "prod": env.PROD_ACCOUNT
+    ]
+
+    return stageToAccountMap.get(params.STAGE)
+}
