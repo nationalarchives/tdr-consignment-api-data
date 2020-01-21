@@ -3,14 +3,14 @@ import sbt.Keys.libraryDependencies
 
 ThisBuild / scalaVersion     := "2.13.0"
 ThisBuild / version          := "0.1.0-SNAPSHOT"
-ThisBuild / organization     := "nationalarchives"
+ThisBuild / organization     := "uk.gov.nationalarchives.tdr"
 ThisBuild / organizationName := "tdr"
 
 val slickVersion = "3.3.2"
 
 lazy val root = (project in file("."))
   .settings(
-    name := "tdr-database-migrations"
+    name := "consignment-api-db"
   )
 
 lazy val lambda = (project in file("lambda"))
