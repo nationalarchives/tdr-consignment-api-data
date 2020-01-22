@@ -3,7 +3,7 @@ import sbt.Keys.libraryDependencies
 
 ThisBuild / scalaVersion     := "2.13.0"
 ThisBuild / version          := "0.1.0-SNAPSHOT"
-ThisBuild / organization     := "uk.gov.nationalarchives.tdr"
+ThisBuild / organization     := "uk.gov.nationalarchives"
 ThisBuild / organizationName := "National Archives"
 
 ThisBuild / scmInfo := Some(
@@ -78,7 +78,7 @@ slick := {
   val slickDriver = "slick.jdbc.MySQLProfile"
   val user = "root"
   val password = "password"
-  val pkg = "uk.gov.nationalarchives.tdr"
+  val pkg = "uk.gov.nationalarchives"
   val outputDir = "src/main/scala"
   r.run("slick.codegen.SourceCodeGenerator",
     cp.files, Array(slickDriver, jdbcDriver, url, outputDir, pkg, user, password),  s.log).failed foreach (sys error _.getMessage)

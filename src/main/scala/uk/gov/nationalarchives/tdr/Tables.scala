@@ -1,4 +1,4 @@
-package uk.gov.nationalarchives.tdr
+package uk.gov.nationalarchives
 // AUTO-GENERATED Slick data model
 /** Stand-alone Slick data model for immediate use */
 object Tables extends {
