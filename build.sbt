@@ -86,3 +86,13 @@ slick := {
   Seq(file(fname))
 }
 
+enablePlugins(FlywayPlugin)
+version := "0.0.1"
+name := "flyway-sbt-test1"
+
+flywayUrl := "jdbc:mysql://localhost:3306/consignmentapi"
+flywayUser := "root"
+flywayPassword := "password"
+flywayLocations += "filesystem:lambda/src/main/resources/db/migration"
+flywaySchemas += "consignmentapi"
+
