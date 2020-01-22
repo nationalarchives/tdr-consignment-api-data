@@ -17,7 +17,7 @@ pipeline {
                 script {
                     sh "aws s3 cp s3://tdr-secrets/keys/sonatype_credential /home/jenkins/.sbt/sonatype_credential"
                     sh "aws s3 cp s3://tdr-secrets/keys/sonatype.key /home/jenkins/sonatype.key"
-                    sh "sbt slick package"
+                    sh "sbt package"
                     withCredentials([string(credentialsId: 'sonatype-gpg-passphrase', variable: 'PASSPHRASE')]) {
                         sh 'gpg --batch --passphrase $PASSPHRASE --import /home/jenkins/sonatype.key'
                     }
