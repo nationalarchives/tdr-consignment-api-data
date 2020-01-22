@@ -36,10 +36,13 @@ ThisBuild / publishMavenStyle := true
 
 
 val slickVersion = "3.3.2"
+useGpgPinentry := true
 
 lazy val root = (project in file("."))
   .settings(
     name := "consignment-api-db"
+
+
   )
 
 lazy val lambda = (project in file("lambda"))
