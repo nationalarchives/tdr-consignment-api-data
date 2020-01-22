@@ -22,7 +22,7 @@ ThisBuild / developers := List(
 )
 
 ThisBuild / description := "Slick classes generated from the database schema for the Transfer Digital Records service"
-ThisBuild / licenses := List("MIT>" -> new URL("https://choosealicense.com/licenses/mit/"))
+ThisBuild / licenses := List("MIT" -> new URL("https://choosealicense.com/licenses/mit/"))
 ThisBuild / homepage := Some(url("https://github.com/nationalarchives/tdr-consignment-api-data"))
 
 // Remove all additional repository other than Maven Central from POM
@@ -33,6 +33,7 @@ ThisBuild / publishTo := {
   else Some("releases" at nexus + "service/local/staging/deploy/maven2")
 }
 ThisBuild / publishMavenStyle := true
+
 
 val slickVersion = "3.3.2"
 
