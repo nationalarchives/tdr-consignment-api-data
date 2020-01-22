@@ -4,7 +4,35 @@ import sbt.Keys.libraryDependencies
 ThisBuild / scalaVersion     := "2.13.0"
 ThisBuild / version          := "0.1.0-SNAPSHOT"
 ThisBuild / organization     := "uk.gov.nationalarchives.tdr"
-ThisBuild / organizationName := "tdr"
+ThisBuild / organizationName := "National Archives"
+
+ThisBuild / scmInfo := Some(
+  ScmInfo(
+    url("https://github.com/nationalarchives/tdr-consignment-api-data"),
+    "git@github.com:nationalarchives/tdr-consignment-api-data.git"
+  )
+)
+ThisBuild / developers := List(
+  Developer(
+    id    = "SP",
+    name  = "Sam Palmer",
+    email = "sam.palmer@nationalarchives.gov.uk",
+    url   = url("http://tdr-transfer-integration.nationalarchives.gov.uk")
+  )
+)
+
+ThisBuild / description := "Slick classes generated from the database schema for the Transfer Digital Records service"
+ThisBuild / licenses := List("MIT>" -> new URL("https://choosealicense.com/licenses/mit/"))
+ThisBuild / homepage := Some(url("https://github.com/nationalarchives/tdr-consignment-api-data"))
+
+// Remove all additional repository other than Maven Central from POM
+ThisBuild / pomIncludeRepository := { _ => false }
+ThisBuild / publishTo := {
+  val nexus = "https://oss.sonatype.org/"
+  if (isSnapshot.value) Some("snapshots" at nexus + "content/repositories/snapshots")
+  else Some("releases" at nexus + "service/local/staging/deploy/maven2")
+}
+ThisBuild / publishMavenStyle := true
 
 val slickVersion = "3.3.2"
 

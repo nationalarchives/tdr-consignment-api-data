@@ -1,0 +1,39 @@
+pipeline {
+    agent {
+        label "master"
+    }
+    parameters {
+        choice(name: "STAGE", choices: ["intg", "staging", "prod"], description: "The stage you are building the front end for")
+    }
+    stages {
+        stage("Invoke lambda") {
+            agent {
+                ecs {
+                    inheritFrom "sonatype"
+                    taskrole "arn:aws:iam::${env.MANAGEMENT_ACCOUNT}:role/TDRJenkinsPublishRole${params.STAGE.capitalize()}"
+                }
+            }
+            steps {
+                script {
+                    sh "aws s3 cp s3://tdr-secrets/keys/sonatype_credential /home/jenkins/.sbt/sonatype_credential"
+                    sh "aws s3 cp s3://tdr-secrets/keys/sonatype.key /home/jenkins/sonatype.key"
+                    sh "sbt slick package"
+                    withCredentials([string(credentialsId: 'sonatype-gpg-passphrase', variable: 'PASSPHRASE')]) {
+                        sh 'gpg --batch --passphrase $PASSPHRASE --import /home/jenkins/sonatype.key'
+                    }
+                    sh "sbt publishSigned"
+                }
+            }
+        }
+    }
+}
+
+def getAccountNumberFromStage() {
+    def stageToAccountMap = [
+            "intg": env.INTG_ACCOUNT,
+            "staging": env.STAGING_ACCOUNT,
+            "prod": env.PROD_ACCOUNT
+    ]
+
+    return stageToAccountMap.get(params.STAGE)
+}
