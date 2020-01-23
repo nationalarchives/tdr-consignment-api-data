@@ -9,18 +9,35 @@ pipeline {
         stage("Invoke lambda") {
             agent {
                 ecs {
-                    inheritFrom "sonatype"
+                    inheritFrom "aws"
+                    taskrole "arn:aws:iam::${env.MANAGEMENT_ACCOUNT}:role/TDRJenkinsNodeLambdaRole${params.STAGE.capitalize()}"
+                }
+            }
+            steps {
+                script {
+                    def accountNumber = getAccountNumberFromStage()
+                    sh "python /invoke_lambda.py ${accountNumber} ${params.STAGE} tdr-database-migrations-${params.STAGE}"
+                    slackSend color: "good", message: "The database migration lambda has been run", channel: "#tdr"
+                }
+            }
+        }
+        stage("Invoke lambda") {
+            agent {
+                ecs {
+                    inheritFrom "base"
+                    taskDefinitionOverride "arn:aws:ecs:eu-west-2:328920706552:task-definition/hello_world:6"
                     taskrole "arn:aws:iam::${env.MANAGEMENT_ACCOUNT}:role/TDRJenkinsPublishRole${params.STAGE.capitalize()}"
                 }
             }
             steps {
                 script {
-                    sh "aws s3 cp s3://tdr-secrets/keys/sonatype_credential /home/jenkins/.sbt/sonatype_credential"
                     sh "aws s3 cp s3://tdr-secrets/keys/sonatype.key /home/jenkins/sonatype.key"
-                    sh "sbt package"
-                    withCredentials([string(credentialsId: 'sonatype-gpg-passphrase', variable: 'PGP_PASSPHRASE')]) {
+                    withCredentials(
+                        [string(credentialsId: 'sonatype-gpg-passphrase', variable: 'PGP_PASSPHRASE')],
+                        [usernamePassword(credentialsId: 'sonatype', usernameVariable: 'SONATYPE_USERNAME', passwordVariable: 'SONATYPE_PASSWORD')]
+                    ) {
                         sh 'gpg --batch --passphrase $PGP_PASSPHRASE --import /home/jenkins/sonatype.key'
-                        sh "sbt publishSigned"
+                        sh "flywayMigrate slick package sbt publishSigned"
                     }
                 }
             }
