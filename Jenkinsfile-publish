@@ -27,8 +27,7 @@ pipeline {
                     agent {
                         ecs {
                             inheritFrom "base"
-                            taskDefinitionOverride "arn:aws:ecs:eu-west-2:328920706552:task-definition/hello_world:6"
-                            taskrole "arn:aws:iam::${env.MANAGEMENT_ACCOUNT}:role/TDRJenkinsPublishRole${params.STAGE.capitalize()}"
+                            taskDefinitionOverride "arn:aws:ecs:eu-west-2:${env.MANAGEMENT_ACCOUNT}:task-definition/sonatype-${params.STAGE}:1"
                         }
                     }
                     steps {
