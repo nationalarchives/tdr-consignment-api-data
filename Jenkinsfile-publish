@@ -21,7 +21,7 @@ pipeline {
                 }
             }
         }
-        stage("Invoke lambda") {
+        stage("Deploy to sonatype") {
             agent {
                 ecs {
                     inheritFrom "base"
