@@ -2,7 +2,7 @@ import Dependencies._
 import sbt.Keys.libraryDependencies
 
 ThisBuild / scalaVersion     := "2.13.0"
-ThisBuild / version          := "0.1.0"
+ThisBuild / version          := "0.0.2"
 ThisBuild / organization     := "uk.gov.nationalarchives"
 ThisBuild / organizationName := "National Archives"
 
@@ -84,8 +84,6 @@ slick := {
 }
 
 enablePlugins(FlywayPlugin)
-version := "0.0.1"
-name := "flyway-sbt-test1"
 
 flywayUrl := "jdbc:mysql://localhost:3306/consignmentapi"
 flywayUser := "root"
