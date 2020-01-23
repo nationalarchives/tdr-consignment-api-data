@@ -14,8 +14,8 @@ pipeline {
             }
             steps {
                 sh "sbt assembly"
-                sh "mv target/scala-2.12/tdr*.jar target/scala-2.12/tdr.jar"
-                stash includes: "target/scala-2.12/tdr.jar", name: "tdr-jar"
+                sh "mv target/scala-2.13/consignment*.jar target/scala-2.13/consignment.jar"
+                stash includes: "target/scala-2.13/consignment.jar", name: "consignment-jar"
             }
         }
         stage("Deploy lambda") {
@@ -27,10 +27,10 @@ pipeline {
             }
             steps {
                 script {
-                    unstash "tdr-jar"
+                    unstash "consignment-jar"
                     def accountNumber = getAccountNumberFromStage()
-                    sh "python /deploy_lambda.py ${accountNumber} ${params.STAGE} tdr-database-migrations-${params.STAGE} ./target/scala-2.12/tdr.jar"
-                    slackSend color: "good", message: "The database migration lambda has been run", channel: "#tdr"
+                    sh "python /deploy_lambda.py ${accountNumber} ${params.STAGE} tdr-database-migrations-${params.STAGE} ./target/scala-2.13/consignment.jar"
+                    slackSend color: "good", message: "The database migration lambda has been deployed", channel: "#tdr"
                 }
             }
         }
