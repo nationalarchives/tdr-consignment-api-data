@@ -37,6 +37,7 @@ pipeline {
                             withCredentials([string(credentialsId: 'sonatype-gpg-passphrase', variable: 'PGP_PASSPHRASE')]) {
                                 sh 'gpg --batch --passphrase $PGP_PASSPHRASE --import /home/jenkins/sonatype.key'
                                 sh "sbt flywayMigrate slick package publishSigned sonatypeBundleRelease"
+                                slackSend color: "good", message: "The database package has been published", channel: "#tdr"
                             }
                         }
                     }
