@@ -1,5 +1,7 @@
-import Dependencies._
+import com.github.tototoshi.sbt.slick.CodegenPlugin.autoImport.slickCodegenDatabaseUrl
 import sbt.Keys.libraryDependencies
+import slick.codegen.SourceCodeGenerator
+import slick.{model => m}
 
 ThisBuild / scalaVersion     := "2.13.0"
 ThisBuild / version          := "0.0.2"
@@ -34,13 +36,42 @@ ThisBuild / publishMavenStyle := true
 val slickVersion = "3.3.2"
 useGpgPinentry := true
 
+lazy val databaseUrl = "jdbc:mysql://localhost:3306/consignmentapi"
+lazy val databaseUser = "root"
+lazy val databasePassword = "password"
+
+resolvers +=
+  "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
+
 
 lazy val root = (project in file("."))
   .settings(
-    name := "consignment-api-db"
 
+    libraryDependencies ++= Seq(
+      "com.typesafe.slick" %% "slick"  % slickVersion,
+      "com.typesafe.slick" %% "slick-hikaricp" % slickVersion,
+      "com.typesafe.slick" %% "slick-codegen"  % slickVersion
+    ),
+    name := "consignment-api-db",
+    slickCodegenDatabaseUrl := databaseUrl,
+    slickCodegenDatabaseUser := databaseUser,
+    slickCodegenDatabasePassword := databasePassword,
+    slickCodegenDriver := slick.jdbc.MySQLProfile,
+    slickCodegenJdbcDriver := "com.mysql.cj.jdbc.Driver",
+    slickCodegenOutputPackage := "models",
+    slickCodegenExcludedTables := Seq("schema_version"),
+    slickCodegenCodeGenerator := { (model:  m.Model) =>
+      new SourceCodeGenerator(model) {
+        override def Table = new Table(_) {
+          override def autoIncLastAsOption = true
+        }
+      }
+    },
+    sourceGenerators in Compile += slickCodegen.taskValue,
+    slickCodegenOutputDir := (sourceManaged in Compile).value / "a"
 
-  )
+  ).enablePlugins(CodegenPlugin)
+
 
 lazy val lambda = (project in file("lambda"))
     .settings(
@@ -56,32 +87,7 @@ lazy val lambda = (project in file("lambda"))
 
     )
 
-libraryDependencies ++= Seq(
-  "org.flywaydb" % "flyway-core" % "6.1.4",
-  "mysql" % "mysql-connector-java" % "5.1.16",
-  "com.typesafe.slick" %% "slick"  % slickVersion,
-  "com.typesafe.slick" %% "slick-hikaricp" % slickVersion,
-  "com.typesafe.slick" %% "slick-codegen"  % slickVersion
-)
 
-lazy val slick = taskKey[Seq[File]]("gen-tables")
-
-slick := {
-  val cp = (dependencyClasspath in Compile).value
-  val r = (runner in Compile).value
-  val s = streams.value
-  val url = "jdbc:mysql://localhost:3306/consignmentapi"
-  val jdbcDriver = "com.mysql.jdbc.Driver"
-  val slickDriver = "slick.jdbc.MySQLProfile"
-  val user = "root"
-  val password = "password"
-  val pkg = "uk.gov.nationalarchives"
-  val outputDir = "src/main/scala"
-  r.run("slick.codegen.SourceCodeGenerator",
-    cp.files, Array(slickDriver, jdbcDriver, url, outputDir, pkg, user, password),  s.log).failed foreach (sys error _.getMessage)
-  val fname = outputDir + "/consignmentapi/Tables.scala"
-  Seq(file(fname))
-}
 
 enablePlugins(FlywayPlugin)
 
