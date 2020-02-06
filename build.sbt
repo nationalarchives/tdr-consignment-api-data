@@ -67,7 +67,6 @@ lazy val root = (project in file("."))
         }
       }
     },
-    sourceGenerators in Compile += slickCodegen.taskValue,
     slickCodegenOutputDir := (scalaSource in Compile).value
 
   ).enablePlugins(CodegenPlugin)
