@@ -2,7 +2,7 @@ import Dependencies._
 import sbt.Keys.libraryDependencies
 
 ThisBuild / scalaVersion     := "2.13.0"
-ThisBuild / version          := "0.0.2"
+ThisBuild / version          := "0.0.3"
 ThisBuild / organization     := "uk.gov.nationalarchives"
 ThisBuild / organizationName := "National Archives"
 
