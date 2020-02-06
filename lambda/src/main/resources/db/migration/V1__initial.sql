@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS `AVMetadata`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `AVMetadata` (
-  `FileId` bigint(20) NOT NULL,
+  `FileId` bigint(20) NOT NULL AUTO_INCREMENT,
   `Software` varchar(255) DEFAULT NULL,
   `Value` varchar(255) DEFAULT NULL,
   `SoftwareVersion` varchar(255) DEFAULT NULL,
@@ -52,7 +52,7 @@ DROP TABLE IF EXISTS `Body`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Body` (
-  `BodyId` bigint(20) NOT NULL,
+  `BodyId` bigint(20) NOT NULL AUTO_INCREMENT,
   `Name` varchar(255) DEFAULT NULL,
   `Code` varchar(255) DEFAULT NULL,
   `Description` varchar(255) DEFAULT NULL,
@@ -77,7 +77,7 @@ DROP TABLE IF EXISTS `ClientFileMetadata`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `ClientFileMetadata` (
-  `FileId` bigint(20) NOT NULL,
+  `FileId` bigint(20) NOT NULL AUTO_INCREMENT,
   `OriginalPath` varchar(255) DEFAULT NULL,
   `Checksum` varchar(255) DEFAULT NULL,
   `ChecksumType` varchar(255) DEFAULT NULL,
@@ -107,7 +107,7 @@ DROP TABLE IF EXISTS `Consignment`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Consignment` (
-  `ConsignmentId` bigint(20) NOT NULL,
+  `ConsignmentId` bigint(20) NOT NULL AUTO_INCREMENT,
   `SeriesId` bigint(20) DEFAULT NULL,
   `UserId` bigint(20) DEFAULT NULL,
   `Datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -136,7 +136,7 @@ DROP TABLE IF EXISTS `ConsignmentMetadata`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `ConsignmentMetadata` (
-  `MetadataId` bigint(20) NOT NULL,
+  `MetadataId` bigint(20) NOT NULL AUTO_INCREMENT,
   `ConsignmentId` bigint(20) DEFAULT NULL,
   `PropertyId` bigint(20) DEFAULT NULL,
   `Value` varchar(255) DEFAULT NULL,
@@ -169,7 +169,7 @@ DROP TABLE IF EXISTS `ConsignmentProperty`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `ConsignmentProperty` (
-  `PropertyId` bigint(20) NOT NULL,
+  `PropertyId` bigint(20) NOT NULL AUTO_INCREMENT,
   `Name` varchar(255) DEFAULT NULL,
   `Description` varchar(255) DEFAULT NULL,
   `Shortname` varchar(255) DEFAULT NULL,
@@ -194,7 +194,7 @@ DROP TABLE IF EXISTS `FFIDMetadata`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `FFIDMetadata` (
-  `FileId` bigint(20) NOT NULL,
+  `FileId` bigint(20) NOT NULL AUTO_INCREMENT,
   `Software` varchar(255) DEFAULT NULL,
   `SoftwareVersion` varchar(255) DEFAULT NULL,
   `DefinitionsVersion` varchar(255) DEFAULT NULL,
@@ -226,7 +226,7 @@ DROP TABLE IF EXISTS `File`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `File` (
-  `FileId` bigint(20) NOT NULL,
+  `FileId` bigint(20) NOT NULL AUTO_INCREMENT,
   `ConsignmentId` bigint(20) DEFAULT NULL,
   `UserId` bigint(20) DEFAULT NULL,
   `Datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -255,7 +255,7 @@ DROP TABLE IF EXISTS `FileMetadata`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `FileMetadata` (
-  `MetadataId` bigint(20) NOT NULL,
+  `MetadataId` bigint(20) NOT NULL AUTO_INCREMENT,
   `FileId` bigint(20) DEFAULT NULL,
   `PropertyId` bigint(20) DEFAULT NULL,
   `Value` varchar(255) DEFAULT NULL,
@@ -288,7 +288,7 @@ DROP TABLE IF EXISTS `FileProperty`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `FileProperty` (
-  `PropertyId` bigint(20) NOT NULL,
+  `PropertyId` bigint(20) NOT NULL AUTO_INCREMENT,
   `Name` varchar(255) DEFAULT NULL,
   `Description` varchar(255) DEFAULT NULL,
   `Shortname` varchar(255) DEFAULT NULL,
@@ -313,7 +313,7 @@ DROP TABLE IF EXISTS `Series`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Series` (
-  `SeriesId` bigint(20) NOT NULL,
+  `SeriesId` bigint(20) NOT NULL AUTO_INCREMENT,
   `BodyId` bigint(20) DEFAULT NULL,
   `Name` varchar(255) DEFAULT NULL,
   `Code` varchar(255) DEFAULT NULL,
@@ -341,7 +341,7 @@ DROP TABLE IF EXISTS `User`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `User` (
-  `UserId` bigint(20) NOT NULL,
+  `UserId` bigint(20) NOT NULL AUTO_INCREMENT,
   `BodyId` bigint(20) DEFAULT NULL,
   `Name` varchar(255) DEFAULT NULL,
   `EMail` varchar(255) DEFAULT NULL,
