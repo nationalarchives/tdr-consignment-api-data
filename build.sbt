@@ -58,7 +58,7 @@ lazy val root = (project in file("."))
     slickCodegenDatabasePassword := databasePassword,
     slickCodegenDriver := slick.jdbc.MySQLProfile,
     slickCodegenJdbcDriver := "com.mysql.cj.jdbc.Driver",
-    slickCodegenOutputPackage := "models",
+    slickCodegenOutputPackage := "uk.gov.nationalarchives",
     slickCodegenExcludedTables := Seq("schema_version"),
     slickCodegenCodeGenerator := { (model:  m.Model) =>
       new SourceCodeGenerator(model) {
@@ -68,7 +68,7 @@ lazy val root = (project in file("."))
       }
     },
     sourceGenerators in Compile += slickCodegen.taskValue,
-    slickCodegenOutputDir := (sourceManaged in Compile).value / "a"
+    slickCodegenOutputDir := (scalaSource in Compile).value
 
   ).enablePlugins(CodegenPlugin)
 
