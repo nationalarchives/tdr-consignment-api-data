@@ -36,7 +36,7 @@ pipeline {
                             sh "aws s3 cp s3://tdr-secrets/keys/sonatype_credential /home/jenkins/.sbt/sonatype_credential"
                             withCredentials([string(credentialsId: 'sonatype-gpg-passphrase', variable: 'PGP_PASSPHRASE')]) {
                                 sh 'gpg --batch --passphrase $PGP_PASSPHRASE --import /home/jenkins/sonatype.key'
-                                sh "sbt flywayMigrate package publishSigned sonatypeBundleRelease"
+                                sh "sbt flywayMigrate slickCodegen package publishSigned sonatypeBundleRelease"
                                 slackSend color: "good", message: "The database package has been published", channel: "#tdr"
                             }
                         }
