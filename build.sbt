@@ -4,7 +4,7 @@ import slick.codegen.SourceCodeGenerator
 import slick.{model => m}
 
 ThisBuild / scalaVersion     := "2.13.0"
-ThisBuild / version          := "0.0.3"
+ThisBuild / version          := "0.0.4"
 ThisBuild / organization     := "uk.gov.nationalarchives"
 ThisBuild / organizationName := "National Archives"
 
