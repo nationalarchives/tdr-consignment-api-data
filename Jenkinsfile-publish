@@ -18,7 +18,7 @@ pipeline {
                     steps {
                         script {
                             def accountNumber = getAccountNumberFromStage()
-                            sh "python /invoke_lambda.py ${accountNumber} ${params.STAGE} tdr-database-migrations-${params.STAGE}"
+                            sh "python3 /invoke_lambda.py ${accountNumber} ${params.STAGE} tdr-database-migrations-${params.STAGE}"
                             slackSend color: "good", message: "The database migration lambda has been run", channel: "#tdr"
                         }
                     }
