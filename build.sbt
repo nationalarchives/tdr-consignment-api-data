@@ -1,10 +1,11 @@
 import com.github.tototoshi.sbt.slick.CodegenPlugin.autoImport.slickCodegenDatabaseUrl
 import sbt.Keys.libraryDependencies
+import sbtrelease.ReleaseStateTransformations.{checkSnapshotDependencies, commitNextVersion, commitReleaseVersion, inquireVersions, pushChanges, runClean, runTest, setNextVersion, setReleaseVersion, tagRelease}
 import slick.codegen.SourceCodeGenerator
 import slick.{model => m}
 
 ThisBuild / scalaVersion     := "2.13.0"
-ThisBuild / version          := "0.0.4"
+ThisBuild / version := (version in ThisBuild).value
 ThisBuild / organization     := "uk.gov.nationalarchives"
 ThisBuild / organizationName := "National Archives"
 
@@ -35,6 +36,23 @@ ThisBuild / publishMavenStyle := true
 
 val slickVersion = "3.3.2"
 useGpgPinentry := true
+
+releasePublishArtifactsAction := PgpKeys.publishSigned.value
+
+releaseProcess := Seq[ReleaseStep](
+  checkSnapshotDependencies,
+  inquireVersions,
+  runClean,
+  runTest,
+  setReleaseVersion,
+  commitReleaseVersion,
+  tagRelease,
+  releaseStepCommandAndRemaining("+publishSigned"),
+  releaseStepCommand("sonatypeBundleRelease"),
+  setNextVersion,
+  commitNextVersion,
+  pushChanges
+)
 
 lazy val databaseUrl = "jdbc:mysql://localhost:3306/consignmentapi"
 lazy val databaseUser = "root"
