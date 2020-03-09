@@ -54,7 +54,8 @@ releaseProcess := Seq[ReleaseStep](
   pushChanges
 )
 
-lazy val databaseUrl = "jdbc:mysql://localhost:3306/consignmentapi"
+lazy val databasePort = sys.env.getOrElse("DB_PORT", "3306")
+lazy val databaseUrl = s"jdbc:mysql://localhost:$databasePort/consignmentapi"
 lazy val databaseUser = "root"
 lazy val databasePassword = "password"
 
@@ -108,9 +109,8 @@ lazy val lambda = (project in file("lambda"))
 
 enablePlugins(FlywayPlugin)
 
-flywayUrl := "jdbc:mysql://localhost:3306/consignmentapi"
+flywayUrl := s"jdbc:mysql://localhost:$databasePort/consignmentapi"
 flywayUser := "root"
 flywayPassword := "password"
 flywayLocations += "filesystem:lambda/src/main/resources/db/migration"
 flywaySchemas += "consignmentapi"
-
