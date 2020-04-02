@@ -26,6 +26,7 @@ ThisBuild / licenses := List("MIT" -> new URL("https://choosealicense.com/licens
 ThisBuild / homepage := Some(url("https://github.com/nationalarchives/tdr-consignment-api-data"))
 
 s3acl := None
+s3sse := true
 ThisBuild / publishMavenStyle := false
 
 ThisBuild / publishTo := {
