@@ -33,7 +33,7 @@ pipeline {
                     steps {
                         script {
                             sshagent(['github-jenkins']) {
-                                sh 'git push --set-upstream origin master'
+                                sh "git push --set-upstream origin ${env.GIT_LOCAL_BRANCH}"
                                 sh 'git config --global user.email tna-digital-archiving-jenkins@nationalarchives.gov.uk'
                                 sh 'git config --global user.name tna-digital-archiving-jenkins'
                                 sh "sbt flywayMigrate slickCodegen 'release with-defaults'"
