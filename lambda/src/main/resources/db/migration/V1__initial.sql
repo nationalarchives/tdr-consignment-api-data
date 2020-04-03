@@ -96,7 +96,7 @@ WITH (
 -- DROP TABLE "ConsignmentMetadata";
 
 CREATE TABLE "ConsignmentMetadata"
-(l
+(
     "MetadataId" uuid,
     "ConsignmentId" uuid,
     "PropertyId" uuid,
