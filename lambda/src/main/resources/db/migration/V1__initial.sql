@@ -2,7 +2,7 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 -- Table: "Body"
 -- DROP TABLE "Body";
 
-CREATE TABLE consignmentapi."Body"
+CREATE TABLE "Body"
 (
     "BodyId" uuid NOT NULL,
     "Name" text COLLATE pg_catalog."default",
@@ -18,7 +18,7 @@ WITH (
 
 -- DROP TABLE "Series";
 	
-CREATE TABLE consignmentapi."Series"
+CREATE TABLE "Series"
 (
     "SeriesId" uuid NOT NULL,
     "BodyId" uuid NOT NULL,
@@ -41,7 +41,7 @@ WITH (
 
 -- DROP TABLE "ConsignmentProperty";
 
-CREATE TABLE consignmentapi."ConsignmentProperty"
+CREATE TABLE "ConsignmentProperty"
 (
     "PropertyId" uuid NOT NULL,
     "Name" text COLLATE pg_catalog."default",
@@ -58,7 +58,7 @@ WITH (
 
 -- DROP TABLE "FileProperty";
 
-CREATE TABLE consignmentapi."FileProperty"
+CREATE TABLE "FileProperty"
 (
     "PropertyId" uuid,
     "Name" text COLLATE pg_catalog."default",
@@ -74,7 +74,7 @@ WITH (
 
 -- DROP TABLE "Consignment";
 
-CREATE TABLE consignmentapi."Consignment"
+CREATE TABLE "Consignment"
 (
     "ConsignmentId" uuid NOT NULL,
     "SeriesId" uuid NOT NULL,
@@ -95,7 +95,7 @@ WITH (
 
 -- DROP TABLE "ConsignmentMetadata";
 
-CREATE TABLE consignmentapi."ConsignmentMetadata"
+CREATE TABLE "ConsignmentMetadata"
 (
     "MetadataId" uuid,
     "ConsignmentId" uuid,
@@ -123,7 +123,7 @@ WITH (
 
 -- DROP TABLE "File";
 
-CREATE TABLE consignmentapi."File"
+CREATE TABLE "File"
 (
     "FileId" uuid NOT NULL,
     "ConsignmentId" uuid NOT NULL,
@@ -144,7 +144,7 @@ WITH (
 
 -- DROP TABLE "FileMetadata";
 
-CREATE TABLE consignmentapi."FileMetadata"
+CREATE TABLE "FileMetadata"
 (
     "MetadataId" uuid,
     "FileId" uuid,
@@ -172,7 +172,7 @@ WITH (
 
 -- DROP TABLE "AVMetadata";
 
-CREATE TABLE consignmentapi."AVMetadata"
+CREATE TABLE "AVMetadata"
 (
     "FileId" uuid,
     "Software" text COLLATE pg_catalog."default",
@@ -195,7 +195,7 @@ WITH (
 
 -- DROP TABLE "FFIDMetadata";
 
-CREATE TABLE consignmentapi."FFIDMetadata"
+CREATE TABLE "FFIDMetadata"
 (
     "FileId" uuid NOT NULL,
     "Software" text COLLATE pg_catalog."default",
@@ -221,7 +221,7 @@ WITH (
 
 -- DROP TABLE "ClientFileMetadata";
 
-CREATE TABLE consignmentapi."ClientFileMetadata"
+CREATE TABLE "ClientFileMetadata"
 (
     "ClientFileMetadataId" uuid not null,
     "FileId" uuid not null,

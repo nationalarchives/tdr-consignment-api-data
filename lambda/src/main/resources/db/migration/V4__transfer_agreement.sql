@@ -1,4 +1,4 @@
-CREATE TABLE consignmentapi."TransferAgreement" (
+CREATE TABLE "TransferAgreement" (
     "TransferAgreementId" uuid NOT NULL,
     "ConsignmentId" uuid NOT NULL,
     "AllPublicRecords" BOOLEAN DEFAULT NULL,
@@ -9,7 +9,7 @@ CREATE TABLE consignmentapi."TransferAgreement" (
     "SensitivityReviewSignedOff" BOOLEAN DEFAULT NULL,
     CONSTRAINT "TransferAgreement_pkey" PRIMARY KEY ("TransferAgreementId"),
     CONSTRAINT "TransferAgreement_Consignment_fkey" FOREIGN KEY ("ConsignmentId")
-        REFERENCES consignmentapi."Consignment" ("ConsignmentId") MATCH SIMPLE
+        REFERENCES "Consignment" ("ConsignmentId") MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
         NOT VALID
