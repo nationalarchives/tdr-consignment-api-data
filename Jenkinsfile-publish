@@ -19,7 +19,7 @@ pipeline {
                         script {
                             def accountNumber = getAccountNumberFromStage()
                             sh "python3 /invoke_lambda.py ${accountNumber} ${params.STAGE} tdr-database-migrations-${params.STAGE}"
-                            //slackSend color: "good", message: "*Database migrations* :arrow_up: The migration lambda has been run in *${params.STAGE}*", channel: "#tdr-releases"
+                            slackSend color: "good", message: "*Database migrations* :arrow_up: The migration lambda has been run in *${params.STAGE}*", channel: "#tdr-releases"
                         }
                     }
                 }
@@ -37,7 +37,7 @@ pipeline {
                                 sh 'git config --global user.email tna-digital-archiving-jenkins@nationalarchives.gov.uk'
                                 sh 'git config --global user.name tna-digital-archiving-jenkins'
                                 sh "sbt flywayMigrate slickCodegen 'release with-defaults'"
-                                //slackSend color: "good", message: "*Database schema* :arrow_up: The database package has been published", channel: "#tdr-releases"
+                                slackSend color: "good", message: "*Database schema* :arrow_up: The database package has been published", channel: "#tdr-releases"
                             }
                         }
                     }
