@@ -1,8 +1,5 @@
 import com.github.tototoshi.sbt.slick.CodegenPlugin.autoImport.slickCodegenDatabaseUrl
 import sbt.Keys.libraryDependencies
-import sbtrelease.ReleaseStateTransformations.{checkSnapshotDependencies, commitNextVersion, commitReleaseVersion, inquireVersions, pushChanges, runClean, runTest, setNextVersion, setReleaseVersion, tagRelease}
-import slick.codegen.SourceCodeGenerator
-import slick.{model => m}
 
 ThisBuild / scalaVersion     := "2.13.0"
 ThisBuild / version := (version in ThisBuild).value
@@ -28,35 +25,21 @@ ThisBuild / description := "Slick classes generated from the database schema for
 ThisBuild / licenses := List("MIT" -> new URL("https://choosealicense.com/licenses/mit/"))
 ThisBuild / homepage := Some(url("https://github.com/nationalarchives/tdr-consignment-api-data"))
 
-// Remove all additional repository other than Maven Central from POM
-ThisBuild / pomIncludeRepository := { _ => false }
-ThisBuild / publishTo := sonatypePublishToBundle.value
+s3acl := None
+s3sse := true
+
 ThisBuild / publishMavenStyle := true
 
+ThisBuild / publishTo := {
+  val prefix = if (isSnapshot.value) "snapshots" else "releases"
+  Some(s3resolver.value(s"My ${prefix} S3 bucket", s3(s"tdr-$prefix-mgmt")))
+}
 
 val slickVersion = "3.3.2"
-useGpgPinentry := true
 
-releasePublishArtifactsAction := PgpKeys.publishSigned.value
-
-releaseProcess := Seq[ReleaseStep](
-  checkSnapshotDependencies,
-  inquireVersions,
-  runClean,
-  runTest,
-  setReleaseVersion,
-  commitReleaseVersion,
-  tagRelease,
-  releaseStepCommandAndRemaining("+publishSigned"),
-  releaseStepCommand("sonatypeBundleRelease"),
-  setNextVersion,
-  commitNextVersion,
-  pushChanges
-)
-
-lazy val databasePort = sys.env.getOrElse("DB_PORT", "3306")
-lazy val databaseUrl = s"jdbc:mysql://localhost:$databasePort/consignmentapi"
-lazy val databaseUser = "root"
+lazy val databasePort = sys.env.getOrElse("DB_PORT", "5432")
+lazy val databaseUrl = s"jdbc:postgresql://localhost:$databasePort/consignmentapi"
+lazy val databaseUser = "tdr"
 lazy val databasePassword = "password"
 
 resolvers +=
@@ -75,17 +58,10 @@ lazy val root = (project in file("."))
     slickCodegenDatabaseUrl := databaseUrl,
     slickCodegenDatabaseUser := databaseUser,
     slickCodegenDatabasePassword := databasePassword,
-    slickCodegenDriver := slick.jdbc.MySQLProfile,
-    slickCodegenJdbcDriver := "com.mysql.cj.jdbc.Driver",
+    slickCodegenDriver := slick.jdbc.PostgresProfile,
+    slickCodegenJdbcDriver := "org.postgresql.Driver",
     slickCodegenOutputPackage := "uk.gov.nationalarchives",
     slickCodegenExcludedTables := Seq("schema_version"),
-    slickCodegenCodeGenerator := { (model:  m.Model) =>
-      new SourceCodeGenerator(model) {
-        override def Table = new Table(_) {
-          override def autoIncLastAsOption = true
-        }
-      }
-    },
     slickCodegenOutputDir := (scalaSource in Compile).value
 
   ).enablePlugins(CodegenPlugin)
@@ -96,7 +72,7 @@ lazy val lambda = (project in file("lambda"))
       name := "tdr-database-migration-lambda",
       libraryDependencies ++= Seq(
         "org.flywaydb" % "flyway-core" % "6.1.4",
-        "mysql" % "mysql-connector-java" % "5.1.16"
+	      "org.postgresql" % "postgresql" % "42.2.11"
       ),
       assemblyMergeStrategy in assembly := {
         case PathList("META-INF", xs @ _*) => MergeStrategy.discard
@@ -105,12 +81,9 @@ lazy val lambda = (project in file("lambda"))
 
     )
 
-
-
 enablePlugins(FlywayPlugin)
 
-flywayUrl := s"jdbc:mysql://localhost:$databasePort/consignmentapi"
-flywayUser := "root"
+flywayUrl := s"jdbc:postgresql://localhost:$databasePort/consignmentapi"
+flywayUser := "tdr"
 flywayPassword := "password"
 flywayLocations += "filesystem:lambda/src/main/resources/db/migration"
-flywaySchemas += "consignmentapi"

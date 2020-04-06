@@ -1,373 +1,261 @@
--- MySQL dump 10.13  Distrib 5.7.29, for Linux (x86_64)
---
--- Host: localhost    Database: consignmentapi
--- ------------------------------------------------------
--- Server version	5.7.29
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+-- Table: "Body"
+-- DROP TABLE "Body";
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+CREATE TABLE "Body"
+(
+    "BodyId" uuid NOT NULL,
+    "Name" text COLLATE pg_catalog."default",
+    "Code" text COLLATE pg_catalog."default",
+    "Description" text COLLATE pg_catalog."default",
+    CONSTRAINT "Body_pkey" PRIMARY KEY ("BodyId")
+)
+WITH (
+    OIDS = FALSE
+);
 
---
--- Table structure for table `AVMetadata`
---
+-- Table: "Series"
 
-DROP TABLE IF EXISTS `AVMetadata`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `AVMetadata` (
-  `FileId` bigint(20) NOT NULL AUTO_INCREMENT,
-  `Software` varchar(255) DEFAULT NULL,
-  `Value` varchar(255) DEFAULT NULL,
-  `SoftwareVersion` varchar(255) DEFAULT NULL,
-  `DatabaseVersion` varchar(255) DEFAULT NULL,
-  `Result` varchar(255) DEFAULT NULL,
-  `Datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`FileId`),
-  CONSTRAINT `AVMetadata_ibfk_1` FOREIGN KEY (`FileId`) REFERENCES `File` (`FileId`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+-- DROP TABLE "Series";
+	
+CREATE TABLE "Series"
+(
+    "SeriesId" uuid NOT NULL,
+    "BodyId" uuid NOT NULL,
+    "Name" text COLLATE pg_catalog."default",
+    "Code" text COLLATE pg_catalog."default",
+    "Description" text COLLATE pg_catalog."default",
+    CONSTRAINT "Series_pkey" PRIMARY KEY ("SeriesId"),
+    CONSTRAINT "Series_Body_fkey" FOREIGN KEY ("BodyId")
+        REFERENCES "Body" ("BodyId") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
 
---
--- Dumping data for table `AVMetadata`
---
+WITH (
+    OIDS = FALSE
+);
 
-LOCK TABLES `AVMetadata` WRITE;
-/*!40000 ALTER TABLE `AVMetadata` DISABLE KEYS */;
-/*!40000 ALTER TABLE `AVMetadata` ENABLE KEYS */;
-UNLOCK TABLES;
+-- Table: "ConsignmentProperty"
 
---
--- Table structure for table `Body`
---
+-- DROP TABLE "ConsignmentProperty";
 
-DROP TABLE IF EXISTS `Body`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Body` (
-  `BodyId` bigint(20) NOT NULL AUTO_INCREMENT,
-  `Name` varchar(255) DEFAULT NULL,
-  `Code` varchar(255) DEFAULT NULL,
-  `Description` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`BodyId`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+CREATE TABLE "ConsignmentProperty"
+(
+    "PropertyId" uuid NOT NULL,
+    "Name" text COLLATE pg_catalog."default",
+    "Description" text COLLATE pg_catalog."default",
+    "Shortname" text COLLATE pg_catalog."default",
+    CONSTRAINT "ConProperty_pkey" PRIMARY KEY ("PropertyId")
+)
+WITH (
+    OIDS = FALSE
+);
 
---
--- Dumping data for table `Body`
---
 
-LOCK TABLES `Body` WRITE;
-/*!40000 ALTER TABLE `Body` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Body` ENABLE KEYS */;
-UNLOCK TABLES;
+-- Table: "FileProperty"
 
---
--- Table structure for table `ClientFileMetadata`
---
+-- DROP TABLE "FileProperty";
 
-DROP TABLE IF EXISTS `ClientFileMetadata`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `ClientFileMetadata` (
-  `FileId` bigint(20) NOT NULL AUTO_INCREMENT,
-  `OriginalPath` varchar(255) DEFAULT NULL,
-  `Checksum` varchar(255) DEFAULT NULL,
-  `ChecksumType` varchar(255) DEFAULT NULL,
-  `LastModified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `CreatedDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `Filesize` decimal(8,2) DEFAULT NULL,
-  `Datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`FileId`),
-  CONSTRAINT `ClientFileMetadata_ibfk_1` FOREIGN KEY (`FileId`) REFERENCES `File` (`FileId`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+CREATE TABLE "FileProperty"
+(
+    "PropertyId" uuid,
+    "Name" text COLLATE pg_catalog."default",
+    "Description" text COLLATE pg_catalog."default",
+    "Shortname" text COLLATE pg_catalog."default",
+    CONSTRAINT "FileProperty_pkey" PRIMARY KEY ("PropertyId")
+)
+WITH (
+    OIDS = FALSE
+);
 
---
--- Dumping data for table `ClientFileMetadata`
---
+-- Table: "Consignment"
 
-LOCK TABLES `ClientFileMetadata` WRITE;
-/*!40000 ALTER TABLE `ClientFileMetadata` DISABLE KEYS */;
-/*!40000 ALTER TABLE `ClientFileMetadata` ENABLE KEYS */;
-UNLOCK TABLES;
+-- DROP TABLE "Consignment";
 
---
--- Table structure for table `Consignment`
---
+CREATE TABLE "Consignment"
+(
+    "ConsignmentId" uuid NOT NULL,
+    "SeriesId" uuid NOT NULL,
+    "UserId" uuid NOT NULL,
+    "Datetime" timestamp with time zone not null DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT "Consignment_pkey" PRIMARY KEY ("ConsignmentId"),
+    CONSTRAINT "Consignment_Series_fkey" FOREIGN KEY ("SeriesId")
+        REFERENCES "Series" ("SeriesId") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+WITH (
+    OIDS = FALSE
+);
 
-DROP TABLE IF EXISTS `Consignment`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Consignment` (
-  `ConsignmentId` bigint(20) NOT NULL AUTO_INCREMENT,
-  `SeriesId` bigint(20) DEFAULT NULL,
-  `UserId` bigint(20) DEFAULT NULL,
-  `Datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`ConsignmentId`),
-  KEY `Consignment_Series_fkey` (`SeriesId`),
-  KEY `Consignment_User_fkey` (`UserId`),
-  CONSTRAINT `Consignment_Series_fkey` FOREIGN KEY (`SeriesId`) REFERENCES `Series` (`SeriesId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `Consignment_User_fkey` FOREIGN KEY (`UserId`) REFERENCES `User` (`UserId`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+-- Table: "ConsignmentMetadata"
 
---
--- Dumping data for table `Consignment`
---
+-- DROP TABLE "ConsignmentMetadata";
 
-LOCK TABLES `Consignment` WRITE;
-/*!40000 ALTER TABLE `Consignment` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Consignment` ENABLE KEYS */;
-UNLOCK TABLES;
+CREATE TABLE "ConsignmentMetadata"
+(
+    "MetadataId" uuid,
+    "ConsignmentId" uuid,
+    "PropertyId" uuid,
+    "Value" text COLLATE pg_catalog."default",
+    "Datetime" timestamp with time zone not null DEFAULT CURRENT_TIMESTAMP,
+    "UserId" uuid NOT NULL,
+    CONSTRAINT "ConMetadataId_pkey" PRIMARY KEY ("MetadataId"),
+    CONSTRAINT "ConMetadata_Consignment_fkey" FOREIGN KEY ("ConsignmentId")
+        REFERENCES "Consignment" ("ConsignmentId") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID,
+    CONSTRAINT "ConMetadata_Property_fkey" FOREIGN KEY ("PropertyId")
+        REFERENCES "ConsignmentProperty" ("PropertyId") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+WITH (
+    OIDS = FALSE
+);
 
---
--- Table structure for table `ConsignmentMetadata`
---
+-- Table: "File"
 
-DROP TABLE IF EXISTS `ConsignmentMetadata`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `ConsignmentMetadata` (
-  `MetadataId` bigint(20) NOT NULL AUTO_INCREMENT,
-  `ConsignmentId` bigint(20) DEFAULT NULL,
-  `PropertyId` bigint(20) DEFAULT NULL,
-  `Value` varchar(255) DEFAULT NULL,
-  `Datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `UserId` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`MetadataId`),
-  KEY `ConsignmentId` (`ConsignmentId`),
-  KEY `PropertyId` (`PropertyId`),
-  KEY `UserId` (`UserId`),
-  CONSTRAINT `ConsignmentMetadata_ibfk_1` FOREIGN KEY (`ConsignmentId`) REFERENCES `Consignment` (`ConsignmentId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `ConsignmentMetadata_ibfk_2` FOREIGN KEY (`PropertyId`) REFERENCES `ConsignmentProperty` (`PropertyId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `ConsignmentMetadata_ibfk_3` FOREIGN KEY (`UserId`) REFERENCES `User` (`UserId`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+-- DROP TABLE "File";
 
---
--- Dumping data for table `ConsignmentMetadata`
---
+CREATE TABLE "File"
+(
+    "FileId" uuid NOT NULL,
+    "ConsignmentId" uuid NOT NULL,
+    "UserId" uuid NOT NULL,
+    "Datetime" timestamp with time zone not null DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT "File_pkey" PRIMARY KEY ("FileId"),
+    CONSTRAINT "File_Consignment_fkey" FOREIGN KEY ("ConsignmentId")
+        REFERENCES "Consignment" ("ConsignmentId") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+WITH (
+    OIDS = FALSE
+);
 
-LOCK TABLES `ConsignmentMetadata` WRITE;
-/*!40000 ALTER TABLE `ConsignmentMetadata` DISABLE KEYS */;
-/*!40000 ALTER TABLE `ConsignmentMetadata` ENABLE KEYS */;
-UNLOCK TABLES;
+-- Table: "FileMetadata"
 
---
--- Table structure for table `ConsignmentProperty`
---
+-- DROP TABLE "FileMetadata";
 
-DROP TABLE IF EXISTS `ConsignmentProperty`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `ConsignmentProperty` (
-  `PropertyId` bigint(20) NOT NULL AUTO_INCREMENT,
-  `Name` varchar(255) DEFAULT NULL,
-  `Description` varchar(255) DEFAULT NULL,
-  `Shortname` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`PropertyId`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+CREATE TABLE "FileMetadata"
+(
+    "MetadataId" uuid,
+    "FileId" uuid,
+    "PropertyId" uuid,
+    "Value" text COLLATE pg_catalog."default",
+    "Datetime" timestamp with time zone not null DEFAULT CURRENT_TIMESTAMP,
+    "UserId" uuid NOT NULL,
+    CONSTRAINT "FileMetadata_pkey" PRIMARY KEY ("MetadataId"),
+    CONSTRAINT "FileMetadata_Consignment_fkey" FOREIGN KEY ("FileId")
+        REFERENCES "File" ("FileId") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID,
+    CONSTRAINT "FileMetadata_Property_fkey" FOREIGN KEY ("PropertyId")
+        REFERENCES "FileProperty" ("PropertyId") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+WITH (
+    OIDS = FALSE
+);
 
---
--- Dumping data for table `ConsignmentProperty`
---
+-- Table: "AVMetadata"
 
-LOCK TABLES `ConsignmentProperty` WRITE;
-/*!40000 ALTER TABLE `ConsignmentProperty` DISABLE KEYS */;
-/*!40000 ALTER TABLE `ConsignmentProperty` ENABLE KEYS */;
-UNLOCK TABLES;
+-- DROP TABLE "AVMetadata";
 
---
--- Table structure for table `FFIDMetadata`
---
+CREATE TABLE "AVMetadata"
+(
+    "FileId" uuid,
+    "Software" text COLLATE pg_catalog."default",
+    "Value" text COLLATE pg_catalog."default",
+    "SoftwareVersion" text COLLATE pg_catalog."default",
+    "DatabaseVersion" text COLLATE pg_catalog."default",
+    "Result" text COLLATE pg_catalog."default",
+    "Datetime" timestamp with time zone not null DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT "AVMetadata_Consignment_fkey" FOREIGN KEY ("FileId")
+        REFERENCES "File" ("FileId") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+WITH (
+    OIDS = FALSE
+);
 
-DROP TABLE IF EXISTS `FFIDMetadata`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `FFIDMetadata` (
-  `FileId` bigint(20) NOT NULL AUTO_INCREMENT,
-  `Software` varchar(255) DEFAULT NULL,
-  `SoftwareVersion` varchar(255) DEFAULT NULL,
-  `DefinitionsVersion` varchar(255) DEFAULT NULL,
-  `Method` varchar(255) DEFAULT NULL,
-  `Extension` varchar(255) DEFAULT NULL,
-  `ExtensionMismatch` varchar(255) DEFAULT NULL,
-  `FormatCount` varchar(255) DEFAULT NULL,
-  `PUId` bigint(20) DEFAULT NULL,
-  `Datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`FileId`),
-  CONSTRAINT `FFIDMetadata_ibfk_1` FOREIGN KEY (`FileId`) REFERENCES `File` (`FileId`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+-- Table: "FFIDMetadata"
 
---
--- Dumping data for table `FFIDMetadata`
---
+-- DROP TABLE "FFIDMetadata";
 
-LOCK TABLES `FFIDMetadata` WRITE;
-/*!40000 ALTER TABLE `FFIDMetadata` DISABLE KEYS */;
-/*!40000 ALTER TABLE `FFIDMetadata` ENABLE KEYS */;
-UNLOCK TABLES;
+CREATE TABLE "FFIDMetadata"
+(
+    "FileId" uuid NOT NULL,
+    "Software" text COLLATE pg_catalog."default",
+    "SoftwareVersion" text COLLATE pg_catalog."default",
+    "DefinitionsVersion" text COLLATE pg_catalog."default",
+    "Method" text COLLATE pg_catalog."default",
+    "Extension" text COLLATE pg_catalog."default",
+    "ExtensionMismatch" text COLLATE pg_catalog."default",
+    "FormatCount" text COLLATE pg_catalog."default",
+    "PUID" text COLLATE pg_catalog."default",
+    "Datetime" timestamp with time zone not null DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT "FFIDMetadata_Consignment_fkey" FOREIGN KEY ("FileId")
+        REFERENCES "File" ("FileId") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+WITH (
+    OIDS = FALSE
+);
 
---
--- Table structure for table `File`
---
+-- Table: "ClientFileMetadata"
 
-DROP TABLE IF EXISTS `File`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `File` (
-  `FileId` bigint(20) NOT NULL AUTO_INCREMENT,
-  `ConsignmentId` bigint(20) DEFAULT NULL,
-  `UserId` bigint(20) DEFAULT NULL,
-  `Datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`FileId`),
-  KEY `ConsignmentId` (`ConsignmentId`),
-  KEY `UserId` (`UserId`),
-  CONSTRAINT `File_ibfk_1` FOREIGN KEY (`ConsignmentId`) REFERENCES `Consignment` (`ConsignmentId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `File_ibfk_2` FOREIGN KEY (`UserId`) REFERENCES `User` (`UserId`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+-- DROP TABLE "ClientFileMetadata";
 
---
--- Dumping data for table `File`
---
+CREATE TABLE "ClientFileMetadata"
+(
+    "ClientFileMetadataId" uuid not null,
+    "FileId" uuid not null,
+    "OriginalPath" text COLLATE pg_catalog."default",
+    "Checksum" text COLLATE pg_catalog."default",
+    "ChecksumType" text COLLATE pg_catalog."default",
+    "LastModified" timestamp with time zone not null,
+    "CreatedDate" timestamp with time zone not null,
+    "Filesize" bigint,
+	"Datetime" timestamp with time zone not null,
+    CONSTRAINT "ClientFileMetadata_pkey" PRIMARY KEY ("ClientFileMetadataId"),
+    CONSTRAINT "ClientFileMetadata_Consignment_fkey" FOREIGN KEY ("FileId")
+        REFERENCES "File" ("FileId") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+WITH (
+    OIDS = FALSE
+);
 
-LOCK TABLES `File` WRITE;
-/*!40000 ALTER TABLE `File` DISABLE KEYS */;
-/*!40000 ALTER TABLE `File` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `FileMetadata`
---
-
-DROP TABLE IF EXISTS `FileMetadata`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `FileMetadata` (
-  `MetadataId` bigint(20) NOT NULL AUTO_INCREMENT,
-  `FileId` bigint(20) DEFAULT NULL,
-  `PropertyId` bigint(20) DEFAULT NULL,
-  `Value` varchar(255) DEFAULT NULL,
-  `Datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `UserId` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`MetadataId`),
-  KEY `FileId` (`FileId`),
-  KEY `PropertyId` (`PropertyId`),
-  KEY `UserId` (`UserId`),
-  CONSTRAINT `FileMetadata_ibfk_1` FOREIGN KEY (`FileId`) REFERENCES `File` (`FileId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FileMetadata_ibfk_2` FOREIGN KEY (`PropertyId`) REFERENCES `FileProperty` (`PropertyId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FileMetadata_ibfk_3` FOREIGN KEY (`UserId`) REFERENCES `User` (`UserId`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `FileMetadata`
---
-
-LOCK TABLES `FileMetadata` WRITE;
-/*!40000 ALTER TABLE `FileMetadata` DISABLE KEYS */;
-/*!40000 ALTER TABLE `FileMetadata` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `FileProperty`
---
-
-DROP TABLE IF EXISTS `FileProperty`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `FileProperty` (
-  `PropertyId` bigint(20) NOT NULL AUTO_INCREMENT,
-  `Name` varchar(255) DEFAULT NULL,
-  `Description` varchar(255) DEFAULT NULL,
-  `Shortname` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`PropertyId`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `FileProperty`
---
-
-LOCK TABLES `FileProperty` WRITE;
-/*!40000 ALTER TABLE `FileProperty` DISABLE KEYS */;
-/*!40000 ALTER TABLE `FileProperty` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `Series`
---
-
-DROP TABLE IF EXISTS `Series`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Series` (
-  `SeriesId` bigint(20) NOT NULL AUTO_INCREMENT,
-  `BodyId` bigint(20) DEFAULT NULL,
-  `Name` varchar(255) DEFAULT NULL,
-  `Code` varchar(255) DEFAULT NULL,
-  `Description` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`SeriesId`),
-  KEY `Series_Body_fkey` (`BodyId`),
-  CONSTRAINT `Series_Body_fkey` FOREIGN KEY (`BodyId`) REFERENCES `Body` (`BodyId`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Series`
---
-
-LOCK TABLES `Series` WRITE;
-/*!40000 ALTER TABLE `Series` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Series` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `User`
---
-
-DROP TABLE IF EXISTS `User`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `User` (
-  `UserId` bigint(20) NOT NULL AUTO_INCREMENT,
-  `BodyId` bigint(20) DEFAULT NULL,
-  `Name` varchar(255) DEFAULT NULL,
-  `EMail` varchar(255) DEFAULT NULL,
-  `PhoneNo` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`UserId`),
-  KEY `User_Body_fkey` (`BodyId`),
-  CONSTRAINT `User_Body_fkey` FOREIGN KEY (`BodyId`) REFERENCES `Body` (`BodyId`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `User`
---
-
-LOCK TABLES `User` WRITE;
-/*!40000 ALTER TABLE `User` DISABLE KEYS */;
-/*!40000 ALTER TABLE `User` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2020-01-20 22:05:15
+CREATE TABLE "TransferAgreement" (
+    "TransferAgreementId" uuid NOT NULL,
+    "ConsignmentId" uuid NOT NULL,
+    "AllPublicRecords" BOOLEAN DEFAULT NULL,
+    "AllCrownCopyright" BOOLEAN DEFAULT NULL,
+    "AllEnglish" BOOLEAN DEFAULT NULL,
+    "AllDigital" BOOLEAN DEFAULT NULL,
+    "AppraisalSelectionSignedOff" BOOLEAN DEFAULT NULL,
+    "SensitivityReviewSignedOff" BOOLEAN DEFAULT NULL,
+    CONSTRAINT "TransferAgreement_pkey" PRIMARY KEY ("TransferAgreementId"),
+    CONSTRAINT "TransferAgreement_Consignment_fkey" FOREIGN KEY ("ConsignmentId")
+        REFERENCES "Consignment" ("ConsignmentId") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
