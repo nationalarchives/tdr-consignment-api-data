@@ -27,7 +27,8 @@ ThisBuild / homepage := Some(url("https://github.com/nationalarchives/tdr-consig
 
 s3acl := None
 s3sse := true
-ThisBuild / publishMavenStyle := false
+
+ThisBuild / publishMavenStyle := true
 
 ThisBuild / publishTo := {
   val prefix = if (isSnapshot.value) "snapshots" else "releases"
