@@ -27,3 +27,19 @@ To publish a new version of the consignment-api-db library containing the genera
 Generation" Jenkins job.
 
 [Slick]: http://scala-slick.org/
+
+## Using updated schema locally
+
+To use updated schema locally for development, run the following command:
+
+`sbt publishLocal`
+
+This will place a snapshot version of the project jar in the local .ivy cache folder: $HOME/.ivy2/local/uk.gov.nationalarchives/consignment-api-db_2.13/[version number]-SNAPSHOT
+
+Other sbt projects that have this project as a dependency can access the local snapshot version by changing the version number in their build.sbt file, for example:
+
+```
+... other dependencies...
+"uk.gov.nationalarchives" %% "consignment-api-db" % "[version number]-SNAPSHOT"
+... other dependences...
+```
