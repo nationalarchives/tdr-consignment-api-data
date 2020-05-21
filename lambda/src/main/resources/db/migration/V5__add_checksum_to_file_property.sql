@@ -1,0 +1,1 @@
+INSERT INTO "FileProperty" ("PropertyId" , "Name", "Description", "Shortname") VALUES (uuid_generate_v4(), 'SHA256ServerSideChecksum', 'The SHA-256 checksum calculated after upload', 'SHA256Checksum');
