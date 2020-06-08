@@ -1,9 +1,11 @@
+library("tdr-jenkinslib")
+
 pipeline {
     agent {
         label "master"
     }
     parameters {
-        choice(name: "STAGE", choices: ["intg", "staging", "prod"], description: "The stage you are building the front end for")
+        choice(name: "STAGE", choices: ["intg", "staging", "prod"], description: "The stage you are deploying the migration lambda to")
     }
     stages {
         stage("Build") {
@@ -28,21 +30,11 @@ pipeline {
             steps {
                 script {
                     unstash "consignment-jar"
-                    def accountNumber = getAccountNumberFromStage()
+                    def accountNumber = tdr.getAccountNumberFromStage(params.STAGE)
                     sh "python3 /deploy_lambda.py ${accountNumber} ${params.STAGE} tdr-database-migrations-${params.STAGE} lambda/target/scala-2.13/consignment.jar"
                     slackSend color: "good", message: "*Database migrations* :arrow_up: The migration lambda has been deployed to *${params.STAGE}*", channel: "#tdr-releases"
                 }
             }
         }
     }
-}
-
-def getAccountNumberFromStage() {
-    def stageToAccountMap = [
-            "intg": env.INTG_ACCOUNT,
-            "staging": env.STAGING_ACCOUNT,
-            "prod": env.PROD_ACCOUNT
-    ]
-
-    return stageToAccountMap.get(params.STAGE)
 }
