@@ -9,7 +9,7 @@ CREATE TABLE "FFIDMetadata"
     "Method" text COLLATE pg_catalog."default" NOT NULL,
     "Extension" text COLLATE pg_catalog."default",
     "IdentificationBasis" text COLLATE pg_catalog."default" NOT NULL,
-    "PUID" text COLLATE pg_catalog."default" NOT NULL,
+    "PUID" text COLLATE pg_catalog."default",
     "Datetime" timestamp with time zone not null,
     CONSTRAINT "FFIDMetadata_Consignment_fkey" FOREIGN KEY ("FileId")
         REFERENCES "File" ("FileId") MATCH SIMPLE
