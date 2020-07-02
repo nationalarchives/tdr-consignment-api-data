@@ -1,4 +1,4 @@
-DROP TABLE "FFIDMetadata";
+ALTER TABLE "FFIDMetadata" RENAME TO "FFIDMetadataOld";
 CREATE TABLE "FFIDMetadata"
 (
     "FFIDMetadataId" uuid NOT NULL,
@@ -14,11 +14,9 @@ CREATE TABLE "FFIDMetadata"
         REFERENCES "File" ("FileId") MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
-        NOT VALID
-)
-WITH (
-    OIDS = FALSE
 );
+
+INSERT INTO "FFIDMetadata" SELECT uuid_generate_v4(), "FileId", "Software", "SoftwareVersion", "Datetime", "BinarySignatureFileVersion", "ContainerSignatureFileVersion", "Method" FROM "FFIDMetadataOld";
 
 CREATE TABLE "FFIDMetadataMatches"
 (
@@ -30,9 +28,8 @@ CREATE TABLE "FFIDMetadataMatches"
         REFERENCES "FFIDMetadata" ("FFIDMetadataId") MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
-        NOT VALID
-)
-WITH (
-    OIDS = FALSE
 );
 
+INSERT INTO "FFIDMetadataMatches" SELECT fm."FFIDMetadataId", fmo."Extension", fmo."IdentificationBasis", fmo."PUID" FROM "FFIDMetadata" fm JOIN "FFIDMetadataOld" fmo on fmo."FileId" = fm."FileId";
+
+DROP TABLE "FFIDMetadataOld";
