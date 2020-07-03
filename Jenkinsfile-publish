@@ -1,5 +1,7 @@
 library("tdr-jenkinslib")
 
+def versionBumpBranch = "version-bump-${BUILD_NUMBER}"
+
 pipeline {
     agent {
         label "master"
@@ -32,16 +34,44 @@ pipeline {
                             taskDefinitionOverride "arn:aws:ecs:eu-west-2:${env.MANAGEMENT_ACCOUNT}:task-definition/s3publish-${params.STAGE}:2"
                         }
                     }
-                    steps {
-                        script {
-                            sshagent(['github-jenkins']) {
-                                sh "git push --set-upstream origin ${env.GIT_LOCAL_BRANCH}"
-                                sh 'git config --global user.email tna-digital-archiving-jenkins@nationalarchives.gov.uk'
-                                sh 'git config --global user.name tna-digital-archiving-jenkins'
-                                sh "sbt flywayMigrate slickCodegen 'release with-defaults'"
-                                tdr.postToDaTdrSlackChannel(colour: "good", message: "*Database schema* :arrow_up: The database package has been published")
-                            }
+                    stages {
+                      stage("Create and push version bump GitHub branch") {
+                        steps {
+                          script {
+                            tdr.configureJenkinsGitUser()
+                          }
+
+                          sh "git checkout -b ${versionBumpBranch}"
+
+                          //sbt release requires branch to be on origin first
+                          script {
+                            tdr.pushGitHubBranch(versionBumpBranch)
+                          }
                         }
+                      }
+                      stage("Publish to S3") {
+                        steps {
+                          sshagent(['github-jenkins']) {
+                            sh "sbt flywayMigrate slickCodegen 'release with-defaults'"
+                          }
+                          script {
+                            tdr.postToDaTdrSlackChannel(colour: "good", message: "*Database schema* :arrow_up: The database package has been published")
+                          }
+                        }
+                      }
+                      stage("Create version bump pull request") {
+                        steps {
+                          script {
+                            tdr.createGitHubPullRequest(
+                              pullRequestTitle: "Version Bump from build number ${config.buildNumber}",
+                              buildUrl: env.BUILD_URL,
+                              repo: "tdr-consignment-api-data",
+                              branchToMergeTo: "master",
+                              branchToMerge: versionBumpBranch
+                            )
+                          }
+                        }
+                      }
                     }
                 }
             }
