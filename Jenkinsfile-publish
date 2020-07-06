@@ -63,7 +63,7 @@ pipeline {
                         steps {
                           script {
                             tdr.createGitHubPullRequest(
-                              pullRequestTitle: "Version Bump from build number ${config.buildNumber}",
+                              pullRequestTitle: "Version Bump from build number ${BUILD_NUMBER}",
                               buildUrl: env.BUILD_URL,
                               repo: "tdr-consignment-api-data",
                               branchToMergeTo: "master",
