@@ -18,6 +18,15 @@ format when it generates the migration name.
 
 To run migrations locally, run `sbt flywayMigrate`.
 
+### Deployment
+
+Run the following Jenkins jobs:
+
+* TDR Database Migrations Deploy: this builds the migration code and deploys it
+  to the Lambda which will run the migrations
+* TDR Database Migrations Run: this runs the latest version of the migrations
+  lambda
+
 Migrations that have been merged to master will be run automatically on the Integration environment and can be run
 manually on other environments by the `TDR Database Migrations Deploy` Jenkins job. The job will:
 
@@ -29,14 +38,14 @@ manually on other environments by the `TDR Database Migrations Deploy` Jenkins j
 
 The project uses slick-codegen to generate [Slick] classes based on the database structure
 
-To generate code locally based on the current state of your local database, run `sbt slickCodegen`.
-
-To publish a new version of the consignment-api-db library containing the generated code, build the "TDR Graphql Code
-Generation" Jenkins job.
-
 [Slick]: http://scala-slick.org/
 
-## Using updated schema locally
+### Publish generated code
+
+* Run the `TDR Database Migrations Publish` Jenkins job. This publishes a new
+  version of the `consignment-api-db` library.
+
+### Using updated schema locally
 
 To use updated schema locally for development, run the following commands:
 
