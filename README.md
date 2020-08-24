@@ -12,10 +12,18 @@ This project is part of [Transfer Digital Records][tdr]. It provides tools for w
 ### Adding a migration script
 
 * Add a sql file to `lambda/src/main/resources/db/migration` with a prefix of `V\d__something.sql`
-* This will trigger a Jenkins job which will:
-    * Run a lambda which updates the database within that environment.
-    * Use slick codegen to generate slick files based on the database schema.
-    * Deploy this code to Sonatype Nexus.
+
+The name of the migration should use snake_case, e.g. V123__add_date_column_to_series_table, because Flyway expects this
+format when it generates the migration name.
+
+To run migrations locally, run `sbt flywayMigrate`.
+
+Migrations that have been merged to master will be run automatically on the Integration environment and can be run
+manually on other environments by the `TDR Database Migrations Deploy` Jenkins job. The job will:
+
+* Run a lambda which updates the database within that environment.
+* Use slick codegen to generate slick files based on the database schema.
+* Deploy this code to the S3 release bucket.
 
 ## Code generation
 
