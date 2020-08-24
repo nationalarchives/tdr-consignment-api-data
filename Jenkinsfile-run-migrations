@@ -30,7 +30,11 @@ pipeline {
       success {
         script {
           if (params.STAGE == "intg"){
-            tdr.runEndToEndTests(0, params.STAGE, BUILD_URL)
+            // Wait for a few minutes so the lambda has finished running before
+            // starting the end-to-end tests
+            def endToEndTestDelaySeconds = 180
+
+            tdr.runEndToEndTests(endToEndTestDelaySeconds, params.STAGE, BUILD_URL)
           }
         }
       }
