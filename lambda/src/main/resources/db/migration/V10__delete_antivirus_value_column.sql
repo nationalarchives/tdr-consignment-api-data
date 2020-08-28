@@ -1,0 +1,2 @@
+ALTER TABLE "AVMetadata"
+  DROP COLUMN "Value";
