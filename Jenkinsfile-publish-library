@@ -6,7 +6,8 @@ pipeline {
   agent {
     ecs {
       inheritFrom "base"
-      taskDefinitionOverride "arn:aws:ecs:eu-west-2:${env.MANAGEMENT_ACCOUNT}:task-definition/s3publish-${params.STAGE}:2"
+      // Despite the name, the "s3publish-intg" task publishes the library to the TDR management account. See TDR-465.
+      taskDefinitionOverride "arn:aws:ecs:eu-west-2:${env.MANAGEMENT_ACCOUNT}:task-definition/s3publish-intg:2"
     }
   }
   stages {
