@@ -4,10 +4,7 @@ def versionBumpBranch = "version-bump-${BUILD_NUMBER}"
 
 pipeline {
   agent {
-    ecs {
-      inheritFrom "base"
-      taskDefinitionOverride "arn:aws:ecs:eu-west-2:${env.MANAGEMENT_ACCOUNT}:task-definition/s3publish-${params.STAGE}:2"
-    }
+    label "master"
   }
   stages {
     stage("Create and push version bump GitHub branch") {
@@ -25,6 +22,12 @@ pipeline {
       }
     }
     stage("Publish to S3") {
+      agent {
+        ecs {
+          inheritFrom "base"
+          taskDefinitionOverride "arn:aws:ecs:eu-west-2:${env.MANAGEMENT_ACCOUNT}:task-definition/s3publish-${params.STAGE}:2"
+        }
+      }
       steps {
         sshagent(['github-jenkins']) {
           sh "sbt flywayMigrate slickCodegen 'release with-defaults'"
