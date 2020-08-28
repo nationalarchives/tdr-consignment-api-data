@@ -3,49 +3,49 @@ library("tdr-jenkinslib")
 def versionBumpBranch = "version-bump-${BUILD_NUMBER}"
 
 pipeline {
-    agent {
-      ecs {
-        inheritFrom "base"
-        taskDefinitionOverride "arn:aws:ecs:eu-west-2:${env.MANAGEMENT_ACCOUNT}:task-definition/s3publish-${params.STAGE}:2"
-      }
+  agent {
+    ecs {
+      inheritFrom "base"
+      taskDefinitionOverride "arn:aws:ecs:eu-west-2:${env.MANAGEMENT_ACCOUNT}:task-definition/s3publish-${params.STAGE}:2"
     }
-    stages {
-      stage("Create and push version bump GitHub branch") {
-        steps {
-          script {
-            tdr.configureJenkinsGitUser()
-          }
-
-          sh "git checkout -b ${versionBumpBranch}"
-
-          //sbt release requires branch to be on origin first
-          script {
-            tdr.pushGitHubBranch(versionBumpBranch)
-          }
+  }
+  stages {
+    stage("Create and push version bump GitHub branch") {
+      steps {
+        script {
+          tdr.configureJenkinsGitUser()
         }
-      }
-      stage("Publish to S3") {
-        steps {
-          sshagent(['github-jenkins']) {
-            sh "sbt flywayMigrate slickCodegen 'release with-defaults'"
-          }
-          script {
-            tdr.postToDaTdrSlackChannel(colour: "good", message: "*Database schema* :arrow_up: The database package has been published")
-          }
-        }
-      }
-      stage("Create version bump pull request") {
-        steps {
-          script {
-            tdr.createGitHubPullRequest(
-              pullRequestTitle: "Version Bump from build number ${BUILD_NUMBER}",
-              buildUrl: env.BUILD_URL,
-              repo: "tdr-consignment-api-data",
-              branchToMergeTo: "master",
-              branchToMerge: versionBumpBranch
-            )
-          }
+
+        sh "git checkout -b ${versionBumpBranch}"
+
+        //sbt release requires branch to be on origin first
+        script {
+          tdr.pushGitHubBranch(versionBumpBranch)
         }
       }
     }
+    stage("Publish to S3") {
+      steps {
+        sshagent(['github-jenkins']) {
+          sh "sbt flywayMigrate slickCodegen 'release with-defaults'"
+        }
+        script {
+          tdr.postToDaTdrSlackChannel(colour: "good", message: "*Database schema* :arrow_up: The database package has been published")
+        }
+      }
+    }
+    stage("Create version bump pull request") {
+      steps {
+        script {
+          tdr.createGitHubPullRequest(
+            pullRequestTitle: "Version Bump from build number ${BUILD_NUMBER}",
+            buildUrl: env.BUILD_URL,
+            repo: "tdr-consignment-api-data",
+            branchToMergeTo: "master",
+            branchToMerge: versionBumpBranch
+          )
+        }
+      }
+    }
+  }
 }
