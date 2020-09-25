@@ -38,7 +38,7 @@ pipeline {
     stage("Create SQL dump") {
       steps {
         script {
-          sh "pg_dump -d consignmentapi -U tdr -h localhost > src/main/resources/pg_dump.sql"
+          sh "pg_dump -s -d consignmentapi -U tdr -h localhost > src/main/resources/pg_dump.sql"
           sh "git add src/main/resources/pg_dump.sql"
           sh "git commit -m 'Add the latest sql script'"
           tdr.pushGitHubBranch(versionBumpBranch)
