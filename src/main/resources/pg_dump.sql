@@ -3,7 +3,7 @@
 --
 
 -- Dumped from database version 11.6 (Debian 11.6-1.pgdg90+1)
--- Dumped by pg_dump version 11.7 (Debian 11.7-0+deb10u1)
+-- Dumped by pg_dump version 12.4
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -17,7 +17,7 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- Name: uuid-ossp; Type: EXTENSION; Schema: -; Owner: 
+-- Name: uuid-ossp; Type: EXTENSION; Schema: -; Owner: -
 --
 
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA public;
@@ -31,8 +31,6 @@ COMMENT ON EXTENSION "uuid-ossp" IS 'generate universally unique identifiers (UU
 
 
 SET default_tablespace = '';
-
-SET default_with_oids = false;
 
 --
 -- Name: AVMetadata; Type: TABLE; Schema: public; Owner: tdr
@@ -75,7 +73,6 @@ CREATE TABLE public."ClientFileMetadata" (
     "Checksum" text,
     "ChecksumType" text,
     "LastModified" timestamp with time zone NOT NULL,
-    "CreatedDate" timestamp with time zone NOT NULL,
     "Filesize" bigint,
     "Datetime" timestamp with time zone NOT NULL
 );
@@ -92,7 +89,11 @@ CREATE TABLE public."Consignment" (
     "SeriesId" uuid NOT NULL,
     "UserId" uuid NOT NULL,
     "Datetime" timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    "ParentFolder" text
+    "ParentFolder" text,
+    "TransferInitiatedDatetime" timestamp with time zone,
+    "TransferInitiatedBy" uuid,
+    "ExportDatetime" timestamp with time zone,
+    "ExportLocation" text
 );
 
 
