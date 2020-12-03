@@ -23,6 +23,9 @@ pipeline {
         }
       }
       steps {
+        dir("src/main/resources") {
+          sh "wget https://s3.amazonaws.com/rds-downloads/rds-ca-2019-root.pem"
+        }
         sh "sbt lambda/assembly"
         sh "mv lambda/target/scala-2.13/tdr-database*.jar lambda/target/scala-2.13/consignment.jar"
         stash includes: "lambda/target/scala-2.13/consignment.jar", name: "consignment-jar"
