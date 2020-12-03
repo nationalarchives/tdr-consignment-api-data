@@ -23,7 +23,7 @@ pipeline {
         }
       }
       steps {
-        dir("src/main/resources") {
+        dir("lambda/src/main/resources") {
           sh "wget https://s3.amazonaws.com/rds-downloads/rds-ca-2019-root.pem"
         }
         sh "sbt lambda/assembly"
