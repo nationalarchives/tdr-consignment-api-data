@@ -87,3 +87,6 @@ flywayUrl := s"jdbc:postgresql://localhost:$databasePort/consignmentapi"
 flywayUser := "tdr"
 flywayPassword := "password"
 flywayLocations += "filesystem:lambda/src/main/resources/db/migration"
+
+// https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api
+libraryDependencies += "javax.xml.bind" % "jaxb-api" % "2.4.0-b180830.0359"
