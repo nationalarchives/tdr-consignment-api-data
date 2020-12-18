@@ -50,6 +50,7 @@ lazy val root = (project in file("."))
   .settings(
 
     libraryDependencies ++= Seq(
+      "javax.xml.bind" % "jaxb-api" % "2.4.0-b180830.0359",
       "com.typesafe.slick" %% "slick"  % slickVersion,
       "com.typesafe.slick" %% "slick-hikaricp" % slickVersion,
       "com.typesafe.slick" %% "slick-codegen"  % slickVersion
@@ -87,6 +88,3 @@ flywayUrl := s"jdbc:postgresql://localhost:$databasePort/consignmentapi"
 flywayUser := "tdr"
 flywayPassword := "password"
 flywayLocations += "filesystem:lambda/src/main/resources/db/migration"
-
-// https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api
-libraryDependencies += "javax.xml.bind" % "jaxb-api" % "2.4.0-b180830.0359"
