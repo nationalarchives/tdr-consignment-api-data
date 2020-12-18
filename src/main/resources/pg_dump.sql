@@ -231,7 +231,6 @@ CREATE TABLE public."TransferAgreement" (
     "AllPublicRecords" boolean,
     "AllCrownCopyright" boolean,
     "AllEnglish" boolean,
-    "AllDigital" boolean,
     "AppraisalSelectionSignedOff" boolean,
     "SensitivityReviewSignedOff" boolean
 );
