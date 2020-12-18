@@ -50,7 +50,6 @@ lazy val root = (project in file("."))
   .settings(
 
     libraryDependencies ++= Seq(
-      "javax.xml.bind" % "jaxb-api" % "2.4.0-b180830.0359",
       "com.typesafe.slick" %% "slick"  % slickVersion,
       "com.typesafe.slick" %% "slick-hikaricp" % slickVersion,
       "com.typesafe.slick" %% "slick-codegen"  % slickVersion
