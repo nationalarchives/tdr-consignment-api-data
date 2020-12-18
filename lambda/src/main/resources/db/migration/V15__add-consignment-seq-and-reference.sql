@@ -8,8 +8,8 @@ INCREMENT BY 1;
 ALTER TABLE "Consignment"
 ADD COLUMN "ConsignmentSequence" bigint DEFAULT nextval('"ConsignmentSequenceID"'),
 ADD COLUMN "ConsignmentReference" text,
-ADD UNIQUE ("ConsignmentSequence", "ConsignmentReference");
+ADD CONSTRAINT constraint_name UNIQUE ("ConsignmentSequence", "ConsignmentReference");
 
 -- Alter consignment table to create consignment reference for existing Consignment rows
 UPDATE "Consignment"
-SET "ConsignmentReference"='TDR-2020-OLD-' || "ConsignmentSequence";
+SET "ConsignmentReference"=CONCAT('TDR-2020-OLD-', "ConsignmentSequence");
