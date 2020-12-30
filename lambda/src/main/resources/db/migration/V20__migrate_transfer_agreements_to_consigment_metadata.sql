@@ -38,7 +38,7 @@ SELECT
     "PropertyId",
     -- New field to be added, assumption that all previous Transfer Agreements are valid
     -- therefore default to true for existing Transfer Agreements
-    'false',
+    'true',
     "UserId" FROM "TransferAgreement"
     JOIN "Consignment" AS con ("con.ConsignmentId", "con.UserId") ON "ConsignmentId" = "con.ConsignmentId"
     JOIN "ConsignmentProperty" ON "Name" = 'InitialOpenRecordsConfirmed';
