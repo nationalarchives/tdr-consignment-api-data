@@ -3,62 +3,62 @@
 
 INSERT INTO "ConsignmentMetadata" ("MetadataId", "ConsignmentId", "PropertyId", "Value", "UserId")
 SELECT
-       uuid_generate_v4(),
-       "ConsignmentId",
-       "PropertyId",
-       "AllEnglish",
-       "UserId" FROM "TransferAgreement"
-       JOIN "Consignment" AS con ("con.ConsignmentId", "con.UserId") ON "ConsignmentId" = "con.ConsignmentId"
-       JOIN "ConsignmentProperty" ON "Name" = 'AllEnglishConfirmed';
-
-INSERT INTO "ConsignmentMetadata" ("MetadataId", "ConsignmentId", "PropertyId", "Value", "UserId")
-SELECT
-       uuid_generate_v4(),
-       "ConsignmentId",
-       "PropertyId",
-       "AppraisalSelectionSignedOff",
-       "UserId" FROM "TransferAgreement"
-       JOIN "Consignment" AS con ("con.ConsignmentId", "con.UserId") ON "ConsignmentId" = "con.ConsignmentId"
-       JOIN "ConsignmentProperty" ON "Name" = 'AppraisalSelectionSignOffConfirmed';
+    uuid_generate_v4(),
+    "ConsignmentId",
+    "prop.PropertyId",
+    "AllEnglish",
+    "con.UserId" FROM "TransferAgreement"
+    JOIN "Consignment" AS con ("con.ConsignmentId", "con.SeriesId", "con.UserId") ON "ConsignmentId" = "con.ConsignmentId"
+    JOIN "ConsignmentProperty" AS prop ("prop.PropertyId", "prop.Name") ON "prop.Name" = 'AllEnglishConfirmed';
 
 INSERT INTO "ConsignmentMetadata" ("MetadataId", "ConsignmentId", "PropertyId", "Value", "UserId")
 SELECT
     uuid_generate_v4(),
     "ConsignmentId",
-    "PropertyId",
+    "prop.PropertyId",
+    "AppraisalSelectionSignedOff",
+    "con.UserId" FROM "TransferAgreement"
+    JOIN "Consignment" AS con ("con.ConsignmentId", "con.SeriesId", "con.UserId") ON "ConsignmentId" = "con.ConsignmentId"
+    JOIN "ConsignmentProperty"AS prop ("prop.PropertyId", "prop.Name") ON "prop.Name" = 'AppraisalSelectionSignOffConfirmed';
+
+INSERT INTO "ConsignmentMetadata" ("MetadataId", "ConsignmentId", "PropertyId", "Value", "UserId")
+SELECT
+    uuid_generate_v4(),
+    "ConsignmentId",
+    "prop.PropertyId",
     "AllCrownCopyright",
-    "UserId" FROM "TransferAgreement"
-    JOIN "Consignment" AS con ("con.ConsignmentId", "con.UserId") ON "ConsignmentId" = "con.ConsignmentId"
-    JOIN "ConsignmentProperty" ON "Name" = 'CrownCopyrightConfirmed';
+    "con.UserId" FROM "TransferAgreement"
+    JOIN "Consignment" AS con ("con.ConsignmentId", "con.SeriesId", "con.UserId") ON "ConsignmentId" = "con.ConsignmentId"
+    JOIN "ConsignmentProperty" AS prop ("prop.PropertyId", "prop.Name") ON "prop.Name" = 'CrownCopyrightConfirmed';
 
 INSERT INTO "ConsignmentMetadata" ("MetadataId", "ConsignmentId", "PropertyId", "Value", "UserId")
 SELECT
     uuid_generate_v4(),
     "ConsignmentId",
-    "PropertyId",
+    "prop.PropertyId",
     -- New field to be added, assumption that all previous Transfer Agreements are valid
     -- therefore default to true for existing Transfer Agreements
     'true',
-    "UserId" FROM "TransferAgreement"
-    JOIN "Consignment" AS con ("con.ConsignmentId", "con.UserId") ON "ConsignmentId" = "con.ConsignmentId"
-    JOIN "ConsignmentProperty" ON "Name" = 'InitialOpenRecordsConfirmed';
+    "con.UserId" FROM "TransferAgreement"
+    JOIN "Consignment" AS con ("con.ConsignmentId", "con.SeriesId", "con.UserId") ON "ConsignmentId" = "con.ConsignmentId"
+    JOIN "ConsignmentProperty" AS prop ("prop.PropertyId", "prop.Name") ON "prop.Name" = 'InitialOpenRecordsConfirmed';
 
 INSERT INTO "ConsignmentMetadata" ("MetadataId", "ConsignmentId", "PropertyId", "Value", "UserId")
 SELECT
     uuid_generate_v4(),
     "ConsignmentId",
-    "PropertyId",
+    "prop.PropertyId",
     "AllPublicRecords",
-    "UserId" FROM "TransferAgreement"
-    JOIN "Consignment" AS con ("con.ConsignmentId", "con.UserId") ON "ConsignmentId" = "con.ConsignmentId"
-    JOIN "ConsignmentProperty" ON "Name" = 'PublicRecordsConfirmed';
+    "con.UserId" FROM "TransferAgreement"
+    JOIN "Consignment" AS con ("con.ConsignmentId", "con.SeriesId", "con.UserId") ON "ConsignmentId" = "con.ConsignmentId"
+    JOIN "ConsignmentProperty" AS prop ("prop.PropertyId", "prop.Name") ON "prop.Name" = 'PublicRecordsConfirmed';
 
 INSERT INTO "ConsignmentMetadata" ("MetadataId", "ConsignmentId", "PropertyId", "Value", "UserId")
 SELECT
     uuid_generate_v4(),
     "ConsignmentId",
-    "PropertyId",
+    "prop.PropertyId",
     "SensitivityReviewSignedOff",
-    "UserId" FROM "TransferAgreement"
-    JOIN "Consignment" AS con ("con.ConsignmentId", "con.UserId") ON "ConsignmentId" = "con.ConsignmentId"
-    JOIN "ConsignmentProperty" ON "Name" = 'SensitivityReviewSignOffConfirmed';
+    "con.UserId" FROM "TransferAgreement"
+    JOIN "Consignment" AS con ("con.ConsignmentId", "con.SeriesId", "con.UserId") ON "ConsignmentId" = "con.ConsignmentId"
+    JOIN "ConsignmentProperty" AS prop ("prop.PropertyId", "prop.Name") ON "prop.Name" = 'SensitivityReviewSignOffConfirmed';
