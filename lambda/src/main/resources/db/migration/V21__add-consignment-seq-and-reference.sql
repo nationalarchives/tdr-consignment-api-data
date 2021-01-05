@@ -9,7 +9,3 @@ ALTER TABLE "Consignment"
 ADD COLUMN "ConsignmentSequence" bigint DEFAULT nextval('"ConsignmentSequenceID"'),
 ADD COLUMN "ConsignmentReference" text,
 ADD CONSTRAINT constraint_name UNIQUE ("ConsignmentSequence", "ConsignmentReference");
-
--- Alter consignment table to create consignment reference for existing Consignment rows
-UPDATE "Consignment"
-SET "ConsignmentReference"=CONCAT('TDR-2020-OLD-', "ConsignmentSequence");
