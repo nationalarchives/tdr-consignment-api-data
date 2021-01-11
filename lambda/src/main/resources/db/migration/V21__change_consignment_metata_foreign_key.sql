@@ -5,8 +5,7 @@ ALTER TABLE "ConsignmentMetadata" ADD CONSTRAINT
     "ConMetadata_PropertyName_fkey" FOREIGN KEY ("PropertyName") REFERENCES "ConsignmentProperty" ("Name")
         MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
-        NOT VALID;
+        ON DELETE NO ACTION;
 
 ALTER TABLE "ConsignmentProperty" DROP CONSTRAINT "ConProperty_pkey";
 ALTER TABLE "ConsignmentProperty" ADD CONSTRAINT "ConProperty_pkey" PRIMARY KEY ("Name");
