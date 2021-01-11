@@ -1,0 +1,41 @@
+
+INSERT INTO "FileMetadata"
+SELECT uuid_generate_v4(),
+       cfm."FileId",
+       (SELECT "PropertyId" FROM "FileProperty" WHERE "Name" = 'ClientSideOriginalFilepath'),
+       "OriginalPath",
+       cfm."Datetime",
+       "UserId"
+FROM "ClientFileMetadata" cfm
+         JOIN "File" f on f."FileId" = cfm."FileId";
+
+INSERT INTO "FileMetadata"
+SELECT uuid_generate_v4(),
+       cfm."FileId",
+       (SELECT "PropertyId" FROM "FileProperty" WHERE "Name" = 'ClientSideFileLastModifiedDate'),
+       "LastModified",
+       cfm."Datetime",
+       "UserId"
+FROM "ClientFileMetadata" cfm
+         JOIN "File" f on f."FileId" = cfm."FileId";
+
+INSERT INTO "FileMetadata"
+SELECT uuid_generate_v4(),
+       cfm."FileId",
+       (SELECT "PropertyId" FROM "FileProperty" WHERE "Name" = 'ClientSideFileSize'),
+       "Filesize",
+       cfm."Datetime",
+       "UserId"
+FROM "ClientFileMetadata" cfm
+         JOIN "File" f on f."FileId" = cfm."FileId";
+
+INSERT INTO "FileMetadata"
+SELECT uuid_generate_v4(),
+       cfm."FileId",
+       (SELECT "PropertyId" FROM "FileProperty" WHERE "Name" = 'SHA256ClientSideChecksum'),
+       "Checksum",
+       cfm."Datetime",
+       "UserId"
+FROM "ClientFileMetadata" cfm
+         JOIN "File" f on f."FileId" = cfm."FileId";
+
