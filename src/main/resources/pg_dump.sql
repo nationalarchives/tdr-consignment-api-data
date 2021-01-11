@@ -106,7 +106,7 @@ ALTER TABLE public."Consignment" OWNER TO tdr;
 CREATE TABLE public."ConsignmentMetadata" (
     "MetadataId" uuid NOT NULL,
     "ConsignmentId" uuid,
-    "PropertyId" uuid,
+    "PropertyName" text,
     "Value" text,
     "Datetime" timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
     "UserId" uuid NOT NULL
@@ -120,8 +120,7 @@ ALTER TABLE public."ConsignmentMetadata" OWNER TO tdr;
 --
 
 CREATE TABLE public."ConsignmentProperty" (
-    "PropertyId" uuid NOT NULL,
-    "Name" text,
+    "Name" text NOT NULL,
     "Description" text,
     "Shortname" text
 );
@@ -295,7 +294,7 @@ ALTER TABLE ONLY public."ConsignmentProperty"
 --
 
 ALTER TABLE ONLY public."ConsignmentProperty"
-    ADD CONSTRAINT "ConProperty_pkey" PRIMARY KEY ("PropertyId");
+    ADD CONSTRAINT "ConProperty_pkey" PRIMARY KEY ("Name");
 
 
 --
@@ -402,11 +401,11 @@ ALTER TABLE ONLY public."ConsignmentMetadata"
 
 
 --
--- Name: ConsignmentMetadata ConMetadata_Property_fkey; Type: FK CONSTRAINT; Schema: public; Owner: tdr
+-- Name: ConsignmentMetadata ConMetadata_PropertyName_fkey; Type: FK CONSTRAINT; Schema: public; Owner: tdr
 --
 
 ALTER TABLE ONLY public."ConsignmentMetadata"
-    ADD CONSTRAINT "ConMetadata_Property_fkey" FOREIGN KEY ("PropertyId") REFERENCES public."ConsignmentProperty"("PropertyId");
+    ADD CONSTRAINT "ConMetadata_PropertyName_fkey" FOREIGN KEY ("PropertyName") REFERENCES public."ConsignmentProperty"("Name");
 
 
 --
