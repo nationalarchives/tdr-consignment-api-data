@@ -283,6 +283,14 @@ ALTER TABLE ONLY public."ConsignmentMetadata"
 
 
 --
+-- Name: ConsignmentProperty ConProperty_Name; Type: CONSTRAINT; Schema: public; Owner: tdr
+--
+
+ALTER TABLE ONLY public."ConsignmentProperty"
+    ADD CONSTRAINT "ConProperty_Name" UNIQUE ("Name");
+
+
+--
 -- Name: ConsignmentProperty ConProperty_pkey; Type: CONSTRAINT; Schema: public; Owner: tdr
 --
 
@@ -312,6 +320,14 @@ ALTER TABLE ONLY public."FFIDMetadata"
 
 ALTER TABLE ONLY public."FileMetadata"
     ADD CONSTRAINT "FileMetadata_pkey" PRIMARY KEY ("MetadataId");
+
+
+--
+-- Name: FileProperty FileProperty_Name; Type: CONSTRAINT; Schema: public; Owner: tdr
+--
+
+ALTER TABLE ONLY public."FileProperty"
+    ADD CONSTRAINT "FileProperty_Name" UNIQUE ("Name");
 
 
 --
