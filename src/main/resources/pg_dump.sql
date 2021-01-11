@@ -3,7 +3,7 @@
 --
 
 -- Dumped from database version 11.6 (Debian 11.6-1.pgdg90+1)
--- Dumped by pg_dump version 12.4
+-- Dumped by pg_dump version 12.5
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -283,6 +283,14 @@ ALTER TABLE ONLY public."ConsignmentMetadata"
 
 
 --
+-- Name: ConsignmentProperty ConProperty_Name; Type: CONSTRAINT; Schema: public; Owner: tdr
+--
+
+ALTER TABLE ONLY public."ConsignmentProperty"
+    ADD CONSTRAINT "ConProperty_Name" UNIQUE ("Name");
+
+
+--
 -- Name: ConsignmentProperty ConProperty_pkey; Type: CONSTRAINT; Schema: public; Owner: tdr
 --
 
@@ -312,6 +320,14 @@ ALTER TABLE ONLY public."FFIDMetadata"
 
 ALTER TABLE ONLY public."FileMetadata"
     ADD CONSTRAINT "FileMetadata_pkey" PRIMARY KEY ("MetadataId");
+
+
+--
+-- Name: FileProperty FileProperty_Name; Type: CONSTRAINT; Schema: public; Owner: tdr
+--
+
+ALTER TABLE ONLY public."FileProperty"
+    ADD CONSTRAINT "FileProperty_Name" UNIQUE ("Name");
 
 
 --
