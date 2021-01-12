@@ -182,10 +182,11 @@ ALTER TABLE public."File" OWNER TO tdr;
 CREATE TABLE public."FileMetadata" (
     "MetadataId" uuid NOT NULL,
     "FileId" uuid NOT NULL,
-    "PropertyId" uuid NOT NULL,
+    "PropertyId" uuid,
     "Value" text NOT NULL,
     "Datetime" timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    "UserId" uuid NOT NULL
+    "UserId" uuid NOT NULL,
+    "PropertyName" text
 );
 
 
@@ -196,8 +197,8 @@ ALTER TABLE public."FileMetadata" OWNER TO tdr;
 --
 
 CREATE TABLE public."FileProperty" (
-    "PropertyId" uuid NOT NULL,
-    "Name" text,
+    "PropertyId" uuid,
+    "Name" text NOT NULL,
     "Description" text,
     "Shortname" text
 );
@@ -322,19 +323,11 @@ ALTER TABLE ONLY public."FileMetadata"
 
 
 --
--- Name: FileProperty FileProperty_Name; Type: CONSTRAINT; Schema: public; Owner: tdr
---
-
-ALTER TABLE ONLY public."FileProperty"
-    ADD CONSTRAINT "FileProperty_Name" UNIQUE ("Name");
-
-
---
 -- Name: FileProperty FileProperty_pkey; Type: CONSTRAINT; Schema: public; Owner: tdr
 --
 
 ALTER TABLE ONLY public."FileProperty"
-    ADD CONSTRAINT "FileProperty_pkey" PRIMARY KEY ("PropertyId");
+    ADD CONSTRAINT "FileProperty_pkey" PRIMARY KEY ("Name");
 
 
 --
@@ -441,11 +434,11 @@ ALTER TABLE ONLY public."FileMetadata"
 
 
 --
--- Name: FileMetadata FileMetadata_Property_fkey; Type: FK CONSTRAINT; Schema: public; Owner: tdr
+-- Name: FileMetadata FileMetadata_PropertyName; Type: FK CONSTRAINT; Schema: public; Owner: tdr
 --
 
 ALTER TABLE ONLY public."FileMetadata"
-    ADD CONSTRAINT "FileMetadata_Property_fkey" FOREIGN KEY ("PropertyId") REFERENCES public."FileProperty"("PropertyId");
+    ADD CONSTRAINT "FileMetadata_PropertyName" FOREIGN KEY ("PropertyName") REFERENCES public."FileProperty"("Name");
 
 
 --
