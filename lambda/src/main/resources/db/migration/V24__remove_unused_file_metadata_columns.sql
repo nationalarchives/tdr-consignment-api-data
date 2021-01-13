@@ -20,3 +20,4 @@ SELECT uuid_generate_v4(), f."FileId", "Checksum", cfm."Datetime", "UserId", 'SH
 FROM "ClientFileMetadata" cfm JOIN "File" f on f."FileId" = cfm."FileId";
 
 DROP TABLE "ClientFileMetadata";
+
