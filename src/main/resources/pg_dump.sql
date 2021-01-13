@@ -106,7 +106,7 @@ ALTER TABLE public."Consignment" OWNER TO tdr;
 CREATE TABLE public."ConsignmentMetadata" (
     "MetadataId" uuid NOT NULL,
     "ConsignmentId" uuid,
-    "PropertyId" uuid,
+    "PropertyName" text,
     "Value" text,
     "Datetime" timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
     "UserId" uuid NOT NULL
@@ -120,8 +120,7 @@ ALTER TABLE public."ConsignmentMetadata" OWNER TO tdr;
 --
 
 CREATE TABLE public."ConsignmentProperty" (
-    "PropertyId" uuid NOT NULL,
-    "Name" text,
+    "Name" text NOT NULL,
     "Description" text,
     "Shortname" text
 );
@@ -183,10 +182,11 @@ ALTER TABLE public."File" OWNER TO tdr;
 CREATE TABLE public."FileMetadata" (
     "MetadataId" uuid NOT NULL,
     "FileId" uuid NOT NULL,
-    "PropertyId" uuid NOT NULL,
+    "PropertyId" uuid,
     "Value" text NOT NULL,
     "Datetime" timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    "UserId" uuid NOT NULL
+    "UserId" uuid NOT NULL,
+    "PropertyName" text
 );
 
 
@@ -197,8 +197,8 @@ ALTER TABLE public."FileMetadata" OWNER TO tdr;
 --
 
 CREATE TABLE public."FileProperty" (
-    "PropertyId" uuid NOT NULL,
-    "Name" text,
+    "PropertyId" uuid,
+    "Name" text NOT NULL,
     "Description" text,
     "Shortname" text
 );
@@ -283,11 +283,19 @@ ALTER TABLE ONLY public."ConsignmentMetadata"
 
 
 --
+-- Name: ConsignmentProperty ConProperty_Name; Type: CONSTRAINT; Schema: public; Owner: tdr
+--
+
+ALTER TABLE ONLY public."ConsignmentProperty"
+    ADD CONSTRAINT "ConProperty_Name" UNIQUE ("Name");
+
+
+--
 -- Name: ConsignmentProperty ConProperty_pkey; Type: CONSTRAINT; Schema: public; Owner: tdr
 --
 
 ALTER TABLE ONLY public."ConsignmentProperty"
-    ADD CONSTRAINT "ConProperty_pkey" PRIMARY KEY ("PropertyId");
+    ADD CONSTRAINT "ConProperty_pkey" PRIMARY KEY ("Name");
 
 
 --
@@ -319,7 +327,7 @@ ALTER TABLE ONLY public."FileMetadata"
 --
 
 ALTER TABLE ONLY public."FileProperty"
-    ADD CONSTRAINT "FileProperty_pkey" PRIMARY KEY ("PropertyId");
+    ADD CONSTRAINT "FileProperty_pkey" PRIMARY KEY ("Name");
 
 
 --
@@ -386,11 +394,11 @@ ALTER TABLE ONLY public."ConsignmentMetadata"
 
 
 --
--- Name: ConsignmentMetadata ConMetadata_Property_fkey; Type: FK CONSTRAINT; Schema: public; Owner: tdr
+-- Name: ConsignmentMetadata ConMetadata_PropertyName_fkey; Type: FK CONSTRAINT; Schema: public; Owner: tdr
 --
 
 ALTER TABLE ONLY public."ConsignmentMetadata"
-    ADD CONSTRAINT "ConMetadata_Property_fkey" FOREIGN KEY ("PropertyId") REFERENCES public."ConsignmentProperty"("PropertyId");
+    ADD CONSTRAINT "ConMetadata_PropertyName_fkey" FOREIGN KEY ("PropertyName") REFERENCES public."ConsignmentProperty"("Name");
 
 
 --
@@ -426,11 +434,11 @@ ALTER TABLE ONLY public."FileMetadata"
 
 
 --
--- Name: FileMetadata FileMetadata_Property_fkey; Type: FK CONSTRAINT; Schema: public; Owner: tdr
+-- Name: FileMetadata FileMetadata_PropertyName; Type: FK CONSTRAINT; Schema: public; Owner: tdr
 --
 
 ALTER TABLE ONLY public."FileMetadata"
-    ADD CONSTRAINT "FileMetadata_Property_fkey" FOREIGN KEY ("PropertyId") REFERENCES public."FileProperty"("PropertyId");
+    ADD CONSTRAINT "FileMetadata_PropertyName" FOREIGN KEY ("PropertyName") REFERENCES public."FileProperty"("Name");
 
 
 --
