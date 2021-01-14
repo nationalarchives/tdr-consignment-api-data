@@ -63,24 +63,6 @@ CREATE TABLE public."Body" (
 ALTER TABLE public."Body" OWNER TO tdr;
 
 --
--- Name: ClientFileMetadata; Type: TABLE; Schema: public; Owner: tdr
---
-
-CREATE TABLE public."ClientFileMetadata" (
-    "ClientFileMetadataId" uuid NOT NULL,
-    "FileId" uuid NOT NULL,
-    "OriginalPath" text,
-    "Checksum" text,
-    "ChecksumType" text,
-    "LastModified" timestamp with time zone NOT NULL,
-    "Filesize" bigint,
-    "Datetime" timestamp with time zone NOT NULL
-);
-
-
-ALTER TABLE public."ClientFileMetadata" OWNER TO tdr;
-
---
 -- Name: Consignment; Type: TABLE; Schema: public; Owner: tdr
 --
 
@@ -105,9 +87,9 @@ ALTER TABLE public."Consignment" OWNER TO tdr;
 
 CREATE TABLE public."ConsignmentMetadata" (
     "MetadataId" uuid NOT NULL,
-    "ConsignmentId" uuid,
-    "PropertyName" text,
-    "Value" text,
+    "ConsignmentId" uuid NOT NULL,
+    "PropertyName" text NOT NULL,
+    "Value" text NOT NULL,
     "Datetime" timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
     "UserId" uuid NOT NULL
 );
@@ -182,11 +164,10 @@ ALTER TABLE public."File" OWNER TO tdr;
 CREATE TABLE public."FileMetadata" (
     "MetadataId" uuid NOT NULL,
     "FileId" uuid NOT NULL,
-    "PropertyId" uuid,
     "Value" text NOT NULL,
     "Datetime" timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
     "UserId" uuid NOT NULL,
-    "PropertyName" text
+    "PropertyName" text NOT NULL
 );
 
 
@@ -197,7 +178,6 @@ ALTER TABLE public."FileMetadata" OWNER TO tdr;
 --
 
 CREATE TABLE public."FileProperty" (
-    "PropertyId" uuid,
     "Name" text NOT NULL,
     "Description" text,
     "Shortname" text
@@ -220,23 +200,6 @@ CREATE TABLE public."Series" (
 
 
 ALTER TABLE public."Series" OWNER TO tdr;
-
---
--- Name: TransferAgreement; Type: TABLE; Schema: public; Owner: tdr
---
-
-CREATE TABLE public."TransferAgreement" (
-    "TransferAgreementId" uuid NOT NULL,
-    "ConsignmentId" uuid NOT NULL,
-    "AllPublicRecords" boolean,
-    "AllCrownCopyright" boolean,
-    "AllEnglish" boolean,
-    "AppraisalSelectionSignedOff" boolean,
-    "SensitivityReviewSignedOff" boolean
-);
-
-
-ALTER TABLE public."TransferAgreement" OWNER TO tdr;
 
 --
 -- Name: flyway_schema_history; Type: TABLE; Schema: public; Owner: tdr
@@ -264,14 +227,6 @@ ALTER TABLE public.flyway_schema_history OWNER TO tdr;
 
 ALTER TABLE ONLY public."Body"
     ADD CONSTRAINT "Body_pkey" PRIMARY KEY ("BodyId");
-
-
---
--- Name: ClientFileMetadata ClientFileMetadata_pkey; Type: CONSTRAINT; Schema: public; Owner: tdr
---
-
-ALTER TABLE ONLY public."ClientFileMetadata"
-    ADD CONSTRAINT "ClientFileMetadata_pkey" PRIMARY KEY ("ClientFileMetadataId");
 
 
 --
@@ -347,14 +302,6 @@ ALTER TABLE ONLY public."Series"
 
 
 --
--- Name: TransferAgreement TransferAgreement_pkey; Type: CONSTRAINT; Schema: public; Owner: tdr
---
-
-ALTER TABLE ONLY public."TransferAgreement"
-    ADD CONSTRAINT "TransferAgreement_pkey" PRIMARY KEY ("TransferAgreementId");
-
-
---
 -- Name: flyway_schema_history flyway_schema_history_pk; Type: CONSTRAINT; Schema: public; Owner: tdr
 --
 
@@ -375,14 +322,6 @@ CREATE INDEX flyway_schema_history_s_idx ON public.flyway_schema_history USING b
 
 ALTER TABLE ONLY public."AVMetadata"
     ADD CONSTRAINT "AVMetadata_Consignment_fkey" FOREIGN KEY ("FileId") REFERENCES public."File"("FileId");
-
-
---
--- Name: ClientFileMetadata ClientFileMetadata_Consignment_fkey; Type: FK CONSTRAINT; Schema: public; Owner: tdr
---
-
-ALTER TABLE ONLY public."ClientFileMetadata"
-    ADD CONSTRAINT "ClientFileMetadata_Consignment_fkey" FOREIGN KEY ("FileId") REFERENCES public."File"("FileId");
 
 
 --
@@ -455,14 +394,6 @@ ALTER TABLE ONLY public."File"
 
 ALTER TABLE ONLY public."Series"
     ADD CONSTRAINT "Series_Body_fkey" FOREIGN KEY ("BodyId") REFERENCES public."Body"("BodyId");
-
-
---
--- Name: TransferAgreement TransferAgreement_Consignment_fkey; Type: FK CONSTRAINT; Schema: public; Owner: tdr
---
-
-ALTER TABLE ONLY public."TransferAgreement"
-    ADD CONSTRAINT "TransferAgreement_Consignment_fkey" FOREIGN KEY ("ConsignmentId") REFERENCES public."Consignment"("ConsignmentId");
 
 
 --
