@@ -8,4 +8,5 @@ INCREMENT BY 1;
 ALTER TABLE "Consignment"
 ADD COLUMN "ConsignmentSequence" bigint DEFAULT nextval('"ConsignmentSequenceID"'),
 ADD COLUMN "ConsignmentReference" text,
-ADD CONSTRAINT constraint_name UNIQUE ("ConsignmentSequence", "ConsignmentReference");
+ADD CONSTRAINT "UniqueConsignmentSequence" UNIQUE ("ConsignmentSequence"),
+ADD CONSTRAINT "UniqueConsignmentReference" UNIQUE ("ConsignmentReference");
