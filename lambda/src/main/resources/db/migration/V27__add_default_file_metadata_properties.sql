@@ -4,4 +4,3 @@ VALUES ('RightsCopyright'),
        ('HeldBy'),
        ('Language'),
        ('FoiExemptionCode')
-
