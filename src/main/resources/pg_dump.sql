@@ -63,6 +63,20 @@ CREATE TABLE public."Body" (
 ALTER TABLE public."Body" OWNER TO tdr;
 
 --
+-- Name: ConsignmentSequenceID; Type: SEQUENCE; Schema: public; Owner: tdr
+--
+
+CREATE SEQUENCE public."ConsignmentSequenceID"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public."ConsignmentSequenceID" OWNER TO tdr;
+
+--
 -- Name: Consignment; Type: TABLE; Schema: public; Owner: tdr
 --
 
@@ -75,7 +89,9 @@ CREATE TABLE public."Consignment" (
     "TransferInitiatedDatetime" timestamp with time zone,
     "TransferInitiatedBy" uuid,
     "ExportDatetime" timestamp with time zone,
-    "ExportLocation" text
+    "ExportLocation" text,
+    "ConsignmentSequence" bigint DEFAULT nextval('public."ConsignmentSequenceID"'::regclass),
+    "ConsignmentReference" text
 );
 
 
@@ -299,6 +315,22 @@ ALTER TABLE ONLY public."File"
 
 ALTER TABLE ONLY public."Series"
     ADD CONSTRAINT "Series_pkey" PRIMARY KEY ("SeriesId");
+
+
+--
+-- Name: Consignment UniqueConsignmentReference; Type: CONSTRAINT; Schema: public; Owner: tdr
+--
+
+ALTER TABLE ONLY public."Consignment"
+    ADD CONSTRAINT "UniqueConsignmentReference" UNIQUE ("ConsignmentReference");
+
+
+--
+-- Name: Consignment UniqueConsignmentSequence; Type: CONSTRAINT; Schema: public; Owner: tdr
+--
+
+ALTER TABLE ONLY public."Consignment"
+    ADD CONSTRAINT "UniqueConsignmentSequence" UNIQUE ("ConsignmentSequence");
 
 
 --
