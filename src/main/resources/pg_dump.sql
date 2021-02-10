@@ -63,10 +63,10 @@ CREATE TABLE public."Body" (
 ALTER TABLE public."Body" OWNER TO tdr;
 
 --
--- Name: ConsignmentSequenceID; Type: SEQUENCE; Schema: public; Owner: tdr
+-- Name: consignment_sequence_id; Type: SEQUENCE; Schema: public; Owner: tdr
 --
 
-CREATE SEQUENCE public."ConsignmentSequenceID"
+CREATE SEQUENCE public.consignment_sequence_id
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -74,7 +74,7 @@ CREATE SEQUENCE public."ConsignmentSequenceID"
     CACHE 1;
 
 
-ALTER TABLE public."ConsignmentSequenceID" OWNER TO tdr;
+ALTER TABLE public.consignment_sequence_id OWNER TO tdr;
 
 --
 -- Name: Consignment; Type: TABLE; Schema: public; Owner: tdr
@@ -90,7 +90,7 @@ CREATE TABLE public."Consignment" (
     "TransferInitiatedBy" uuid,
     "ExportDatetime" timestamp with time zone,
     "ExportLocation" text,
-    "ConsignmentSequence" bigint DEFAULT nextval('public."ConsignmentSequenceID"'::regclass),
+    "ConsignmentSequence" bigint DEFAULT nextval('public.consignment_sequence_id'::regclass),
     "ConsignmentReference" text
 );
 
