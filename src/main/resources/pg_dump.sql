@@ -91,7 +91,7 @@ CREATE TABLE public."Consignment" (
     "ExportDatetime" timestamp with time zone,
     "ExportLocation" text,
     "ConsignmentSequence" bigint DEFAULT nextval('public.consignment_sequence_id'::regclass),
-    "ConsignmentReference" text
+    "ConsignmentReference" text NOT NULL
 );
 
 
