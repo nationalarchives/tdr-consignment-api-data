@@ -3,7 +3,7 @@
 --
 
 -- Dumped from database version 11.6 (Debian 11.6-1.pgdg90+1)
--- Dumped by pg_dump version 12.5
+-- Dumped by pg_dump version 12.6
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -125,6 +125,21 @@ CREATE TABLE public."ConsignmentProperty" (
 
 
 ALTER TABLE public."ConsignmentProperty" OWNER TO tdr;
+
+--
+-- Name: ConsignmentStatus; Type: TABLE; Schema: public; Owner: tdr
+--
+
+CREATE TABLE public."ConsignmentStatus" (
+    "ConsignmentStatusId" uuid NOT NULL,
+    "ConsignmentId" uuid NOT NULL,
+    "StatusType" text NOT NULL,
+    "Value" text NOT NULL,
+    "CreatedDatetime" timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public."ConsignmentStatus" OWNER TO tdr;
 
 --
 -- Name: FFIDMetadata; Type: TABLE; Schema: public; Owner: tdr
@@ -270,6 +285,14 @@ ALTER TABLE ONLY public."ConsignmentProperty"
 
 
 --
+-- Name: ConsignmentStatus ConsignmentStatus_pkey; Type: CONSTRAINT; Schema: public; Owner: tdr
+--
+
+ALTER TABLE ONLY public."ConsignmentStatus"
+    ADD CONSTRAINT "ConsignmentStatus_pkey" PRIMARY KEY ("ConsignmentStatusId");
+
+
+--
 -- Name: Consignment Consignment_pkey; Type: CONSTRAINT; Schema: public; Owner: tdr
 --
 
@@ -370,6 +393,14 @@ ALTER TABLE ONLY public."ConsignmentMetadata"
 
 ALTER TABLE ONLY public."ConsignmentMetadata"
     ADD CONSTRAINT "ConMetadata_PropertyName_fkey" FOREIGN KEY ("PropertyName") REFERENCES public."ConsignmentProperty"("Name");
+
+
+--
+-- Name: ConsignmentStatus ConsignmentStatus_Consignment_fkey; Type: FK CONSTRAINT; Schema: public; Owner: tdr
+--
+
+ALTER TABLE ONLY public."ConsignmentStatus"
+    ADD CONSTRAINT "ConsignmentStatus_Consignment_fkey" FOREIGN KEY ("ConsignmentId") REFERENCES public."Consignment"("ConsignmentId");
 
 
 --
