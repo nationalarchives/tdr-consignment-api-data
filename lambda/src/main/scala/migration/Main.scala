@@ -8,17 +8,13 @@ import software.amazon.awssdk.regions.Region
 import software.amazon.awssdk.services.rds.RdsUtilities
 import software.amazon.awssdk.services.rds.model.GenerateAuthenticationTokenRequest
 
-object B extends App {
-  new Main().runMigration()
-}
-
 class Main {
 
   case class MigrationConfig(host: String, port: Int, url: String, username: String)
 
   def runMigration(): Int = {
     val config = ConfigSource.default.load[MigrationConfig] match {
-      case Left(value) => throw new RuntimeException(value.prettyPrint())
+      case Left(value) => throw new RuntimeException(s"Failed to load database migration config${value.prettyPrint()}")
       case Right(value) => value
     }
     val rdsClient = RdsUtilities.builder().region(Region.EU_WEST_2).build()
