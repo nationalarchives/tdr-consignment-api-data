@@ -72,7 +72,9 @@ lazy val lambda = (project in file("lambda"))
       name := "tdr-database-migration-lambda",
       libraryDependencies ++= Seq(
         "org.flywaydb" % "flyway-core" % "6.1.4",
-	      "org.postgresql" % "postgresql" % "42.2.11"
+        "software.amazon.awssdk" % "rds" % "2.16.16",
+        "org.postgresql" % "postgresql" % "42.2.11",
+        "com.github.pureconfig" %% "pureconfig" % "0.14.1"
       ),
       assemblyMergeStrategy in assembly := {
         case PathList("META-INF", xs @ _*) => MergeStrategy.discard
