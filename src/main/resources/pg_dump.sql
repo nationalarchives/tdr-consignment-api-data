@@ -218,6 +218,21 @@ CREATE TABLE public."FileProperty" (
 ALTER TABLE public."FileProperty" OWNER TO tdr;
 
 --
+-- Name: FileStatus; Type: TABLE; Schema: public; Owner: tdr
+--
+
+CREATE TABLE public."FileStatus" (
+    "FileStatusId" uuid NOT NULL,
+    "FileId" uuid NOT NULL,
+    "StatusType" text NOT NULL,
+    "Value" text NOT NULL,
+    "CreatedDatetime" timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public."FileStatus" OWNER TO tdr;
+
+--
 -- Name: Series; Type: TABLE; Schema: public; Owner: tdr
 --
 
@@ -322,6 +337,14 @@ ALTER TABLE ONLY public."FileMetadata"
 
 ALTER TABLE ONLY public."FileProperty"
     ADD CONSTRAINT "FileProperty_pkey" PRIMARY KEY ("Name");
+
+
+--
+-- Name: FileStatus FileStatus_pkey; Type: CONSTRAINT; Schema: public; Owner: tdr
+--
+
+ALTER TABLE ONLY public."FileStatus"
+    ADD CONSTRAINT "FileStatus_pkey" PRIMARY KEY ("FileStatusId");
 
 
 --
@@ -441,6 +464,14 @@ ALTER TABLE ONLY public."FileMetadata"
 
 ALTER TABLE ONLY public."FileMetadata"
     ADD CONSTRAINT "FileMetadata_PropertyName" FOREIGN KEY ("PropertyName") REFERENCES public."FileProperty"("Name");
+
+
+--
+-- Name: FileStatus FileStatus_File_fkey; Type: FK CONSTRAINT; Schema: public; Owner: tdr
+--
+
+ALTER TABLE ONLY public."FileStatus"
+    ADD CONSTRAINT "FileStatus_File_fkey" FOREIGN KEY ("FileId") REFERENCES public."File"("FileId");
 
 
 --
