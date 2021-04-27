@@ -9,4 +9,3 @@ CREATE TABLE "FileStatus"
     CONSTRAINT "FileStatus_File_fkey" FOREIGN KEY ("FileId")
     REFERENCES "File" ("FileId") MATCH SIMPLE
 );
-
