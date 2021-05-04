@@ -135,7 +135,8 @@ CREATE TABLE public."ConsignmentStatus" (
     "ConsignmentId" uuid NOT NULL,
     "StatusType" text NOT NULL,
     "Value" text NOT NULL,
-    "CreatedDatetime" timestamp with time zone NOT NULL
+    "CreatedDatetime" timestamp with time zone NOT NULL,
+    "ModifiedDatetime" timestamp with time zone
 );
 
 
@@ -377,6 +378,14 @@ ALTER TABLE ONLY public."Consignment"
 
 ALTER TABLE ONLY public."Consignment"
     ADD CONSTRAINT "UniqueConsignmentSequence" UNIQUE ("ConsignmentSequence");
+
+
+--
+-- Name: ConsignmentStatus consignment_status; Type: CONSTRAINT; Schema: public; Owner: tdr
+--
+
+ALTER TABLE ONLY public."ConsignmentStatus"
+    ADD CONSTRAINT consignment_status UNIQUE ("ConsignmentId", "StatusType");
 
 
 --
