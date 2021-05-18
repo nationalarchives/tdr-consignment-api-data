@@ -63,20 +63,6 @@ CREATE TABLE public."Body" (
 ALTER TABLE public."Body" OWNER TO tdr;
 
 --
--- Name: consignment_sequence_id; Type: SEQUENCE; Schema: public; Owner: tdr
---
-
-CREATE SEQUENCE public.consignment_sequence_id
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.consignment_sequence_id OWNER TO tdr;
-
---
 -- Name: Consignment; Type: TABLE; Schema: public; Owner: tdr
 --
 
@@ -90,7 +76,7 @@ CREATE TABLE public."Consignment" (
     "TransferInitiatedBy" uuid,
     "ExportDatetime" timestamp with time zone,
     "ExportLocation" text,
-    "ConsignmentSequence" bigint DEFAULT nextval('public.consignment_sequence_id'::regclass),
+    "ConsignmentSequence" bigint NOT NULL,
     "ConsignmentReference" text NOT NULL
 );
 
@@ -247,6 +233,20 @@ CREATE TABLE public."Series" (
 
 
 ALTER TABLE public."Series" OWNER TO tdr;
+
+--
+-- Name: consignment_sequence_id; Type: SEQUENCE; Schema: public; Owner: tdr
+--
+
+CREATE SEQUENCE public.consignment_sequence_id
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.consignment_sequence_id OWNER TO tdr;
 
 --
 -- Name: flyway_schema_history; Type: TABLE; Schema: public; Owner: tdr
