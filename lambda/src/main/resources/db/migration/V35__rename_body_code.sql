@@ -1,0 +1,1 @@
+ALTER TABLE "Body" RENAME COLUMN "Code" TO "TdrCode";
