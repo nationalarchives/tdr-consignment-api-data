@@ -56,7 +56,8 @@ CREATE TABLE public."Body" (
     "BodyId" uuid NOT NULL,
     "Name" text,
     "Code" text,
-    "Description" text
+    "Description" text,
+    "TdrCode" text
 );
 
 
