@@ -1,1 +1,2 @@
-ALTER TABLE "Body" RENAME COLUMN "Code" TO "TdrCode";
+ALTER TABLE "Body" ADD COLUMN "TdrCode" text;
+UPDATE "Body" SET "TdrCode" = "Code";
