@@ -3,7 +3,7 @@
 --
 
 -- Dumped from database version 11.6 (Debian 11.6-1.pgdg90+1)
--- Dumped by pg_dump version 12.6
+-- Dumped by pg_dump version 12.7
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -54,10 +54,9 @@ ALTER TABLE public."AVMetadata" OWNER TO tdr;
 
 CREATE TABLE public."Body" (
     "BodyId" uuid NOT NULL,
-    "Name" text,
-    "Code" text,
+    "Name" text NOT NULL,
     "Description" text,
-    "TdrCode" text
+    "TdrCode" text NOT NULL
 );
 
 
@@ -227,8 +226,8 @@ ALTER TABLE public."FileStatus" OWNER TO tdr;
 CREATE TABLE public."Series" (
     "SeriesId" uuid NOT NULL,
     "BodyId" uuid NOT NULL,
-    "Name" text,
-    "Code" text,
+    "Name" text NOT NULL,
+    "Code" text NOT NULL,
     "Description" text
 );
 
