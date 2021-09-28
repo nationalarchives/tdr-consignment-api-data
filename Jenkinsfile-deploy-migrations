@@ -3,7 +3,7 @@ def repo = "tdr-consignment-api-data"
 
 pipeline {
   agent {
-    label "master"
+    label "built-in"
   }
   parameters {
     choice(name: "STAGE", choices: ["intg", "staging", "prod"], description: "The stage you are deploying the migration lambda to")

@@ -4,7 +4,7 @@ def versionBumpBranch = "version-bump-${BUILD_NUMBER}"
 
 pipeline {
     agent {
-        label "master"
+        label "built-in"
     }
     parameters {
         choice(name: "STAGE", choices: ["intg", "staging", "prod"], description: "The stage you are running the database migration for")
