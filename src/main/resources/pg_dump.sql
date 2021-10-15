@@ -3,7 +3,7 @@
 --
 
 -- Dumped from database version 11.6 (Debian 11.6-1.pgdg90+1)
--- Dumped by pg_dump version 13.3
+-- Dumped by pg_dump version 13.4
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -77,7 +77,8 @@ CREATE TABLE public."Consignment" (
     "ExportDatetime" timestamp with time zone,
     "ExportLocation" text,
     "ConsignmentSequence" bigint NOT NULL,
-    "ConsignmentReference" text NOT NULL
+    "ConsignmentReference" text NOT NULL,
+    "ConsignmentType" text
 );
 
 
