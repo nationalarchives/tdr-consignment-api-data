@@ -27,8 +27,7 @@ pipeline {
           sh "wget https://s3.amazonaws.com/rds-downloads/rds-ca-2019-root.pem"
         }
         sh "sbt lambda/assembly"
-        sh "mv lambda/target/scala-2.13/tdr-database*.jar lambda/target/scala-2.13/consignment.jar"
-        stash includes: "lambda/target/scala-2.13/consignment.jar", name: "consignment-jar"
+        stash includes: "lambda/target/scala-2.13/db-migrations.jar", name: "db-migrations.jar"
       }
     }
     stage("Deploy lambda") {
@@ -40,7 +39,7 @@ pipeline {
       }
       steps {
         script {
-          unstash "consignment-jar"
+          unstash "db-migrations.jar"
           def accountNumber = tdr.getAccountNumberFromStage(params.STAGE)
           sh "python3 /deploy_lambda.py ${accountNumber} ${params.STAGE} tdr-database-migrations-${params.STAGE} lambda/target/scala-2.13/consignment.jar"
           tdr.postToDaTdrSlackChannel(colour: "good", message: "*Database migrations* :arrow_up: The migration lambda has been deployed to *${params.STAGE}*")
