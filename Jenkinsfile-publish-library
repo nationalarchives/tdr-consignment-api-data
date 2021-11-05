@@ -27,7 +27,9 @@ pipeline {
     stage("Publish to S3") {
       steps {
         sshagent(['github-jenkins']) {
-          sh "sbt flywayMigrate slickCodegen 'release with-defaults'"
+          withCredentials([string(credentialsId: 'github-jenkins-api-key', variable: 'GITHUB_TOKEN')]) {
+            sh "sbt flywayMigrate slickCodegen 'release with-defaults'"
+          }
         }
         script {
           tdr.postToDaTdrSlackChannel(colour: "good", message: "*Database schema* :arrow_up: The database package has been published")
