@@ -1,8 +1,10 @@
 import com.github.tototoshi.sbt.slick.CodegenPlugin.autoImport.slickCodegenDatabaseUrl
 import sbt.Keys.libraryDependencies
 import ReleaseTransformations._
+import scala.sys.process._
 
-import java.nio.file.Files
+import java.nio.charset.StandardCharsets
+import java.nio.file.{Files, Paths}
 
 ThisBuild / scalaVersion     := "2.13.0"
 ThisBuild / version := (version in ThisBuild).value
@@ -35,7 +37,7 @@ ThisBuild / publishMavenStyle := true
 
 ThisBuild / publishTo := {
   val prefix = if (isSnapshot.value) "snapshots" else "releases"
-  Some(s3resolver.value(s"My ${prefix} S3 bucket", s3(s"tdr-$prefix-mgmt")))
+  Some(s3resolver.value(s"My $prefix S3 bucket", s3(s"tdr-$prefix-mgmt")))
 }
 
 val slickVersion = "3.3.2"
@@ -46,6 +48,21 @@ lazy val databaseUser = "tdr"
 lazy val databasePassword = "password"
 
 lazy val generateChangelogFile = taskKey[Unit]("Generates a changelog file from the last version")
+
+generateChangelogFile := {
+  val lastTag = "git describe --tags --abbrev=0".!!.replace("\n","")
+  val gitLog = s"git log $lastTag..HEAD --oneline".!!
+  val folderName = s"${baseDirectory.value}/notes"
+  val fileName = s"${version.value}.markdown"
+  val fullPath = s"$folderName/$fileName"
+  new File(folderName).mkdirs()
+  val file = new File(fullPath)
+  if(!file.exists()) {
+    new File(fullPath).createNewFile
+    Files.write(Paths.get(fullPath), gitLog.getBytes(StandardCharsets.UTF_8))
+  }
+  s"git add $fullPath".!!
+}
 
 resolvers +=
   "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
@@ -67,7 +84,24 @@ lazy val root = (project in file("."))
     slickCodegenJdbcDriver := "org.postgresql.Driver",
     slickCodegenOutputPackage := "uk.gov.nationalarchives",
     slickCodegenExcludedTables := Seq("schema_version"),
-    slickCodegenOutputDir := (scalaSource in Compile).value
+    slickCodegenOutputDir := (scalaSource in Compile).value,
+    ghreleaseRepoOrg := "nationalarchives",
+    ghreleaseRepoName := "tdr-consignment-api-data",
+    ghreleaseAssets := Seq(file(s"${(lambda / assembly / target).value}/${(lambda /assembly / assemblyJarName).value}.tgz")),
+    releaseProcess := Seq[ReleaseStep](
+      inquireVersions,
+      setReleaseVersion,
+      releaseStepTask(generateChangelogFile),
+      commitReleaseVersion,
+      tagRelease,
+      pushChanges,
+      releaseStepTask(assembly),
+      releaseStepInputTask(githubRelease),
+      publishArtifacts,
+      setNextVersion,
+      commitNextVersion,
+      pushChanges
+    ),
 
   ).enablePlugins(CodegenPlugin)
 
@@ -85,24 +119,7 @@ lazy val lambda = (project in file("lambda"))
         case PathList("META-INF", xs @ _*) => MergeStrategy.discard
         case _ => MergeStrategy.first
       },
-      assemblyJarName in assembly := "db-migrations.jar",
-      ghreleaseRepoOrg := "nationalarchives",
-      ghreleaseRepoName := "tdr-consignment-api-data",
-      ghreleaseAssets := Seq(file(s"${(target in assembly).value}/${(assembly / assemblyJarName).value}.tgz")),
-      releaseProcess := Seq[ReleaseStep](
-        inquireVersions,
-        setReleaseVersion,
-        releaseStepTask(generateChangelogFile),
-        commitReleaseVersion,
-        tagRelease,
-        pushChanges,
-        releaseStepTask(assembly),
-        releaseStepInputTask(githubRelease),
-        publishArtifacts,
-        setNextVersion,
-        commitNextVersion,
-        pushChanges
-      ),
+      assemblyJarName in assembly := "db-migrations.jar"
     )
 
 enablePlugins(FlywayPlugin)
