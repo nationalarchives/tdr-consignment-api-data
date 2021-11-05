@@ -1,5 +1,8 @@
 import com.github.tototoshi.sbt.slick.CodegenPlugin.autoImport.slickCodegenDatabaseUrl
 import sbt.Keys.libraryDependencies
+import ReleaseTransformations._
+
+import java.nio.file.Files
 
 ThisBuild / scalaVersion     := "2.13.0"
 ThisBuild / version := (version in ThisBuild).value
@@ -42,6 +45,8 @@ lazy val databaseUrl = s"jdbc:postgresql://localhost:$databasePort/consignmentap
 lazy val databaseUser = "tdr"
 lazy val databasePassword = "password"
 
+lazy val generateChangelogFile = taskKey[Unit]("Generates a changelog file from the last version")
+
 resolvers +=
   "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
 
@@ -79,8 +84,25 @@ lazy val lambda = (project in file("lambda"))
       assemblyMergeStrategy in assembly := {
         case PathList("META-INF", xs @ _*) => MergeStrategy.discard
         case _ => MergeStrategy.first
-      }
-
+      },
+      assemblyJarName in assembly := "db-migrations.jar",
+      ghreleaseRepoOrg := "nationalarchives",
+      ghreleaseRepoName := "tdr-consignment-api-data",
+      ghreleaseAssets := Seq(file(s"${(target in assembly).value}/${(assembly / assemblyJarName).value}.tgz")),
+      releaseProcess := Seq[ReleaseStep](
+        inquireVersions,
+        setReleaseVersion,
+        releaseStepTask(generateChangelogFile),
+        commitReleaseVersion,
+        tagRelease,
+        pushChanges,
+        releaseStepTask(assembly),
+        releaseStepInputTask(githubRelease),
+        publishArtifacts,
+        setNextVersion,
+        commitNextVersion,
+        pushChanges
+      ),
     )
 
 enablePlugins(FlywayPlugin)
