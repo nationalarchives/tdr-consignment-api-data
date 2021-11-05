@@ -87,7 +87,7 @@ lazy val root = (project in file("."))
     slickCodegenOutputDir := (scalaSource in Compile).value,
     ghreleaseRepoOrg := "nationalarchives",
     ghreleaseRepoName := "tdr-consignment-api-data",
-    ghreleaseAssets := Seq(file(s"${(lambda / assembly / target).value}/${(lambda /assembly / assemblyJarName).value}.tgz")),
+    ghreleaseAssets := Seq(file(s"${(lambda / assembly / target).value}/${(lambda /assembly / assemblyJarName).value}")),
     releaseProcess := Seq[ReleaseStep](
       inquireVersions,
       setReleaseVersion,
