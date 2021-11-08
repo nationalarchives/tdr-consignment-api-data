@@ -41,7 +41,7 @@ pipeline {
         script {
           unstash "db-migrations.jar"
           def accountNumber = tdr.getAccountNumberFromStage(params.STAGE)
-          sh "python3 /deploy_lambda.py ${accountNumber} ${params.STAGE} tdr-database-migrations-${params.STAGE} lambda/target/scala-2.13/consignment.jar"
+          sh "python3 /deploy_lambda.py ${accountNumber} ${params.STAGE} tdr-database-migrations-${params.STAGE} lambda/target/scala-2.13/db-migrations.jar"
           tdr.postToDaTdrSlackChannel(colour: "good", message: "*Database migrations* :arrow_up: The migration lambda has been deployed to *${params.STAGE}*")
         }
       }
