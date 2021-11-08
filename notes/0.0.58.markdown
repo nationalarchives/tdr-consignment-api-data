@@ -1,0 +1,2 @@
+430407f Manually bump version.sbt
+49aa59d Remove the tgz extension
