@@ -26,8 +26,13 @@ pipeline {
     }
     stage("Publish to S3") {
       steps {
+        dir("lambda/src/main/resources") {
+          sh "wget https://s3.amazonaws.com/rds-downloads/rds-ca-2019-root.pem"
+        }
         sshagent(['github-jenkins']) {
-          sh "sbt flywayMigrate slickCodegen 'release with-defaults'"
+          withCredentials([string(credentialsId: 'github-jenkins-api-key', variable: 'GITHUB_TOKEN')]) {
+            sh "sbt flywayMigrate slickCodegen 'release with-defaults'"
+          }
         }
         script {
           tdr.postToDaTdrSlackChannel(colour: "good", message: "*Database schema* :arrow_up: The database package has been published")

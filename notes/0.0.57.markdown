@@ -1,0 +1,2 @@
+ce806f8 MOve the custom release to the root project.
+773cb6c Setting version to 0.0.57-SNAPSHOT
