@@ -90,7 +90,7 @@ lazy val root = (project in file("."))
     ghreleaseAssets := Seq(file(s"${(lambda / assembly / target).value}/${(lambda /assembly / assemblyJarName).value}")),
     releaseIgnoreUntrackedFiles := true,
     releaseProcess := Seq[ReleaseStep](
-      releaseStepTask(assembly),
+      releaseStepTask(lambda / assembly),
       inquireVersions,
       setReleaseVersion,
       releaseStepTask(generateChangelogFile),
