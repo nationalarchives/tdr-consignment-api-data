@@ -68,7 +68,7 @@ ALTER TABLE public."Body" OWNER TO tdr;
 
 CREATE TABLE public."Consignment" (
     "ConsignmentId" uuid NOT NULL,
-    "SeriesId" uuid NOT NULL,
+    "SeriesId" uuid,
     "UserId" uuid NOT NULL,
     "Datetime" timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
     "ParentFolder" text,
@@ -78,7 +78,8 @@ CREATE TABLE public."Consignment" (
     "ExportLocation" text,
     "ConsignmentSequence" bigint NOT NULL,
     "ConsignmentReference" text NOT NULL,
-    "ConsignmentType" text
+    "ConsignmentType" text,
+    "BodyId" uuid
 );
 
 
@@ -434,6 +435,14 @@ ALTER TABLE ONLY public."ConsignmentMetadata"
 
 ALTER TABLE ONLY public."ConsignmentStatus"
     ADD CONSTRAINT "ConsignmentStatus_Consignment_fkey" FOREIGN KEY ("ConsignmentId") REFERENCES public."Consignment"("ConsignmentId");
+
+
+--
+-- Name: Consignment Consignment_Body_fkey; Type: FK CONSTRAINT; Schema: public; Owner: tdr
+--
+
+ALTER TABLE ONLY public."Consignment"
+    ADD CONSTRAINT "Consignment_Body_fkey" FOREIGN KEY ("BodyId") REFERENCES public."Body"("BodyId");
 
 
 --
