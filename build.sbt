@@ -88,6 +88,7 @@ lazy val root = (project in file("."))
     ghreleaseRepoOrg := "nationalarchives",
     ghreleaseRepoName := "tdr-consignment-api-data",
     ghreleaseAssets := Seq(file(s"${(lambda / assembly / target).value}/${(lambda /assembly / assemblyJarName).value}")),
+    releaseIgnoreUntrackedFiles := true,
     releaseProcess := Seq[ReleaseStep](
       inquireVersions,
       setReleaseVersion,
