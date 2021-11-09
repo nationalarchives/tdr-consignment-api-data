@@ -1,0 +1,14 @@
+9dd3a59 Run the assembly command on the lambda project
+c3b97c7 Run the assembly step first
+37cadb4 Ignore untracked files
+a20ce88 Merge pull request #106 from nationalarchives/TDR-1462-make-series-nullable
+787bf0a Merge pull request #105 from nationalarchives/fix-incorrect-name-in-deploy-file
+ac653ee Update migration version numbers to avoid conflict
+c6e7925 Merge remote-tracking branch 'origin/master' into TDR-1462-make-series-nullable
+abc5fa5 Fix incorrect name.
+ed93f13 Merge pull request #104 from nationalarchives/add-release-to-github-step
+7797cb4 Add in the root certificate before releasing
+b0bdaeb Configure static assembly jar name
+2dee42c Add the github token to allow publishing to github
+f2be793 Setting version to 0.0.59-SNAPSHOT
+6031363 Make series nullable
