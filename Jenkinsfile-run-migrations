@@ -29,7 +29,7 @@ pipeline {
     post {
       success {
         script {
-          if (params.STAGE == "intg"){
+          if (params.STAGE == "intg" || params.STAGE == "staging"){
             // Wait for a few minutes so the lambda has finished running before
             // starting the end-to-end tests
             def endToEndTestDelaySeconds = 180
