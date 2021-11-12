@@ -1,0 +1,7 @@
+5e03dfd Merge pull request #109 from nationalarchives/TDR-1505-backfill-body-id
+42ade50 Add missing line break
+cf5e2f8 Fix indentation
+f256bbb Backfill 'BodyId' values in 'Consignment' table
+2451b2e Merge pull request #107 from nationalarchives/version-bump-141
+9c7f298 Add the latest sql script
+b21edae Setting version to 0.0.60-SNAPSHOT
