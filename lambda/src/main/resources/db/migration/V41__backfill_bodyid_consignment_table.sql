@@ -4,7 +4,7 @@ SET "BodyId" = s."BodyId"
 FROM
     "Series" s
 WHERE
-        c."SeriesId" = s."SeriesId";
+    c."SeriesId" = s."SeriesId";
 
 COMMIT;
 
