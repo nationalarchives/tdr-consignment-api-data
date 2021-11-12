@@ -79,7 +79,7 @@ CREATE TABLE public."Consignment" (
     "ConsignmentSequence" bigint NOT NULL,
     "ConsignmentReference" text NOT NULL,
     "ConsignmentType" text,
-    "BodyId" uuid
+    "BodyId" uuid NOT NULL
 );
 
 
