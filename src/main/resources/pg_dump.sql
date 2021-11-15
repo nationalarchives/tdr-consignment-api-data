@@ -78,7 +78,7 @@ CREATE TABLE public."Consignment" (
     "ExportLocation" text,
     "ConsignmentSequence" bigint NOT NULL,
     "ConsignmentReference" text NOT NULL,
-    "ConsignmentType" text,
+    "ConsignmentType" text NOT NULL,
     "BodyId" uuid NOT NULL
 );
 
