@@ -1,0 +1,5 @@
+eb29687 Merge pull request #111 from nationalarchives/TDR-1521-backfill-consignment-type
+9267820 'ConsignmentType' required
+aa62bd0 Merge pull request #110 from nationalarchives/version-bump-142
+bf03172 Add the latest sql script
+a32ac30 Setting version to 0.0.61-SNAPSHOT
