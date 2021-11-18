@@ -2,7 +2,7 @@ DO $$
     DECLARE
         bodyUuid "Body"."BodyId"%TYPE;
     BEGIN
-        -- Insert HRA body into the  Body Table
+        -- Insert Royal Mint body into the  Body Table
         INSERT INTO "Body" ("BodyId", "Name", "Description", "TdrCode") VALUES
         (uuid_generate_v4(), 'Royal Mint', 'Royal Mint', 'TDR-RMNT') RETURNING "BodyId" INTO bodyUuid;
 
@@ -13,4 +13,4 @@ DO $$
     END $$;
 
 --commit changes
-COMMIT; 
+COMMIT;
