@@ -171,7 +171,11 @@ CREATE TABLE public."File" (
     "ConsignmentId" uuid NOT NULL,
     "UserId" uuid NOT NULL,
     "Datetime" timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    "ChecksumMatches" boolean
+    "ChecksumMatches" boolean,
+    "FileType" text,
+    "FileName" text,
+    "ParentId" uuid,
+    CONSTRAINT "chk_FileType" CHECK (("FileType" = ANY (ARRAY['File'::text, 'Folder'::text])))
 );
 
 

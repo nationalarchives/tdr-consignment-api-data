@@ -1,0 +1,6 @@
+98f6f43 Merge pull request #115 from nationalarchives/TDR-1529-add-folder-details
+ea31d28 Add missing line break
+5e9a025 Add columns to support custom metadata
+a9b70c8 Merge pull request #114 from nationalarchives/version-bump-144
+e231c6a Add the latest sql script
+9db8f82 Setting version to 0.0.63-SNAPSHOT
