@@ -1,0 +1,6 @@
+caf1c1c Merge pull request #117 from nationalarchives/fileId-consignmentId-index
+d96d4de Add missing line break
+5a4fb40 Add index to file table to support consignment info retrieval
+b784542 Merge pull request #116 from nationalarchives/version-bump-145
+4dc5cf9 Add the latest sql script
+6872c61 Setting version to 0.0.64-SNAPSHOT
