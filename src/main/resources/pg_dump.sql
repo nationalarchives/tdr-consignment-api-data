@@ -403,6 +403,13 @@ ALTER TABLE ONLY public.flyway_schema_history
 
 
 --
+-- Name: file_consignmentid_fileid_index; Type: INDEX; Schema: public; Owner: tdr
+--
+
+CREATE INDEX file_consignmentid_fileid_index ON public."File" USING btree ("ConsignmentId", "FileId");
+
+
+--
 -- Name: flyway_schema_history_s_idx; Type: INDEX; Schema: public; Owner: tdr
 --
 
