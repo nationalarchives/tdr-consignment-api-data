@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS public."FilePropertyValuesV2"
+CREATE TABLE IF NOT EXISTS public."FilePropertyValues"
 (
     "PropertyName"      text          NOT NULL,
     "PropertyValue"     text          NOT NULL,
@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS public."FilePropertyValuesV2"
     "SecondaryValue"    integer
 );
 
-INSERT INTO "FilePropertyValuesV2" ("PropertyName","PropertyValue","Default","Dependencies","SecondaryValue")
+INSERT INTO "FilePropertyValues" ("PropertyName","PropertyValue","Default","Dependencies","SecondaryValue")
 VALUES
     ('Language','English',true,NULL,NULL),
     ('RightsCopyright','Crown Copyright',true,NULL,NULL),
