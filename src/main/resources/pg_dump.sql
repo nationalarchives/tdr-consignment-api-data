@@ -204,11 +204,46 @@ ALTER TABLE public."FileMetadata" OWNER TO tdr;
 CREATE TABLE public."FileProperty" (
     "Name" text NOT NULL,
     "Description" text,
-    "Shortname" text
+    "FullName" text,
+    "CreatedDatetime" timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    "ModifiedDatetime" timestamp with time zone,
+    "PropertyType" text,
+    "Datatype" text,
+    "Editable" boolean,
+    "MutliValue" boolean,
+    "PropertyGroup" text
 );
 
 
 ALTER TABLE public."FileProperty" OWNER TO tdr;
+
+--
+-- Name: FilePropertyDependencies; Type: TABLE; Schema: public; Owner: tdr
+--
+
+CREATE TABLE public."FilePropertyDependencies" (
+    "GroupId" integer NOT NULL,
+    "PropertyName" text NOT NULL,
+    "Default" text
+);
+
+
+ALTER TABLE public."FilePropertyDependencies" OWNER TO tdr;
+
+--
+-- Name: FilePropertyValues; Type: TABLE; Schema: public; Owner: tdr
+--
+
+CREATE TABLE public."FilePropertyValues" (
+    "PropertyName" text NOT NULL,
+    "PropertyValue" text NOT NULL,
+    "Default" boolean,
+    "Dependencies" integer,
+    "SecondaryValue" integer
+);
+
+
+ALTER TABLE public."FilePropertyValues" OWNER TO tdr;
 
 --
 -- Name: FileStatus; Type: TABLE; Schema: public; Owner: tdr
