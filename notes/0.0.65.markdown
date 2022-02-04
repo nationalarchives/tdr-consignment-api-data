@@ -1,0 +1,4 @@
+7ed6fc3 Add Closure Metadata Tables (#119)
+24f80af Merge pull request #118 from nationalarchives/version-bump-146
+6789f4f Add the latest sql script
+4e2db90 Setting version to 0.0.65-SNAPSHOT
