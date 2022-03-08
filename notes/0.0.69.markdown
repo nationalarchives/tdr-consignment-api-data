@@ -1,0 +1,8 @@
+922e68f Merge pull request #129 from nationalarchives/addExportVersionToConsignmentTable
+47d4e72 Add semi-colon and new line
+bec6c31 Add 'ExportVersion to Consignment table
+e8cd8a2 Merge pull request #128 from nationalarchives/ignore-unchanged-pggump-file
+7bd7441 Merge branch 'master' into ignore-unchanged-pggump-file
+355f848 Merge pull request #125 from nationalarchives/version-bump-155
+1face4c Ignore unchanged pg_dump.sql file
+f8059f8 Setting version to 0.0.69-SNAPSHOT
