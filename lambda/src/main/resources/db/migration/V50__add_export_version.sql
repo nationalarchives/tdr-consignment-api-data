@@ -1,2 +1,2 @@
 ALTER TABLE "Consignment"
-    ADD COLUMN "ExportVersion" text
+    ADD COLUMN "ExportVersion" text;
