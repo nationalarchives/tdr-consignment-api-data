@@ -1,0 +1,47 @@
+on:
+  workflow_dispatch:
+env:
+  BRANCH_NAME: version-bump-${{ github.run_id }}${{ github.run_attempt }}
+jobs:
+  deploy-db-changes:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: password
+          POSTGRES_USER: tdr
+          POSTGRES_DB: consignmentapi
+    steps:
+      - uses: actions/checkout@v3
+      - name: Import GPG key
+        id: import_gpg
+        uses: crazy-max/ghaction-import-gpg@v4
+        with:
+          git_user_signingkey: true
+          git_commit_gpgsign: true
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+          passphrase: ${{ secrets.GPG_PASSPHRASE }}
+      - name: Publish
+        run: |
+            git config --global user.email digitalpreservation@nationalarchives.gov.uk
+            git config --global user.name tna-digital-archiving-jenkins
+            git checkout -b $BRANCH_NAME
+            git push -u origin $BRANCH_NAME
+            sbt flywayMigrate slickCodegen 'release with-defaults'
+      - name: Send success message
+        uses: nationalarchives/tdr-github-actions/.github/actions/slack-send@main
+        with:
+          message: "*Database schema* :arrow_up: The database package has been published"
+          slack-url: ${{ secrets.SLACK_WEBHOOK }}
+      - name: Publish new sql file
+        run: |
+            pg_dump -s -d consignmentapi -U tdr -h localhost > src/main/resources/pg_dump.sql
+            git add src/main/resources/pg_dump.sql
+            git commit -m 'Add the latest sql script' || true
+            git push -u origin $BRANCH_NAME
+            gh pr create --fill
+        env:
+          GITHUB_TOKEN: ${{ secrets.WORKFLOW_PAT }}
+
+

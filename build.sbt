@@ -1,8 +1,8 @@
 import com.github.tototoshi.sbt.slick.CodegenPlugin.autoImport.slickCodegenDatabaseUrl
 import sbt.Keys.libraryDependencies
 import ReleaseTransformations._
-import scala.sys.process._
 
+import scala.sys.process._
 import java.nio.charset.StandardCharsets
 import java.nio.file.{Files, Paths}
 
@@ -17,12 +17,12 @@ ThisBuild / scmInfo := Some(
     "git@github.com:nationalarchives/tdr-consignment-api-data.git"
   )
 )
-ThisBuild / developers := List(
+developers := List(
   Developer(
-    id    = "SP",
-    name  = "Sam Palmer",
-    email = "sam.palmer@nationalarchives.gov.uk",
-    url   = url("http://tdr-transfer-integration.nationalarchives.gov.uk")
+    id    = "tna-digital-archiving-jenkins",
+    name  = "TNA Digital Archiving",
+    email = "digitalpreservation@nationalarchives.gov.uk",
+    url   = url("https://github.com/nationalarchives/tdr-consignment-api-data")
   )
 )
 
@@ -30,15 +30,9 @@ ThisBuild / description := "Slick classes generated from the database schema for
 ThisBuild / licenses := List("MIT" -> new URL("https://choosealicense.com/licenses/mit/"))
 ThisBuild / homepage := Some(url("https://github.com/nationalarchives/tdr-consignment-api-data"))
 
-s3acl := None
-s3sse := true
-
-ThisBuild / publishMavenStyle := true
-
-ThisBuild / publishTo := {
-  val prefix = if (isSnapshot.value) "snapshots" else "releases"
-  Some(s3resolver.value(s"My $prefix S3 bucket", s3(s"tdr-$prefix-mgmt")))
-}
+useGpgPinentry := true
+publishTo := sonatypePublishToBundle.value
+publishMavenStyle := true
 
 val slickVersion = "3.3.2"
 
@@ -85,25 +79,23 @@ lazy val root = (project in file("."))
     slickCodegenOutputPackage := "uk.gov.nationalarchives",
     slickCodegenExcludedTables := Seq("schema_version"),
     slickCodegenOutputDir := (scalaSource in Compile).value,
-    ghreleaseRepoOrg := "nationalarchives",
-    ghreleaseRepoName := "tdr-consignment-api-data",
-    ghreleaseAssets := Seq(file(s"${(lambda / assembly / target).value}/${(lambda /assembly / assemblyJarName).value}")),
     releaseIgnoreUntrackedFiles := true,
+
     releaseProcess := Seq[ReleaseStep](
       releaseStepTask(lambda / assembly),
+      checkSnapshotDependencies,
       inquireVersions,
+      runClean,
+      runTest,
       setReleaseVersion,
-      releaseStepTask(generateChangelogFile),
       commitReleaseVersion,
       tagRelease,
-      pushChanges,
-      releaseStepInputTask(githubRelease),
-      publishArtifacts,
+      releaseStepCommand("publishSigned"),
+      releaseStepCommand("sonatypeBundleRelease"),
       setNextVersion,
       commitNextVersion,
       pushChanges
-    ),
-
+    )
   ).enablePlugins(CodegenPlugin)
 
 
