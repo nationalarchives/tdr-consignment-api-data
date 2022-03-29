@@ -1,4 +1,5 @@
 on:
+  push:
   workflow_dispatch:
     inputs:
       environment:
@@ -13,7 +14,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - id: role-name
-        run: print(f"::set-output name=role-name::TDRGithubActionsDeployLambda{'${{ inputs.environment }}'.title()}")
+        run: print(f"::set-output name=role-name::TDRGithubActionsDeployLambda{'${{ github.event.inputs.environment }}'.title()}")
         shell: python
       - name: Configure AWS credentials for Lambda
         uses: aws-actions/configure-aws-credentials@v1
