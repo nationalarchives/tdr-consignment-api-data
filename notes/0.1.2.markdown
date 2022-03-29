@@ -1,0 +1,8 @@
+a502fe9 Set fetch depth
+7a40a44 Add port mapping
+6578880 Rename image
+a2d335d Wait until postgres is ready
+9ee7040 Add token permissions
+ba9c2f4 Remove push trigger
+7116948 Add push trigger to start jobs
+5b9caa4 Setting version to 0.1.2-SNAPSHOT
