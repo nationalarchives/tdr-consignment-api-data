@@ -1,6 +1,7 @@
 import com.github.tototoshi.sbt.slick.CodegenPlugin.autoImport.slickCodegenDatabaseUrl
-import sbt.Keys.libraryDependencies
+import sbt.Keys.{libraryDependencies, publishTo}
 import ReleaseTransformations._
+import xerial.sbt.Sonatype.autoImport.sonatypePublishToBundle
 
 import scala.sys.process._
 import java.nio.charset.StandardCharsets
@@ -29,10 +30,6 @@ developers := List(
 ThisBuild / description := "Slick classes generated from the database schema for the Transfer Digital Records service"
 ThisBuild / licenses := List("MIT" -> new URL("https://choosealicense.com/licenses/mit/"))
 ThisBuild / homepage := Some(url("https://github.com/nationalarchives/tdr-consignment-api-data"))
-
-useGpgPinentry := true
-publishTo := sonatypePublishToBundle.value
-publishMavenStyle := true
 
 val slickVersion = "3.3.2"
 
@@ -80,7 +77,9 @@ lazy val root = (project in file("."))
     slickCodegenExcludedTables := Seq("schema_version"),
     slickCodegenOutputDir := (scalaSource in Compile).value,
     releaseIgnoreUntrackedFiles := true,
-
+    useGpgPinentry := true,
+    publishTo := sonatypePublishToBundle.value,
+    publishMavenStyle := true,
     releaseProcess := Seq[ReleaseStep](
       releaseStepTask(lambda / assembly),
       checkSnapshotDependencies,
@@ -88,8 +87,10 @@ lazy val root = (project in file("."))
       runClean,
       runTest,
       setReleaseVersion,
+      releaseStepTask(generateChangelogFile),
       commitReleaseVersion,
       tagRelease,
+      pushChanges,
       releaseStepCommand("publishSigned"),
       releaseStepCommand("sonatypeBundleRelease"),
       setNextVersion,
