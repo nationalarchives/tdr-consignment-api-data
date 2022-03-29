@@ -1,0 +1,3 @@
+8051abb Manual version bump.
+2ccb288 Move the maven settings
+74d59a1 Setting version to 0.0.73-SNAPSHOT
