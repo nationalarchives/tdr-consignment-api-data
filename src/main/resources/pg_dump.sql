@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 11.6 (Debian 11.6-1.pgdg90+1)
--- Dumped by pg_dump version 14.2
+-- Dumped from database version 12.9 (Ubuntu 12.9-0ubuntu0.20.04.1)
+-- Dumped by pg_dump version 13.6
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -31,6 +31,8 @@ COMMENT ON EXTENSION "uuid-ossp" IS 'generate universally unique identifiers (UU
 
 
 SET default_tablespace = '';
+
+SET default_table_access_method = heap;
 
 --
 -- Name: AVMetadata; Type: TABLE; Schema: public; Owner: tdr
