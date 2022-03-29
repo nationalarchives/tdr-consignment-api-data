@@ -5,6 +5,8 @@ on:
         description: 'Environment'
         required: true
         default: 'intg'
+permissions:
+  id-token: write
 jobs:
   run-lambda:
     environment: ${{ github.event.inputs.environment }}
