@@ -1,6 +1,5 @@
 name: TDR Deploy Checksum Lambda
 on:
-  push:
   workflow_dispatch:
     inputs:
       environment:

@@ -1,5 +1,4 @@
 on:
-  push:
   workflow_dispatch:
 env:
   BRANCH_NAME: version-bump-${{ github.run_id }}${{ github.run_attempt }}
