@@ -38,6 +38,9 @@ jobs:
             git checkout -b $BRANCH_NAME
             git push -u origin $BRANCH_NAME
             sbt flywayMigrate slickCodegen 'release with-defaults'
+        env:
+          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
       - name: Send success message
         uses: nationalarchives/tdr-github-actions/.github/actions/slack-send@main
         with:
