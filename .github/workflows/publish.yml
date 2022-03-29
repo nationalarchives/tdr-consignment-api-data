@@ -21,8 +21,6 @@ jobs:
           - 5432:5432
     steps:
       - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
       - name: Import GPG key
         id: import_gpg
         uses: crazy-max/ghaction-import-gpg@v4
@@ -32,6 +30,7 @@ jobs:
           gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
           passphrase: ${{ secrets.GPG_PASSPHRASE }}
       - name: Publish
+        id: publish
         run: |
             git config --global user.email digitalpreservation@nationalarchives.gov.uk
             git config --global user.name tna-digital-archiving-jenkins
@@ -41,6 +40,10 @@ jobs:
         env:
           SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
           SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+      - name: Release to GitHub
+        run: gh release create --generate-notes ${{ steps.publish.outputs.latest-tag}} lambda/target/scala-2.13/db-migrations.jar
+        env:
+          GITHUB_TOKEN: ${{ secrets.WORKFLOW_PAT }}
       - name: Send success message
         uses: nationalarchives/tdr-github-actions/.github/actions/slack-send@main
         with:

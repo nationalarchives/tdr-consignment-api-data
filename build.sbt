@@ -38,21 +38,10 @@ lazy val databaseUrl = s"jdbc:postgresql://localhost:$databasePort/consignmentap
 lazy val databaseUser = "tdr"
 lazy val databasePassword = "password"
 
-lazy val generateChangelogFile = taskKey[Unit]("Generates a changelog file from the last version")
+lazy val setLatestTagOutput = taskKey[Unit]("Generates a changelog file from the last version")
 
-generateChangelogFile := {
-  val lastTag = "git describe --tags --abbrev=0".!!.replace("\n","")
-  val gitLog = s"git log $lastTag..HEAD --oneline".!!
-  val folderName = s"${baseDirectory.value}/notes"
-  val fileName = s"${version.value}.markdown"
-  val fullPath = s"$folderName/$fileName"
-  new File(folderName).mkdirs()
-  val file = new File(fullPath)
-  if(!file.exists()) {
-    new File(fullPath).createNewFile
-    Files.write(Paths.get(fullPath), gitLog.getBytes(StandardCharsets.UTF_8))
-  }
-  s"git add $fullPath".!!
+setLatestTagOutput := {
+  println(s"::set-output name=latest-tag::${(version in ThisBuild).value}")
 }
 
 resolvers +=
@@ -87,7 +76,7 @@ lazy val root = (project in file("."))
       runClean,
       runTest,
       setReleaseVersion,
-      releaseStepTask(generateChangelogFile),
+      releaseStepTask(setLatestTagOutput),
       commitReleaseVersion,
       tagRelease,
       pushChanges,
