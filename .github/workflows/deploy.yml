@@ -1,4 +1,4 @@
-name: TDR Deploy Checksum Lambda
+name: TDR Deploy Data Migration Lambda
 on:
   workflow_dispatch:
     inputs:

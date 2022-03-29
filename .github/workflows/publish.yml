@@ -1,3 +1,4 @@
+name: TDR Publish
 on:
   workflow_dispatch:
 env:
@@ -21,14 +22,14 @@ jobs:
           - 5432:5432
     steps:
       - uses: actions/checkout@v3
-#      - name: Import GPG key
-#        id: import_gpg
-#        uses: crazy-max/ghaction-import-gpg@v4
-#        with:
-#          git_user_signingkey: true
-#          git_commit_gpgsign: true
-#          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
-#          passphrase: ${{ secrets.GPG_PASSPHRASE }}
+      - name: Import GPG key
+        id: import_gpg
+        uses: crazy-max/ghaction-import-gpg@v4
+        with:
+          git_user_signingkey: true
+          git_commit_gpgsign: true
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+          passphrase: ${{ secrets.GPG_PASSPHRASE }}
       - name: Publish
         id: publish
         run: |
@@ -36,20 +37,19 @@ jobs:
             git config --global user.name tna-digital-archiving-jenkins
             git checkout -b $BRANCH_NAME
             git push -u origin $BRANCH_NAME
-            sbt flywayMigrate slickCodegen
-#            sbt flywayMigrate slickCodegen 'release with-defaults'
-#        env:
-#          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
-#          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
-#      - name: Release to GitHub
-#        run: gh release create --generate-notes ${{ steps.publish.outputs.latest-tag}} lambda/target/scala-2.13/db-migrations.jar
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.WORKFLOW_PAT }}
-#      - name: Send success message
-#        uses: nationalarchives/tdr-github-actions/.github/actions/slack-send@main
-#        with:
-#          message: "*Database schema* :arrow_up: The database package has been published"
-#          slack-url: ${{ secrets.SLACK_WEBHOOK }}
+            sbt flywayMigrate slickCodegen 'release with-defaults'
+        env:
+          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+      - name: Release to GitHub
+        run: gh release create --generate-notes ${{ steps.publish.outputs.latest-tag}} lambda/target/scala-2.13/db-migrations.jar
+        env:
+          GITHUB_TOKEN: ${{ secrets.WORKFLOW_PAT }}
+      - name: Send success message
+        uses: nationalarchives/tdr-github-actions/.github/actions/slack-send@main
+        with:
+          message: "*Database schema* :arrow_up: The database package has been published"
+          slack-url: ${{ secrets.SLACK_WEBHOOK }}
       - name: Publish new sql file
         run: |
             PGPASSWORD=password pg_dump -s -d consignmentapi -U tdr -h localhost > src/main/resources/pg_dump.sql

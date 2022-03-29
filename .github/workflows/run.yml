@@ -1,3 +1,4 @@
+name: Run DB Migrations
 on:
   workflow_dispatch:
     inputs:
