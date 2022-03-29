@@ -56,6 +56,6 @@ jobs:
             git add src/main/resources/pg_dump.sql
             git commit -m 'Add the latest sql script' || true
             git push -u origin $BRANCH_NAME
-            gh pr create --fill
+            gh pr create --fill -B move-to-maven-and-github-actions
         env:
           GITHUB_TOKEN: ${{ secrets.WORKFLOW_PAT }}
