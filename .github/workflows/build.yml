@@ -3,10 +3,9 @@ on:
   push:
     branches:
       - master
-      - move-to-maven-and-github-actions
 jobs:
   pre-deploy:
-    uses: nationalarchives/tdr-github-actions/.github/workflows/lambda_build.yml@allow-sub-project-builds
+    uses: nationalarchives/tdr-github-actions/.github/workflows/lambda_build.yml@main
     with:
       repo-name: tdr-consignment-api-data
       artifact-name: db-migrations
@@ -22,6 +21,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: gh workflow run deploy.yml -f environment=intg -f to-deploy=${{ needs.pre-deploy.outputs.next-version }} --ref move-to-maven-and-github-actions
+      - run: gh workflow run deploy.yml -f environment=intg -f to-deploy=${{ needs.pre-deploy.outputs.next-version }}
         env:
           GITHUB_TOKEN: ${{ secrets.WORKFLOW_PAT }}
