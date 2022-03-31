@@ -1,4 +1,4 @@
-name: TDR Publish
+name: TDR Publish Slick Classes
 on:
   workflow_dispatch:
 env:

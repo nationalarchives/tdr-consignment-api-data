@@ -12,6 +12,7 @@ jobs:
       artifact-name: db-migrations
       artifact-path: lambda/target/scala-2.13
       build-command: |
+        wget -O lambda/src/main/resources/rds-ca-2019-root.pem https://s3.amazonaws.com/rds-downloads/rds-ca-2019-root.pem
         sbt lambda/assembly
     secrets:
       MANAGEMENT_ACCOUNT: ${{ secrets.MANAGEMENT_ACCOUNT }}
