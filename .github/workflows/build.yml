@@ -3,12 +3,14 @@ on:
   push:
     branches:
       - master
+      - move-to-maven-and-github-actions
 jobs:
   pre-deploy:
     uses: nationalarchives/tdr-github-actions/.github/workflows/lambda_build.yml@allow-sub-project-builds
     with:
       repo-name: tdr-consignment-api-data
       artifact-name: db-migrations
+      artifact-path: lambda/target/scala-2.13
       build-command: |
         sbt lambda/assembly
     secrets:
@@ -19,6 +21,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: gh workflow run deploy.yml -f environment=intg -f to-deploy=${{ needs.pre-deploy.outputs.next-version }}
+      - run: gh workflow run deploy.yml -f environment=intg -f to-deploy=${{ needs.pre-deploy.outputs.next-version }} --ref move-to-maven-and-github-actions
         env:
           GITHUB_TOKEN: ${{ secrets.WORKFLOW_PAT }}
