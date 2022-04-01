@@ -7,7 +7,7 @@ import scala.sys.process._
 import java.nio.charset.StandardCharsets
 import java.nio.file.{Files, Paths}
 
-ThisBuild / scalaVersion     := "2.13.0"
+ThisBuild / scalaVersion     := "2.13.8"
 ThisBuild / version := (version in ThisBuild).value
 ThisBuild / organization     := "uk.gov.nationalarchives"
 ThisBuild / organizationName := "National Archives"
