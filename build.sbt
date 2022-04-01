@@ -7,7 +7,7 @@ import scala.sys.process._
 import java.nio.charset.StandardCharsets
 import java.nio.file.{Files, Paths}
 
-ThisBuild / scalaVersion     := "2.13.0"
+ThisBuild / scalaVersion     := "2.13.8"
 ThisBuild / version := (version in ThisBuild).value
 ThisBuild / organization     := "uk.gov.nationalarchives"
 ThisBuild / organizationName := "National Archives"
@@ -31,7 +31,7 @@ ThisBuild / description := "Slick classes generated from the database schema for
 ThisBuild / licenses := List("MIT" -> new URL("https://choosealicense.com/licenses/mit/"))
 ThisBuild / homepage := Some(url("https://github.com/nationalarchives/tdr-consignment-api-data"))
 
-val slickVersion = "3.3.2"
+val slickVersion = "3.3.3"
 
 lazy val databasePort = sys.env.getOrElse("DB_PORT", "5432")
 lazy val databaseUrl = s"jdbc:postgresql://localhost:$databasePort/consignmentapi"
@@ -95,7 +95,7 @@ lazy val lambda = (project in file("lambda"))
       libraryDependencies ++= Seq(
         "org.flywaydb" % "flyway-core" % "6.1.4",
         "software.amazon.awssdk" % "rds" % "2.16.16",
-        "org.postgresql" % "postgresql" % "42.2.11",
+        "org.postgresql" % "postgresql" % "42.2.25",
         "com.github.pureconfig" %% "pureconfig" % "0.14.1"
       ),
       assemblyMergeStrategy in assembly := {
