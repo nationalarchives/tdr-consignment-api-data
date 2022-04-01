@@ -1,0 +1,24 @@
+name: TDR Run Flyway Test
+on:
+  push:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: password
+          POSTGRES_USER: tdr
+          POSTGRES_DB: consignmentapi
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+    steps:
+      - uses: actions/checkout@v3
+      - name: Test
+        run: sbt flywayMigrate
