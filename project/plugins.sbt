@@ -7,6 +7,6 @@ libraryDependencies ++= Seq(
   "com.sun.activation" % "javax.activation" % "1.2.0"
 )
 addSbtPlugin("com.github.tototoshi" % "sbt-slick-codegen" % "1.4.0")
-addSbtPlugin("com.github.gseitz" % "sbt-release" % "1.0.13")
+addSbtPlugin("com.github.sbt" % "sbt-release" % "1.0.15")
 addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "3.9.12")
 addSbtPlugin("com.github.sbt" % "sbt-pgp" % "2.1.2")
