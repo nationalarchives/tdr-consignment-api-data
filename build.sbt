@@ -1,8 +1,9 @@
 import com.github.tototoshi.sbt.slick.CodegenPlugin.autoImport.slickCodegenDatabaseUrl
-import sbt.Keys.libraryDependencies
+import sbt.Keys.{libraryDependencies, publishTo}
 import ReleaseTransformations._
-import scala.sys.process._
+import xerial.sbt.Sonatype.autoImport.sonatypePublishToBundle
 
+import scala.sys.process._
 import java.nio.charset.StandardCharsets
 import java.nio.file.{Files, Paths}
 
@@ -17,28 +18,18 @@ ThisBuild / scmInfo := Some(
     "git@github.com:nationalarchives/tdr-consignment-api-data.git"
   )
 )
-ThisBuild / developers := List(
+developers := List(
   Developer(
-    id    = "SP",
-    name  = "Sam Palmer",
-    email = "sam.palmer@nationalarchives.gov.uk",
-    url   = url("http://tdr-transfer-integration.nationalarchives.gov.uk")
+    id    = "tna-digital-archiving-jenkins",
+    name  = "TNA Digital Archiving",
+    email = "digitalpreservation@nationalarchives.gov.uk",
+    url   = url("https://github.com/nationalarchives/tdr-consignment-api-data")
   )
 )
 
 ThisBuild / description := "Slick classes generated from the database schema for the Transfer Digital Records service"
 ThisBuild / licenses := List("MIT" -> new URL("https://choosealicense.com/licenses/mit/"))
 ThisBuild / homepage := Some(url("https://github.com/nationalarchives/tdr-consignment-api-data"))
-
-s3acl := None
-s3sse := true
-
-ThisBuild / publishMavenStyle := true
-
-ThisBuild / publishTo := {
-  val prefix = if (isSnapshot.value) "snapshots" else "releases"
-  Some(s3resolver.value(s"My $prefix S3 bucket", s3(s"tdr-$prefix-mgmt")))
-}
 
 val slickVersion = "3.3.2"
 
@@ -47,21 +38,10 @@ lazy val databaseUrl = s"jdbc:postgresql://localhost:$databasePort/consignmentap
 lazy val databaseUser = "tdr"
 lazy val databasePassword = "password"
 
-lazy val generateChangelogFile = taskKey[Unit]("Generates a changelog file from the last version")
+lazy val setLatestTagOutput = taskKey[Unit]("Generates a changelog file from the last version")
 
-generateChangelogFile := {
-  val lastTag = "git describe --tags --abbrev=0".!!.replace("\n","")
-  val gitLog = s"git log $lastTag..HEAD --oneline".!!
-  val folderName = s"${baseDirectory.value}/notes"
-  val fileName = s"${version.value}.markdown"
-  val fullPath = s"$folderName/$fileName"
-  new File(folderName).mkdirs()
-  val file = new File(fullPath)
-  if(!file.exists()) {
-    new File(fullPath).createNewFile
-    Files.write(Paths.get(fullPath), gitLog.getBytes(StandardCharsets.UTF_8))
-  }
-  s"git add $fullPath".!!
+setLatestTagOutput := {
+  println(s"::set-output name=latest-tag::${(version in ThisBuild).value}")
 }
 
 resolvers +=
@@ -85,25 +65,27 @@ lazy val root = (project in file("."))
     slickCodegenOutputPackage := "uk.gov.nationalarchives",
     slickCodegenExcludedTables := Seq("schema_version"),
     slickCodegenOutputDir := (scalaSource in Compile).value,
-    ghreleaseRepoOrg := "nationalarchives",
-    ghreleaseRepoName := "tdr-consignment-api-data",
-    ghreleaseAssets := Seq(file(s"${(lambda / assembly / target).value}/${(lambda /assembly / assemblyJarName).value}")),
     releaseIgnoreUntrackedFiles := true,
+    useGpgPinentry := true,
+    publishTo := sonatypePublishToBundle.value,
+    publishMavenStyle := true,
     releaseProcess := Seq[ReleaseStep](
       releaseStepTask(lambda / assembly),
+      checkSnapshotDependencies,
       inquireVersions,
+      runClean,
+      runTest,
       setReleaseVersion,
-      releaseStepTask(generateChangelogFile),
+      releaseStepTask(setLatestTagOutput),
       commitReleaseVersion,
       tagRelease,
       pushChanges,
-      releaseStepInputTask(githubRelease),
-      publishArtifacts,
+      releaseStepCommand("publishSigned"),
+      releaseStepCommand("sonatypeBundleRelease"),
       setNextVersion,
       commitNextVersion,
       pushChanges
-    ),
-
+    )
   ).enablePlugins(CodegenPlugin)
 
 
