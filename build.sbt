@@ -8,7 +8,7 @@ import java.nio.charset.StandardCharsets
 import java.nio.file.{Files, Paths}
 
 ThisBuild / scalaVersion     := "2.13.8"
-ThisBuild / version := (version in ThisBuild).value
+ThisBuild / version := (ThisBuild / version).value
 ThisBuild / organization     := "uk.gov.nationalarchives"
 ThisBuild / organizationName := "National Archives"
 
@@ -41,7 +41,7 @@ lazy val databasePassword = "password"
 lazy val setLatestTagOutput = taskKey[Unit]("Generates a changelog file from the last version")
 
 setLatestTagOutput := {
-  println(s"::set-output name=latest-tag::${(version in ThisBuild).value}")
+  println(s"::set-output name=latest-tag::${(ThisBuild / version).value}")
 }
 
 resolvers +=
@@ -64,7 +64,7 @@ lazy val root = (project in file("."))
     slickCodegenJdbcDriver := "org.postgresql.Driver",
     slickCodegenOutputPackage := "uk.gov.nationalarchives",
     slickCodegenExcludedTables := Seq("schema_version"),
-    slickCodegenOutputDir := (scalaSource in Compile).value,
+    slickCodegenOutputDir := (Compile / scalaSource).value,
     releaseIgnoreUntrackedFiles := true,
     useGpgPinentry := true,
     publishTo := sonatypePublishToBundle.value,
@@ -95,14 +95,14 @@ lazy val lambda = (project in file("lambda"))
       libraryDependencies ++= Seq(
         "org.flywaydb" % "flyway-core" % "6.1.4",
         "software.amazon.awssdk" % "rds" % "2.16.16",
-        "org.postgresql" % "postgresql" % "42.2.25",
+        "org.postgresql" % "postgresql" % "42.3.3",
         "com.github.pureconfig" %% "pureconfig" % "0.14.1"
       ),
-      assemblyMergeStrategy in assembly := {
+      (assembly / assemblyMergeStrategy) := {
         case PathList("META-INF", xs @ _*) => MergeStrategy.discard
         case _ => MergeStrategy.first
       },
-      assemblyJarName in assembly := "db-migrations.jar"
+      (assembly / assemblyJarName) := "db-migrations.jar"
     )
 
 enablePlugins(FlywayPlugin)
