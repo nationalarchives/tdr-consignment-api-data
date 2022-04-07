@@ -1,11 +1,12 @@
 name: TDR Tag and pre deploy
 on:
-  push:
-    branches:
-      - master
+  pull_request:
+    types:
+      - closed
 jobs:
   pre-deploy:
     uses: nationalarchives/tdr-github-actions/.github/workflows/lambda_build.yml@main
+    if: ${{ github.base_ref == 'master' && github.event.pull_request.merged == true && !contains(github.event.pull_request.labels.*.name, 'Version bump') }}
     with:
       repo-name: tdr-consignment-api-data
       artifact-name: db-migrations
