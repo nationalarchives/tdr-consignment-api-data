@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 12.9 (Ubuntu 12.9-0ubuntu0.20.04.1)
--- Dumped by pg_dump version 13.6
+-- Dumped from database version 14.2 (Debian 14.2-1.pgdg110+1)
+-- Dumped by pg_dump version 14.2 (Ubuntu 14.2-1.pgdg20.04+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -213,7 +213,7 @@ CREATE TABLE public."FileProperty" (
     "PropertyType" text,
     "Datatype" text,
     "Editable" boolean,
-    "MutliValue" boolean,
+    "MultiValue" boolean,
     "PropertyGroup" text
 );
 
