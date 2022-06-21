@@ -14,7 +14,6 @@ UPDATE "FileProperty" SET "PropertyGroup" = 'OptionalClosure'  WHERE "Name" = 'T
 UPDATE "FileProperty" SET "PropertyGroup" = 'MandatoryClosure'  WHERE "Name" = 'FoiExemptionAsserted';
 UPDATE "FileProperty" SET "PropertyGroup" = 'MandatoryClosure'  WHERE "Name" = 'FoiExemptionCode';
 
-
 -- update the filepropertyvalues tables adding new group for when TitlePublic is true
 UPDATE "FilePropertyValues" SET "Dependencies" = '4'  WHERE "PropertyName" = 'TitlePublic' and "PropertyValue" = 'True';
 
