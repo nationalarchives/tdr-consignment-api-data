@@ -9,6 +9,6 @@ CREATE TABLE IF NOT EXISTS public."AllowedPuids"
 
 INSERT INTO "AllowedPuids" ("PUID","PUID Description","ConsignmentType")
 VALUES
-    ('fmt/412','Microsoft Word 2007 onwards','judgment');
+    ('fmt/412','Microsoft Word for Windows','judgment');
 
 COMMIT;
