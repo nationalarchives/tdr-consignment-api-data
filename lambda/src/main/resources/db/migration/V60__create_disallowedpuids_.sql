@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS public."DisallowedPuids"
 (
-    "PUID" text   NOT NULL,
+    "PUID" text NOT NULL,
     "PUID Description" text NOT NULL,
     "Created Date" timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
     "Modified Date" timestamp with time zone,
@@ -10,8 +10,8 @@ CREATE TABLE IF NOT EXISTS public."DisallowedPuids"
 INSERT INTO "DisallowedPuids" ("PUID","PUID Description","Reason")
 VALUES
     ('fmt/494','Microsoft Office Encrypted Document','PasswordProtected'),
-    ('fmt/754','Microsoft Word Document (Password Protected)','PasswordProtected'),
-    ('fmt/755','Microsoft Word Document Template (Password Protected)','PasswordProtected'),
+    ('fmt/754','Microsoft Word Document','PasswordProtected'),
+    ('fmt/755','Microsoft Word Document Template','PasswordProtected'),
     ('fmt/289','WARC Web ARChive file format','Zip'),
     ('fmt/329','Shell Archive Format','Zip'),
     ('fmt/508','Quarter Inch Cartridge Host Interchange Format','Zip'),
