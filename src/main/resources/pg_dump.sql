@@ -51,6 +51,21 @@ CREATE TABLE public."AVMetadata" (
 ALTER TABLE public."AVMetadata" OWNER TO tdr;
 
 --
+-- Name: AllowedPuids; Type: TABLE; Schema: public; Owner: tdr
+--
+
+CREATE TABLE public."AllowedPuids" (
+    "PUID" text NOT NULL,
+    "PUID Description" text NOT NULL,
+    "Created Date" timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    "Modified Date" timestamp with time zone,
+    "ConsignmentType" text NOT NULL
+);
+
+
+ALTER TABLE public."AllowedPuids" OWNER TO tdr;
+
+--
 -- Name: Body; Type: TABLE; Schema: public; Owner: tdr
 --
 
@@ -132,6 +147,21 @@ CREATE TABLE public."ConsignmentStatus" (
 
 
 ALTER TABLE public."ConsignmentStatus" OWNER TO tdr;
+
+--
+-- Name: DisallowedPuids; Type: TABLE; Schema: public; Owner: tdr
+--
+
+CREATE TABLE public."DisallowedPuids" (
+    "PUID" text NOT NULL,
+    "PUID Description" text NOT NULL,
+    "Created Date" timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    "Modified Date" timestamp with time zone,
+    "Reason" text NOT NULL
+);
+
+
+ALTER TABLE public."DisallowedPuids" OWNER TO tdr;
 
 --
 -- Name: FFIDMetadata; Type: TABLE; Schema: public; Owner: tdr
