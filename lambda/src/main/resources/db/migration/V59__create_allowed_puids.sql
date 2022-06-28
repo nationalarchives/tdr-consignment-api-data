@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS public."AllowedPuids"
 (
     "PUID" text NOT NULL,
-    "PUID Description" text NULL,
+    "PUID Description" text NOT NULL,
     "Created Date" timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
     "Modified Date" timestamp with time zone,
     "ConsignmentType" text NOT NULL
