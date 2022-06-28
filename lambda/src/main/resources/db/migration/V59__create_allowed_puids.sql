@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS public."AllowedPuids"
     "PUID Description" text NULL,
     "Created Date" timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
     "Modified Date" timestamp with time zone,
-    "ConsignmentType" text
+    "ConsignmentType" text NOT NULL
 );
 
 INSERT INTO "AllowedPuids" ("PUID","PUID Description","ConsignmentType")

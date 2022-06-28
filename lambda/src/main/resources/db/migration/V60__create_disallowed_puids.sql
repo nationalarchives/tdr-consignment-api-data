@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS public."DisallowedPuids"
     "PUID Description" text NULL,
     "Created Date" timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
     "Modified Date" timestamp with time zone,
-    "Reason" text
+    "Reason" text NOT NULL,
 );
 
 INSERT INTO "DisallowedPuids" ("PUID","PUID Description","Reason")
