@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 14.2 (Debian 14.2-1.pgdg110+1)
--- Dumped by pg_dump version 14.2 (Ubuntu 14.2-1.pgdg20.04+1)
+-- Dumped from database version 14.4 (Debian 14.4-1.pgdg110+1)
+-- Dumped by pg_dump version 14.4 (Ubuntu 14.4-1.pgdg20.04+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -49,6 +49,21 @@ CREATE TABLE public."AVMetadata" (
 
 
 ALTER TABLE public."AVMetadata" OWNER TO tdr;
+
+--
+-- Name: AllowedPuids; Type: TABLE; Schema: public; Owner: tdr
+--
+
+CREATE TABLE public."AllowedPuids" (
+    "PUID" text NOT NULL,
+    "PUID Description" text NOT NULL,
+    "Created Date" timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    "Modified Date" timestamp with time zone,
+    "ConsignmentType" text NOT NULL
+);
+
+
+ALTER TABLE public."AllowedPuids" OWNER TO tdr;
 
 --
 -- Name: Body; Type: TABLE; Schema: public; Owner: tdr
@@ -132,6 +147,21 @@ CREATE TABLE public."ConsignmentStatus" (
 
 
 ALTER TABLE public."ConsignmentStatus" OWNER TO tdr;
+
+--
+-- Name: DisallowedPuids; Type: TABLE; Schema: public; Owner: tdr
+--
+
+CREATE TABLE public."DisallowedPuids" (
+    "PUID" text NOT NULL,
+    "PUID Description" text NOT NULL,
+    "Created Date" timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    "Modified Date" timestamp with time zone,
+    "Reason" text NOT NULL
+);
+
+
+ALTER TABLE public."DisallowedPuids" OWNER TO tdr;
 
 --
 -- Name: FFIDMetadata; Type: TABLE; Schema: public; Owner: tdr
