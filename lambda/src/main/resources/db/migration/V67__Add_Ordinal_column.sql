@@ -1,3 +1,4 @@
 ALTER TABLE "FileProperty"
-    ADD COLUMN "Ordinal"  integer
-    ;
+    ADD COLUMN "Ordinal"  integer;
+
+COMMIT;
