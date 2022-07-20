@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 14.2 (Debian 14.2-1.pgdg110+1)
--- Dumped by pg_dump version 14.2 (Ubuntu 14.2-1.pgdg20.04+1)
+-- Dumped from database version 14.4 (Debian 14.4-1.pgdg110+1)
+-- Dumped by pg_dump version 14.4 (Ubuntu 14.4-1.pgdg20.04+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -157,7 +157,8 @@ CREATE TABLE public."DisallowedPuids" (
     "PUID Description" text NOT NULL,
     "Created Date" timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
     "Modified Date" timestamp with time zone,
-    "Reason" text NOT NULL
+    "Reason" text NOT NULL,
+    "Active" boolean DEFAULT true NOT NULL
 );
 
 
