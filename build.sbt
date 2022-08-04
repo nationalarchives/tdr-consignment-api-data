@@ -94,7 +94,7 @@ lazy val lambda = (project in file("lambda"))
       libraryDependencies ++= Seq(
         "org.flywaydb" % "flyway-core" % "6.1.4",
         "software.amazon.awssdk" % "rds" % "2.16.16",
-        "org.postgresql" % "postgresql" % "42.4.0",
+        "org.postgresql" % "postgresql" % "42.4.1",
         "com.github.pureconfig" %% "pureconfig" % "0.14.1"
       ),
       (assembly / assemblyMergeStrategy) := {
