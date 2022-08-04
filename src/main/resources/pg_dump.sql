@@ -245,7 +245,8 @@ CREATE TABLE public."FileProperty" (
     "Datatype" text,
     "Editable" boolean,
     "MultiValue" boolean,
-    "PropertyGroup" text
+    "PropertyGroup" text,
+    "Ordinal" integer
 );
 
 
