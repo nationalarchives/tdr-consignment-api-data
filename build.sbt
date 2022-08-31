@@ -31,7 +31,7 @@ ThisBuild / description := "Slick classes generated from the database schema for
 ThisBuild / licenses := List("MIT" -> new URL("https://choosealicense.com/licenses/mit/"))
 ThisBuild / homepage := Some(url("https://github.com/nationalarchives/tdr-consignment-api-data"))
 
-val slickVersion = "3.3.3"
+val slickVersion = "3.4.0"
 
 lazy val databasePort = sys.env.getOrElse("DB_PORT", "5432")
 lazy val databaseUrl = s"jdbc:postgresql://localhost:$databasePort/consignmentapi"
