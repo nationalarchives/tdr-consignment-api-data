@@ -1,3 +1,6 @@
+-- This script adds description information used for fields on the 
+-- "Add Closure Metadata" page of the TDR web application.
+
 UPDATE public."FileProperty"
 SET "Description" = (CASE
                          WHEN "Name" = 'FoiExemptionAsserted'
@@ -12,3 +15,4 @@ SET "Description" = (CASE
                          WHEN "Name" = 'FoiExemptionCode'
                          THEN 'Select the exemption code that applies'
                      END);
+COMMIT;
