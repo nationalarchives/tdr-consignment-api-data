@@ -29,4 +29,14 @@ DELETE from public."FilePropertyValues"
 WHERE "PropertyName" = 'LegalStatus' 
 AND "PropertyValue" IN ('Welsh Public Record(s)', 'Not Public Record(s)', 'Non Crown Copyright');
 
+-- Commenting out until I have an answer on if the following are in fact required
+
+-- UPDATE public."FilePropertyValues"
+-- SET "PropertyValue" = 'closed', 
+-- WHERE "PropertyName" = 'ClosureType' AND "PropertyValue" = 'closed_for';
+
+-- UPDATE public."FilePropertyValues"
+-- SET "PropertyValue" = 'open', 
+-- WHERE "PropertyName" = 'ClosureType' AND "PropertyValue" = 'open_on_transfer';
+
 COMMIT;
