@@ -27,7 +27,10 @@
 
 DELETE from public."FilePropertyValues"
 WHERE "PropertyName" = 'LegalStatus' 
-AND "PropertyValue" IN ('Welsh Public Record(s)', 'Not Public Record(s)', 'Non Crown Copyright');
+AND "PropertyValue" IN ('Welsh Public Record(s)', 'Not Public Record(s)');
+
+DELETE from public."FilePropertyValues"
+WHERE "PropertyName" = 'RightsCopyright' AND "PropertyValue" = 'Non Crown Copyright';
 
 -- Commenting out until I have an answer on if the following are in fact required
 
