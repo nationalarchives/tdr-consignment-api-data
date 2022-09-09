@@ -27,6 +27,6 @@
 
 DELETE from public."FilePropertyValues"
 WHERE "PropertyName" = 'LegalStatus' 
-AND "PropertyValue" IN ('Welsh Public Record(s)', 'Not Public Record(s)', 'Non Crown Copyright')
+AND "PropertyValue" IN ('Welsh Public Record(s)', 'Not Public Record(s)', 'Non Crown Copyright');
 
 COMMIT;
