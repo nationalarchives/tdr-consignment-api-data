@@ -19,3 +19,4 @@ SET "PropertyName" = 'TitleClosed',
 WHERE "PropertyName" = 'TitlePublic' AND "PropertyValue" = 'False';
 
 COMMIT;
+ 
