@@ -15,4 +15,5 @@ SET "Description" = (CASE
                          WHEN "Name" = 'FoiExemptionCode'
                          THEN 'Select the exemption code that applies'
                      END);
+                     
 COMMIT;
