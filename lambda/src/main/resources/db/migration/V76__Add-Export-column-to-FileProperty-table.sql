@@ -1,4 +1,5 @@
--- Add ExportValue column to FileProperty table
+-- Add Export column to FileProperty table
+-- A boolean, indicating if a property should be included in metadata downloads
 
 ALTER TABLE public."FileProperies"
 ADD COLUMN "Export" BOOLEAN NOT NULL DEFAULT FALSE;
