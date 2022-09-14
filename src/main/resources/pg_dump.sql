@@ -274,7 +274,8 @@ CREATE TABLE public."FilePropertyValues" (
     "PropertyValue" text NOT NULL,
     "Default" boolean,
     "Dependencies" integer,
-    "SecondaryValue" integer
+    "SecondaryValue" integer,
+    "Ordinal" integer
 );
 
 
