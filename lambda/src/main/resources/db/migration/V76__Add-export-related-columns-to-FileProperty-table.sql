@@ -3,9 +3,7 @@
 -- Indexes added to speed up retrieval and sorting
 
 ALTER TABLE public."FileProperty"
-ADD COLUMN "ExportOrdinal" SMALLINT;
-
-ALTER TABLE public."FileProperty"
+ADD COLUMN "ExportOrdinal" SMALLINT,
 ADD COLUMN "AllowExport" BOOLEAN NOT NULL DEFAULT FALSE;
 
 CREATE INDEX FileProperty_ExportOrdinal ON public."FileProperty" ("ExportOrdinal");
