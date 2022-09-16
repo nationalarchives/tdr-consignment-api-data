@@ -2,4 +2,4 @@
 
 ALTER TABLE  "FileProperty"  RENAME COLUMN "Ordinal" TO "UIOrdinal";
 
-COMMIT:
+COMMIT;
