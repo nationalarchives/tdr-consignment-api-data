@@ -7,8 +7,8 @@ ALTER TABLE public."FileProperty"
 ADD COLUMN "ExportOrdinal" SMALLINT,
 ADD COLUMN "AllowExport" BOOLEAN NOT NULL DEFAULT FALSE;
 
-CREATE INDEX FileProperty_ExportOrdinal ON public."FileProperty" ("ExportOrdinal");
+CREATE INDEX FileProperty_ExportOrdinal_idx ON public."FileProperty" ("ExportOrdinal");
 
-CREATE INDEX FileProperty_AllowExport ON public."FileProperty" ("AllowExport");
+CREATE INDEX FileProperty_AllowExport_idx ON public."FileProperty" ("AllowExport");
 
 COMMIT;
