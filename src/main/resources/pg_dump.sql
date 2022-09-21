@@ -246,7 +246,9 @@ CREATE TABLE public."FileProperty" (
     "Editable" boolean,
     "MultiValue" boolean,
     "PropertyGroup" text,
-    "Ordinal" integer
+    "UIOrdinal" integer,
+    "ExportOrdinal" smallint,
+    "AllowExport" boolean DEFAULT false NOT NULL
 );
 
 
@@ -478,6 +480,20 @@ ALTER TABLE ONLY public.flyway_schema_history
 --
 
 CREATE INDEX file_consignmentid_fileid_index ON public."File" USING btree ("ConsignmentId", "FileId");
+
+
+--
+-- Name: fileproperty_allowexport_idx; Type: INDEX; Schema: public; Owner: tdr
+--
+
+CREATE INDEX fileproperty_allowexport_idx ON public."FileProperty" USING btree ("AllowExport");
+
+
+--
+-- Name: fileproperty_exportordinal_idx; Type: INDEX; Schema: public; Owner: tdr
+--
+
+CREATE INDEX fileproperty_exportordinal_idx ON public."FileProperty" USING btree ("ExportOrdinal");
 
 
 --
