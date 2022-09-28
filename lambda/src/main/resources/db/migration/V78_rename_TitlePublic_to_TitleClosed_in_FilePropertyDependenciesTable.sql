@@ -7,4 +7,3 @@ SET "PropertyName" = 'TitleClosed'
 WHERE "PropertyName" = 'TitlePublic';
 
 COMMIT;
--
