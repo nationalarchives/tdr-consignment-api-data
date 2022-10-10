@@ -98,6 +98,7 @@ lazy val lambda = (project in file("lambda"))
         "com.github.pureconfig" %% "pureconfig" % "0.17.1"
       ),
       (assembly / assemblyMergeStrategy) := {
+        case PathList("META-INF", "services", xs@_*) => MergeStrategy.first
         case PathList("META-INF", xs @ _*) => MergeStrategy.discard
         case _ => MergeStrategy.first
       },
