@@ -26,15 +26,15 @@ To undo what was done by the migrations, run `sbt flywayClean`
 
 ### Deployment
 
-Run the following Jenkins jobs:
+Run the following GitHub actions:
 
-* TDR Database Migrations Deploy: this builds the migration code and deploys it
+* TDR Deploy Data Migration Lambda: this builds the migration code and deploys it
   to the Lambda which will run the migrations
-* TDR Database Migrations Run: this runs the latest version of the migrations
+* Run DB Migrations: this runs the latest version of the migrations
   lambda
 
-Migrations that have been merged to master will be run automatically on the Integration environment and can be run
-manually on other environments by the `TDR Database Migrations Deploy` Jenkins job. The job will:
+Migrations that have been merged to master will be deployed automatically on the Integration environment, and can be deployed
+manually on other environments with the `TDR Deploy Data Migration Lambda` GitHub action. The action will:
 
 * Run a lambda which updates the database within that environment.
 * Use slick codegen to generate slick files based on the database schema.
