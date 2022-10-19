@@ -2,7 +2,7 @@ DO $$
     DECLARE
         bodyUuid "Body"."BodyId"%TYPE;
     BEGIN
-        -- Insert 'Office of National Statistics' body into the  Body Table
+        -- Insert 'Office for National Statistics' body into the  Body Table
         INSERT INTO "Body" ("BodyId", "Name", "Description", "TdrCode") VALUES
         (uuid_generate_v4(), 'Office for National Statistics', 'Office for National Statistics', 'TDR-ONS') RETURNING "BodyId" INTO bodyUuid;
 
