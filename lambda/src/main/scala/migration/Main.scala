@@ -1,6 +1,7 @@
 package migration
 
 import org.flywaydb.core.Flyway
+import org.flywaydb.core.api.output.MigrateResult
 import pureconfig._
 import pureconfig.generic.auto._
 import software.amazon.awssdk.auth.credentials.DefaultCredentialsProvider
@@ -12,7 +13,7 @@ class Main {
 
   case class MigrationConfig(host: String, port: Int, url: String, username: String)
 
-  def runMigration(): Int = {
+  def runMigration(): MigrateResult = {
     val config = ConfigSource.default.load[MigrationConfig] match {
       case Left(value) => throw new RuntimeException(s"Failed to load database migration config${value.prettyPrint()}")
       case Right(value) => value

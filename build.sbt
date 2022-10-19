@@ -7,7 +7,7 @@ import scala.sys.process._
 import java.nio.charset.StandardCharsets
 import java.nio.file.{Files, Paths}
 
-ThisBuild / scalaVersion     := "2.13.9"
+ThisBuild / scalaVersion     := "2.13.10"
 ThisBuild / version := (ThisBuild / version).value
 ThisBuild / organization     := "uk.gov.nationalarchives"
 ThisBuild / organizationName := "National Archives"
@@ -92,12 +92,13 @@ lazy val lambda = (project in file("lambda"))
     .settings(
       name := "tdr-database-migration-lambda",
       libraryDependencies ++= Seq(
-        "org.flywaydb" % "flyway-core" % "6.1.4",
-        "software.amazon.awssdk" % "rds" % "2.16.16",
+        "org.flywaydb" % "flyway-core" % "9.4.0",
+        "software.amazon.awssdk" % "rds" % "2.17.289",
         "org.postgresql" % "postgresql" % "42.5.0",
-        "com.github.pureconfig" %% "pureconfig" % "0.14.1"
+        "com.github.pureconfig" %% "pureconfig" % "0.17.1"
       ),
       (assembly / assemblyMergeStrategy) := {
+        case PathList("META-INF", "services", xs@_*) => MergeStrategy.first
         case PathList("META-INF", xs @ _*) => MergeStrategy.discard
         case _ => MergeStrategy.first
       },
