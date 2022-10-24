@@ -48,7 +48,7 @@ The project uses slick-codegen to generate [Slick] classes based on the database
 
 ### Publish generated code
 
-* Run the `TDR Database Migrations Publish` Jenkins job. This publishes a new
+* Run the `TDR Publish Slick Classes` GitHub action. This publishes a new
   version of the `consignment-api-db` library.
 
 ### Using updated schema locally
