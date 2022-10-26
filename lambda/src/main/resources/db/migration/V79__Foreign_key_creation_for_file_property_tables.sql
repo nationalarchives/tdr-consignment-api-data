@@ -1,4 +1,4 @@
--- Add three foreign key constraints
+-- Add two foreign key constraints
 -- FilePropertyValues.PropertyName as fk to FileProperty.Name
 -- FilePropertyDependencies.PropertyName as fk to FileProperty.Name
 
