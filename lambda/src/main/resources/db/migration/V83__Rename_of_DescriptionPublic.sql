@@ -48,7 +48,6 @@ ALTER TABLE "FileMetadata"
   ON UPDATE NO ACTION
   ON DELETE NO ACTION;
 
-
 ALTER TABLE "FileMetadata"
   ADD CONSTRAINT "FileMetadata_FileProperty_PropertyName_fkey" FOREIGN KEY ("PropertyName")
   REFERENCES "FileProperty" ("Name")
