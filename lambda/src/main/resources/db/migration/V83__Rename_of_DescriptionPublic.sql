@@ -1,10 +1,10 @@
 -- Script to update DescriptionPublic nomenclature to DescriptionClosed within the Propertyxx Group of tables
--- First we have to disable constraints as Update cascade has not been set on them
+-- First we have to drop constraints as Update cascade has not been set on them
 
-ALTER TABLE "FileMetadata" DISABLE TRIGGER ALL;
-ALTER TABLE "FileProperty" DISABLE TRIGGER ALL;
-ALTER TABLE "FilePropertyValues" DISABLE TRIGGER ALL;
-ALTER TABLE "FilePropertyDependencies" DISABLE TRIGGER ALL;
+ALTER TABLE "FileMetadata" DROP CONSTRAINT "FileMetadata_Consignment_fkey";
+ALTER TABLE "FileMetadata" DROP CONSTRAINT "FileMetadata_PropertyName";
+ALTER TABLE "FilePropertyValues" DROP CONSTRAINT "FilePropertyValues_FileProperty_PropertyName_fkey";
+ALTER TABLE "FilePropertyDependencies" DROP CONSTRAINT "FilePropertyDependencies_PropertyName_FileProperty_fkey";
 
 COMMIT;
 
@@ -39,10 +39,32 @@ UPDATE public."FilePropertyDependencies"
 SET "PropertyName" = 'DescriptionClosed'
 WHERE "PropertyName" = 'DescriptionPublic' ;
 
--- Enable all the constraints once again
-ALTER TABLE "FileMetadata" ENABLE TRIGGER ALL;
-ALTER TABLE "FileProperty" ENABLE TRIGGER ALL;
-ALTER TABLE "FilePropertyValues" ENABLE TRIGGER ALL;
-ALTER TABLE "FilePropertyDependencies" ENABLE TRIGGER ALL;
+-- Create all the constraints once again
+-- Whilst tidying up naming conventions
+
+ALTER TABLE "FileMetadata"
+  ADD CONSTRAINT "FileMetadata_File_FileId_fkey" FOREIGN KEY ("FileId")
+  REFERENCES "File" ("FileId")
+  ON UPDATE NO ACTION
+  ON DELETE NO ACTION;
+
+
+ALTER TABLE "FileMetadata"
+  ADD CONSTRAINT "FileMetadata_FileProperty_PropertyName_fkey" FOREIGN KEY ("PropertyName")
+  REFERENCES "FileProperty" ("Name")
+  ON UPDATE NO ACTION
+  ON DELETE NO ACTION;
+
+ALTER TABLE "FilePropertyValues"
+  ADD CONSTRAINT "FilePropertyValues_FileProperty_PropertyName_fkey" FOREIGN KEY ("PropertyName")
+  REFERENCES "FileProperty" ("Name")
+  ON UPDATE NO ACTION
+  ON DELETE NO ACTION;
+
+ALTER TABLE "FilePropertyDependencies"
+  ADD CONSTRAINT "FilePropertyDependencies_FileProperty_PropertyName_fkey" FOREIGN KEY ("PropertyName")
+  REFERENCES "FileProperty" ("Name")
+  ON UPDATE NO ACTION
+  ON DELETE NO ACTION;
 
 COMMIT;
