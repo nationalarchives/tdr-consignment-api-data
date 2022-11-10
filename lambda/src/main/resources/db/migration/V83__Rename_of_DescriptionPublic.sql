@@ -4,7 +4,7 @@
 ALTER TABLE "FileMetadata" DROP CONSTRAINT "FileMetadata_Consignment_fkey";
 ALTER TABLE "FileMetadata" DROP CONSTRAINT "FileMetadata_PropertyName";
 ALTER TABLE "FilePropertyValues" DROP CONSTRAINT "FilePropertyValues_FileProperty_PropertyName_fkey";
-ALTER TABLE "FilePropertyDependencies" DROP CONSTRAINT "FilePropertyDependencies_PropertyName_FileProperty_fkey";
+ALTER TABLE "FilePropertyDependencies" DROP CONSTRAINT "FilePropertyDependencies_FileProperty_PropertyName_fkey";
 
 COMMIT;
 
