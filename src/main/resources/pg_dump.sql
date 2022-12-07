@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 14.5 (Debian 14.5-1.pgdg110+1)
--- Dumped by pg_dump version 14.5 (Ubuntu 14.5-1.pgdg20.04+1)
+-- Dumped from database version 14.6 (Debian 14.6-1.pgdg110+1)
+-- Dumped by pg_dump version 14.6 (Ubuntu 14.6-1.pgdg22.04+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -163,6 +163,20 @@ CREATE TABLE public."DisallowedPuids" (
 
 
 ALTER TABLE public."DisallowedPuids" OWNER TO tdr;
+
+--
+-- Name: DisplayProperties; Type: TABLE; Schema: public; Owner: tdr
+--
+
+CREATE TABLE public."DisplayProperties" (
+    "PropertyName" text,
+    "Attribute" text,
+    "Value" text,
+    "AttributeType" text
+);
+
+
+ALTER TABLE public."DisplayProperties" OWNER TO tdr;
 
 --
 -- Name: FFIDMetadata; Type: TABLE; Schema: public; Owner: tdr
@@ -476,10 +490,52 @@ ALTER TABLE ONLY public.flyway_schema_history
 
 
 --
+-- Name: avmetadata_fileid_idx; Type: INDEX; Schema: public; Owner: tdr
+--
+
+CREATE INDEX avmetadata_fileid_idx ON public."AVMetadata" USING btree ("FileId");
+
+
+--
+-- Name: consignment_consignmentid_consignmentreference_idx; Type: INDEX; Schema: public; Owner: tdr
+--
+
+CREATE INDEX consignment_consignmentid_consignmentreference_idx ON public."Consignment" USING btree ("ConsignmentId", "ConsignmentReference");
+
+
+--
+-- Name: ffidmetadata_fileid_ffidmetadataid_idx; Type: INDEX; Schema: public; Owner: tdr
+--
+
+CREATE INDEX ffidmetadata_fileid_ffidmetadataid_idx ON public."FFIDMetadata" USING btree ("FileId", "FFIDMetadataId");
+
+
+--
+-- Name: ffidmetadatamatches_ffidmetadataid_idx; Type: INDEX; Schema: public; Owner: tdr
+--
+
+CREATE INDEX ffidmetadatamatches_ffidmetadataid_idx ON public."FFIDMetadataMatches" USING btree ("FFIDMetadataId");
+
+
+--
 -- Name: file_consignmentid_fileid_index; Type: INDEX; Schema: public; Owner: tdr
 --
 
 CREATE INDEX file_consignmentid_fileid_index ON public."File" USING btree ("ConsignmentId", "FileId");
+
+
+--
+-- Name: file_consignmentid_filetype_fileid_idx; Type: INDEX; Schema: public; Owner: tdr
+--
+
+CREATE INDEX file_consignmentid_filetype_fileid_idx ON public."File" USING btree ("ConsignmentId", "FileType", "FileId");
+
+
+--
+-- Name: filemetadata_fileid_propertyname_idx; Type: INDEX; Schema: public; Owner: tdr
+--
+
+CREATE INDEX filemetadata_fileid_propertyname_idx ON public."FileMetadata" USING btree ("FileId", "PropertyName");
 
 
 --
@@ -494,6 +550,13 @@ CREATE INDEX fileproperty_allowexport_idx ON public."FileProperty" USING btree (
 --
 
 CREATE INDEX fileproperty_exportordinal_idx ON public."FileProperty" USING btree ("ExportOrdinal");
+
+
+--
+-- Name: filestatus_fileid_statustype_idx; Type: INDEX; Schema: public; Owner: tdr
+--
+
+CREATE INDEX filestatus_fileid_statustype_idx ON public."FileStatus" USING btree ("FileId", "StatusType");
 
 
 --
@@ -552,6 +615,14 @@ ALTER TABLE ONLY public."Consignment"
 
 
 --
+-- Name: DisplayProperties DisplayProperties_FileProperty_PropertyName_fkey; Type: FK CONSTRAINT; Schema: public; Owner: tdr
+--
+
+ALTER TABLE ONLY public."DisplayProperties"
+    ADD CONSTRAINT "DisplayProperties_FileProperty_PropertyName_fkey" FOREIGN KEY ("PropertyName") REFERENCES public."FileProperty"("Name");
+
+
+--
 -- Name: FFIDMetadataMatches FFIDMetadataMatches_Metadata_fkey; Type: FK CONSTRAINT; Schema: public; Owner: tdr
 --
 
@@ -568,19 +639,35 @@ ALTER TABLE ONLY public."FFIDMetadata"
 
 
 --
--- Name: FileMetadata FileMetadata_Consignment_fkey; Type: FK CONSTRAINT; Schema: public; Owner: tdr
+-- Name: FileMetadata FileMetadata_FileProperty_PropertyName_fkey; Type: FK CONSTRAINT; Schema: public; Owner: tdr
 --
 
 ALTER TABLE ONLY public."FileMetadata"
-    ADD CONSTRAINT "FileMetadata_Consignment_fkey" FOREIGN KEY ("FileId") REFERENCES public."File"("FileId");
+    ADD CONSTRAINT "FileMetadata_FileProperty_PropertyName_fkey" FOREIGN KEY ("PropertyName") REFERENCES public."FileProperty"("Name");
 
 
 --
--- Name: FileMetadata FileMetadata_PropertyName; Type: FK CONSTRAINT; Schema: public; Owner: tdr
+-- Name: FileMetadata FileMetadata_File_FileId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: tdr
 --
 
 ALTER TABLE ONLY public."FileMetadata"
-    ADD CONSTRAINT "FileMetadata_PropertyName" FOREIGN KEY ("PropertyName") REFERENCES public."FileProperty"("Name");
+    ADD CONSTRAINT "FileMetadata_File_FileId_fkey" FOREIGN KEY ("FileId") REFERENCES public."File"("FileId");
+
+
+--
+-- Name: FilePropertyDependencies FilePropertyDependencies_FileProperty_PropertyName_fkey; Type: FK CONSTRAINT; Schema: public; Owner: tdr
+--
+
+ALTER TABLE ONLY public."FilePropertyDependencies"
+    ADD CONSTRAINT "FilePropertyDependencies_FileProperty_PropertyName_fkey" FOREIGN KEY ("PropertyName") REFERENCES public."FileProperty"("Name");
+
+
+--
+-- Name: FilePropertyValues FilePropertyValues_FileProperty_PropertyName_fkey; Type: FK CONSTRAINT; Schema: public; Owner: tdr
+--
+
+ALTER TABLE ONLY public."FilePropertyValues"
+    ADD CONSTRAINT "FilePropertyValues_FileProperty_PropertyName_fkey" FOREIGN KEY ("PropertyName") REFERENCES public."FileProperty"("Name");
 
 
 --
