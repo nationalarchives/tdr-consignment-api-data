@@ -8,7 +8,7 @@ UPDATE "DisplayProperties" SET "Value" = 'small text' WHERE "PropertyName" = 'De
 
 INSERT INTO "DisplayProperties" ("PropertyName","Attribute","Value","AttributeType")
 VALUES
-    ('ClosurePeriod','ComponentType','small text','integer'),
+    ('ClosurePeriod','ComponentType','small text','text'),
     ('FoiExemptionCode','ComponentType','select','text');
 
 COMMIT;
