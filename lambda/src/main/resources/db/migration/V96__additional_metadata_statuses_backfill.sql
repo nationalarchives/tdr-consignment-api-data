@@ -4,10 +4,10 @@ DO $$
 
     DECLARE
         closureMetadataFileIds uuid[] = ARRAY(
-            SELECT DISTINCT "FileId" FROM "FileStatus" WHERE NOT EXISTS (SELECT * FROM "FileStatus" WHERE "StatusType" = 'ClosureMetadata')
+            SELECT DISTINCT "FileId" FROM "FileStatus" WHERE "FileId" NOT IN (SELECT "FileId" FROM "FileStatus" WHERE "StatusType" = 'ClosureMetadata')
         );
         descriptiveMetadataFileIds uuid[] = ARRAY(
-            SELECT DISTINCT "FileId" FROM "FileStatus" WHERE NOT EXISTS (SELECT * FROM "FileStatus" WHERE "StatusType" = 'DescriptiveMetadata')
+           SELECT DISTINCT "FileId" FROM "FileStatus" WHERE "FileId" NOT IN (SELECT "FileId" FROM "FileStatus" WHERE "StatusType" = 'DescriptiveMetadata')
         );
 
         fileId uuid;
