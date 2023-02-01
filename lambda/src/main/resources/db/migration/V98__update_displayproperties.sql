@@ -2,8 +2,7 @@
 
 UPDATE "DisplayProperties"
 SET "Value" = 'large text'
-WHERE "PropertyName" = 'DescriptionAlternate'
-  AND "Attribute" = 'ComponentType';
+WHERE "PropertyName" = 'DescriptionAlternate' AND "Attribute" = 'ComponentType';
 
 INSERT INTO "DisplayProperties" ("PropertyName", "Attribute", "Value", "AttributeType")
 VALUES ('FoiExemptionAsserted', 'FutureDateAllowed', false, 'boolean');
