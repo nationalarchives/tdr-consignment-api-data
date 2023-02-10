@@ -2,7 +2,7 @@
 
 INSERT INTO "DisplayProperties" ("PropertyName", "Attribute", "Value", "AttributeType")
 VALUES
-    ('FoiExemptionAsserted', 'AlternativeName', 'Advisory Council Approval', 'text'),
-    ('TitleAlternate', 'AlternativeName', 'Alternative Title', 'text');
+    ('FoiExemptionAsserted', 'AlternativeName', 'Advisory Council approval', 'text'),
+    ('TitleAlternate', 'AlternativeName', 'Alternative title', 'text');
 
 COMMIT;
