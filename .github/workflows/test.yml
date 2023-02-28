@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     services:
       postgres:
-        image: postgres
+        image: postgres:14
         env:
           POSTGRES_PASSWORD: password
           POSTGRES_USER: tdr
@@ -20,5 +20,7 @@ jobs:
           - 5432:5432
     steps:
       - uses: actions/checkout@v3
+      - name: Create migrations user
+        run: PGPASSWORD=password psql -U tdr -h localhost -d consignmentapi -f ./scripts/create-user.sql
       - name: Test
         run: sbt flywayMigrate

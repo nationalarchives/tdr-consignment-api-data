@@ -35,8 +35,8 @@ val slickVersion = "3.4.1"
 
 lazy val databasePort = sys.env.getOrElse("DB_PORT", "5432")
 lazy val databaseUrl = s"jdbc:postgresql://localhost:$databasePort/consignmentapi"
-lazy val databaseUser = "tdr"
-lazy val databasePassword = "password"
+lazy val databaseUser = "migrations_user"
+lazy val databasePassword = "migrations_password"
 
 lazy val setLatestTagOutput = taskKey[Unit]("Generates a changelog file from the last version")
 
