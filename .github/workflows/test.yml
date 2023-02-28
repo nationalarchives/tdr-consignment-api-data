@@ -21,6 +21,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Create migrations user
-        run: PGPASSWORD=password psql -U tdr -h localhost -d consignmentapi -f ./scripts/create-user.sql
+        run: PGPASSWORD=password psql -U tdr -h localhost -d consignmentapi -f .github/scripts/create-user.sql
       - name: Test
         run: sbt flywayMigrate
