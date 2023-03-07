@@ -97,7 +97,8 @@ CREATE TABLE public."Consignment" (
     "ConsignmentReference" text NOT NULL,
     "ConsignmentType" text NOT NULL,
     "BodyId" uuid NOT NULL,
-    "ExportVersion" text
+    "ExportVersion" text,
+    "IncludeTopLevelFolder" boolean
 );
 
 
