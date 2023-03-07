@@ -1,6 +1,6 @@
 -- Insert data into the DisplayProperties table
 
-INSERT INTO "DisplayProperties" ("PropertyName","Attribute","Value","AttributeType") 
+INSERT INTO "DisplayProperties" ("PropertyName","Attribute","Value","AttributeType")
 VALUES
   ('date_range','Name','Date range','text'),
   ('date_range','PropertyType','Descriptive','text'),
