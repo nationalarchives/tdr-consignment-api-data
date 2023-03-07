@@ -33,6 +33,7 @@ jobs:
       - name: Publish
         id: publish
         run: |
+            PGPASSWORD=password psql -U tdr -h localhost -d consignmentapi -f .github/scripts/create-user.sql
             git config --global user.email digitalpreservation@nationalarchives.gov.uk
             git config --global user.name tna-digital-archiving-jenkins
             git checkout -b $BRANCH_NAME
