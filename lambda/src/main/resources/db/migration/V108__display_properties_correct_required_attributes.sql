@@ -1,4 +1,5 @@
 -- Delete attribute added to non-existent property
+-- Add attribute to correct existing property
 
 DELETE FROM "DisplayProperties"
        WHERE "Attribute" = 'Required'
@@ -6,10 +7,8 @@ DELETE FROM "DisplayProperties"
 
 COMMIT;
 
--- Add attribute to correct existing property
-
 INSERT INTO "DisplayProperties" ("PropertyName","Attribute","Value","AttributeType")
 VALUES
-    ('ClosureType','Required','true','boolean')
+    ('ClosureType','Required','true','boolean');
 
 COMMIT;
