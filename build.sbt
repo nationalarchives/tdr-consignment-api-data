@@ -2,10 +2,7 @@ import com.github.tototoshi.sbt.slick.CodegenPlugin.autoImport.slickCodegenDatab
 import sbt.Keys.{libraryDependencies, publishTo}
 import ReleaseTransformations._
 import xerial.sbt.Sonatype.autoImport.sonatypePublishToBundle
-
-import scala.sys.process._
-import java.nio.charset.StandardCharsets
-import java.nio.file.{Files, Paths}
+import java.io.FileWriter
 
 ThisBuild / scalaVersion     := "2.13.10"
 ThisBuild / version := (ThisBuild / version).value
@@ -41,7 +38,9 @@ lazy val databasePassword = "migrations_password"
 lazy val setLatestTagOutput = taskKey[Unit]("Generates a changelog file from the last version")
 
 setLatestTagOutput := {
-  println(s"::set-output name=latest-tag::${(ThisBuild / version).value}")
+  val fileWriter = new FileWriter(sys.env("GITHUB_OUTPUT"), true)
+  fileWriter.write(s"latest-tag=${(ThisBuild / version).value}\n")
+  fileWriter.close()
 }
 
 resolvers +=
