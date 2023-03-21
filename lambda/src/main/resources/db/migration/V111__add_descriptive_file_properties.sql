@@ -35,6 +35,7 @@ VALUES ('file_name_translation', 'Ordinal', '25', 'integer'),
        ('former_reference_department', 'Editable', 'true', 'boolean'),
        ('former_reference_department', 'MultiValue', 'false', 'boolean'),
        ('former_reference_department', 'Ordinal', '30', 'integer'),
+       ('former_reference_department', 'Summary', 'Former reference', 'text'),
        ('creating_body', 'Name', 'Creating body', 'text'),
        ('creating_body', 'Description',
         'Add where the record is inherited from if it is different to the transferring body.', 'text'),
@@ -44,7 +45,9 @@ VALUES ('file_name_translation', 'Ordinal', '25', 'integer'),
        ('creating_body', 'Datatype', 'text', 'text'),
        ('creating_body', 'Editable', 'true', 'boolean'),
        ('creating_body', 'MultiValue', 'false', 'boolean'),
-       ('creating_body', 'Ordinal', '35', 'integer');
+       ('creating_body', 'Ordinal', '35', 'integer'),
+       ('creating_body', 'Summary', 'Creating body', 'text'),
+       ('end_date', 'Summary', 'Date of the record', 'text');
 
 INSERT INTO "FilePropertyValues" ("PropertyName", "PropertyValue", "Default", "Dependencies", "SecondaryValue")
 VALUES ('creating_body', 'Council for National Academic Awards', NULL, NULL, NULL),
