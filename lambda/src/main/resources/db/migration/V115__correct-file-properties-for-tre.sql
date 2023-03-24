@@ -10,6 +10,10 @@ SET  "FullName" = 'creating_body'
 WHERE "Name" = 'creating_body';
 
 UPDATE "FileProperty"
+SET "FullName" = 'clientside_original_filepath'
+WHERE "Name" = 'ClientSideOriginalFilepath';
+
+UPDATE "FileProperty"
 SET  "AllowExport" = 'false'
 WHERE "Name" = 'creating_body';
 
