@@ -126,8 +126,7 @@ ALTER TABLE public."ConsignmentMetadata" OWNER TO tdr;
 
 CREATE TABLE public."ConsignmentProperty" (
     "Name" text NOT NULL,
-    "Description" text,
-    "Shortname" text
+    "Description" text
 );
 
 
