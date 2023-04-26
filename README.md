@@ -22,7 +22,7 @@ To ensure that nothing has been changed accidentally, run `sbt flywayValidate`
 
 To run migrations locally, run `sbt flywayMigrate`.
 
-To undo what was done by the migrations, run `sbt flywayClean`
+To undo what was done by the migrations, run `sbt flywayClean`.
 
 ### Deployment
 
