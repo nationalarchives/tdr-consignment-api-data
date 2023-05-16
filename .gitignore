@@ -1,3 +1,4 @@
 target/
 .idea
+.bsp
 src/main/scala/uk/gov/nationalarchives/Tables.scala
