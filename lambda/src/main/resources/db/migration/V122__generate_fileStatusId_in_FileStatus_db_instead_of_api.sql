@@ -6,3 +6,6 @@ ALTER TABLE "FileStatus" ALTER COLUMN "FileStatusId" SET DEFAULT uuid_generate_v
 
 -- Add a new primary key constraint using the altered column
 ALTER TABLE "FileStatus" ADD CONSTRAINT "FileStatus_pkey" PRIMARY KEY ("FileStatusId");
+
+-- Alter table to create datetime in the DB rather than in the API.
+ALTER TABLE "FileStatus" ALTER COLUMN "CreatedDatetime" SET DEFAULT CURRENT_TIMESTAMP;
