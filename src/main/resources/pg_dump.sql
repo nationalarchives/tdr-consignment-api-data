@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 14.7 (Debian 14.7-1.pgdg110+1)
--- Dumped by pg_dump version 14.7 (Ubuntu 14.7-1.pgdg22.04+1)
+-- Dumped from database version 14.8 (Debian 14.8-1.pgdg120+1)
+-- Dumped by pg_dump version 14.8 (Ubuntu 14.8-1.pgdg22.04+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -518,6 +518,13 @@ CREATE INDEX ffidmetadatamatches_ffidmetadataid_idx ON public."FFIDMetadataMatch
 
 
 --
+-- Name: file_allfields_idx; Type: INDEX; Schema: public; Owner: tdr
+--
+
+CREATE INDEX file_allfields_idx ON public."File" USING btree ("ConsignmentId", "FileId", "FileType", "FileName", "ParentId", "UserId", "Datetime", "ChecksumMatches");
+
+
+--
 -- Name: file_consignmentid_fileid_index; Type: INDEX; Schema: public; Owner: tdr
 --
 
@@ -529,6 +536,13 @@ CREATE INDEX file_consignmentid_fileid_index ON public."File" USING btree ("Cons
 --
 
 CREATE INDEX file_consignmentid_filetype_fileid_idx ON public."File" USING btree ("ConsignmentId", "FileType", "FileId");
+
+
+--
+-- Name: filemetadata_allfields_idx; Type: INDEX; Schema: public; Owner: tdr
+--
+
+CREATE INDEX filemetadata_allfields_idx ON public."FileMetadata" USING btree ("FileId", "PropertyName", "Value", "MetadataId", "Datetime", "UserId");
 
 
 --
@@ -550,6 +564,13 @@ CREATE INDEX fileproperty_allowexport_idx ON public."FileProperty" USING btree (
 --
 
 CREATE INDEX fileproperty_exportordinal_idx ON public."FileProperty" USING btree ("ExportOrdinal");
+
+
+--
+-- Name: filestatus_allfields_idx; Type: INDEX; Schema: public; Owner: tdr
+--
+
+CREATE INDEX filestatus_allfields_idx ON public."FileStatus" USING btree ("FileId", "StatusType", "Value", "FileStatusId", "CreatedDatetime");
 
 
 --
