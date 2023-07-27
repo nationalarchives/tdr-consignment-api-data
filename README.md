@@ -26,7 +26,7 @@ To undo what was done by the migrations, run `sbt flywayClean`.
 
 ### Deployment
 
-Run the following GitHub actions:
+Run the following GitHub actions: 
 
 * TDR Deploy Data Migration Lambda: this builds the migration code and deploys it
   to the Lambda which will run the migrations
