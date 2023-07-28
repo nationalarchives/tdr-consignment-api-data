@@ -38,7 +38,7 @@ manually on other environments with the `TDR Deploy Data Migration Lambda` GitHu
 
 * Run a lambda which updates the database within that environment.
 * Use slick codegen to generate slick files based on the database schema.
-* Deploy this code to the S3 release bucket.
+* Deploy this code to the S3 release bucket. 
 
 ## Code generation
 
