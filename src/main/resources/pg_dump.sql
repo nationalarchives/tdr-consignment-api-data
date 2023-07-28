@@ -302,11 +302,11 @@ ALTER TABLE public."FilePropertyValues" OWNER TO tdr;
 --
 
 CREATE TABLE public."FileStatus" (
-    "FileStatusId" uuid NOT NULL,
+    "FileStatusId" uuid DEFAULT public.uuid_generate_v4() NOT NULL,
     "FileId" uuid NOT NULL,
     "StatusType" text NOT NULL,
     "Value" text NOT NULL,
-    "CreatedDatetime" timestamp with time zone NOT NULL
+    "CreatedDatetime" timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 
