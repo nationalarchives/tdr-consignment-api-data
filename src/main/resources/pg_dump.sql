@@ -302,7 +302,7 @@ ALTER TABLE public."FilePropertyValues" OWNER TO tdr;
 --
 
 CREATE TABLE public."FileStatus" (
-    "FileStatusId" uuid DEFAULT uuid_generate_v4() NOT NULL,
+    "FileStatusId" uuid NOT NULL,
     "FileId" uuid NOT NULL,
     "StatusType" text NOT NULL,
     "Value" text NOT NULL,
