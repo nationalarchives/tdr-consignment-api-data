@@ -1,3 +1,3 @@
 ALTER TABLE "FFIDMetadataMatches"
-    ADD COLUMN ExtensionMismatch boolean NOT NULL DEFAULT false,
-    ADD COLUMN FormatName text NOT NULL;
+    ADD COLUMN ExtensionMismatch boolean,
+    ADD COLUMN FormatName text;
