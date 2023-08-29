@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 14.8 (Debian 14.8-1.pgdg120+1)
--- Dumped by pg_dump version 14.8 (Ubuntu 14.8-1.pgdg22.04+1)
+-- Dumped from database version 14.9 (Debian 14.9-1.pgdg120+1)
+-- Dumped by pg_dump version 14.9 (Ubuntu 14.9-1.pgdg22.04+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -204,7 +204,9 @@ CREATE TABLE public."FFIDMetadataMatches" (
     "FFIDMetadataId" uuid NOT NULL,
     "Extension" text,
     "IdentificationBasis" text NOT NULL,
-    "PUID" text
+    "PUID" text,
+    extensionmismatch boolean,
+    formatname text
 );
 
 

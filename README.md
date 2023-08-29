@@ -18,7 +18,7 @@ format when it generates the migration name.
 
 To see the list of migrations detected and ensure that your migration will be run, run `sbt flywayInfo`
 
-To ensure that nothing has been changed accidentally, run `sbt flywayValidate`
+To ensure that nothing has been changed accidentally, run `sbt flywayValidate`.
 
 To run migrations locally, run `sbt flywayMigrate`.
 
