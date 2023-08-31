@@ -205,8 +205,8 @@ CREATE TABLE public."FFIDMetadataMatches" (
     "Extension" text,
     "IdentificationBasis" text NOT NULL,
     "PUID" text,
-    extensionmismatch boolean,
-    formatname text
+    "ExtensionMismatch" boolean,
+    "FormatName" text
 );
 
 
