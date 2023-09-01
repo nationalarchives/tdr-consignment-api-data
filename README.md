@@ -42,7 +42,7 @@ manually on other environments with the `TDR Deploy Data Migration Lambda` GitHu
 
 ## Code generation
 
-The project uses slick-codegen to generate [Slick] classes based on the database structure
+The project uses slick-codegen to generate [Slick] classes based on the database structure.
 
 [Slick]: http://scala-slick.org/
 
