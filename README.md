@@ -29,7 +29,7 @@ To undo what was done by the migrations, run `sbt flywayClean`.
 Run the following GitHub actions: 
 
 * TDR Deploy Data Migration Lambda: this builds the migration code and deploys it
-  to the Lambda which will run the migrations
+  to the Lambda which will run the migrations.
 * Run DB Migrations: this runs the latest version of the migrations
   lambda
 
@@ -42,7 +42,7 @@ manually on other environments with the `TDR Deploy Data Migration Lambda` GitHu
 
 ## Code generation
 
-The project uses slick-codegen to generate [Slick] classes based on the database structure
+The project uses slick-codegen to generate [Slick] classes based on the database structure.
 
 [Slick]: http://scala-slick.org/
 
