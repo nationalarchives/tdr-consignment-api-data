@@ -31,7 +31,7 @@ Run the following GitHub actions:
 * TDR Deploy Data Migration Lambda: this builds the migration code and deploys it
   to the Lambda which will run the migrations.
 * Run DB Migrations: this runs the latest version of the migrations
-  lambda
+  lambda.
 
 Migrations that have been merged to master will be deployed automatically on the Integration environment, and can be deployed
 manually on other environments with the `TDR Deploy Data Migration Lambda` GitHub action. The action will:
