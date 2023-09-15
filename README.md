@@ -14,7 +14,7 @@ This project is part of [Transfer Digital Records][tdr]. It provides tools for w
 * Add a sql file to `lambda/src/main/resources/db/migration` with a prefix of `V\d__something.sql`
 
 The name of the migration should use snake_case, e.g. V123__add_date_column_to_series_table, because Flyway expects this
-format when it generates the migration name.
+format when it generates the migration name. 
 
 To see the list of migrations detected and ensure that your migration will be run, run `sbt flywayInfo`
 
@@ -31,7 +31,7 @@ Run the following GitHub actions:
 * TDR Deploy Data Migration Lambda: this builds the migration code and deploys it
   to the Lambda which will run the migrations.
 * Run DB Migrations: this runs the latest version of the migrations
-  lambda
+  lambda.
 
 Migrations that have been merged to master will be deployed automatically on the Integration environment, and can be deployed
 manually on other environments with the `TDR Deploy Data Migration Lambda` GitHub action. The action will:

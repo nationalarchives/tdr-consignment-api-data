@@ -98,7 +98,9 @@ CREATE TABLE public."Consignment" (
     "ConsignmentType" text NOT NULL,
     "BodyId" uuid NOT NULL,
     "ExportVersion" text,
-    "IncludeTopLevelFolder" boolean
+    "IncludeTopLevelFolder" boolean,
+    "SeriesName" text,
+    "TransferringBodyName" text
 );
 
 
@@ -225,6 +227,7 @@ CREATE TABLE public."File" (
     "FileType" text,
     "FileName" text,
     "ParentId" uuid,
+    "FileReference" text,
     CONSTRAINT "chk_FileType" CHECK (("FileType" = ANY (ARRAY['File'::text, 'Folder'::text])))
 );
 
