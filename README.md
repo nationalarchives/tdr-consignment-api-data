@@ -16,7 +16,7 @@ This project is part of [Transfer Digital Records][tdr]. It provides tools for w
 The name of the migration should use snake_case, e.g. V123__add_date_column_to_series_table, because Flyway expects this
 format when it generates the migration name. 
 
-To see the list of migrations detected and ensure that your migration will be run, run `sbt flywayInfo`
+To see the list of migrations detected and ensure that your migration will be run, run `sbt flywayInfo`.
 
 To ensure that nothing has been changed accidentally, run `sbt flywayValidate`.
 
