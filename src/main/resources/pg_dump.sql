@@ -228,6 +228,7 @@ CREATE TABLE public."File" (
     "FileName" text,
     "ParentId" uuid,
     "FileReference" text,
+    "ParentReference" text,
     CONSTRAINT "chk_FileType" CHECK (("FileType" = ANY (ARRAY['File'::text, 'Folder'::text])))
 );
 
@@ -436,6 +437,14 @@ ALTER TABLE ONLY public."FileMetadata"
 
 ALTER TABLE ONLY public."FileProperty"
     ADD CONSTRAINT "FileProperty_pkey" PRIMARY KEY ("Name");
+
+
+--
+-- Name: File FileReference_unique; Type: CONSTRAINT; Schema: public; Owner: tdr
+--
+
+ALTER TABLE ONLY public."File"
+    ADD CONSTRAINT "FileReference_unique" UNIQUE ("FileReference");
 
 
 --
