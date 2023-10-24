@@ -1,6 +1,6 @@
 DO $$
     DECLARE
-        -- Retrieve Welsh Assembly body uuid
+        -- Retrieve Welsh Government body uuid
         WaBodyUuid "Body"."BodyId"%TYPE := (SELECT "BodyId" FROM "Body" WHERE "TdrCode" = 'TDR-WA');
     BEGIN
         -- Use the returned WaBodyUuid value for the series insert
