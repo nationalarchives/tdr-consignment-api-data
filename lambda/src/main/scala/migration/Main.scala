@@ -28,7 +28,7 @@ class Main {
       .build()
 
     val password = rdsClient.generateAuthenticationToken(request)
-    val url = s"${config.url}?ssl=true&sslrootcert=${getClass.getResource("/rds-ca-2019-root.pem").getPath}&sslmode=verify-full"
+    val url = s"${config.url}?ssl=true&sslrootcert=${getClass.getResource("/rds-eu-west-2-bundle.pem").getPath}&sslmode=verify-full"
     val flyway = Flyway.configure()
       .dataSource(url, config.username, password)
       .load()
