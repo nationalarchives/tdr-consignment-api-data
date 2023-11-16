@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 14.9 (Debian 14.9-1.pgdg120+1)
+-- Dumped from database version 14.10 (Debian 14.10-1.pgdg120+1)
 -- Dumped by pg_dump version 14.9 (Ubuntu 14.9-1.pgdg22.04+1)
 
 SET statement_timeout = 0;
@@ -240,7 +240,7 @@ ALTER TABLE public."File" OWNER TO tdr;
 --
 
 CREATE TABLE public."FileMetadata" (
-    "MetadataId" uuid NOT NULL,
+    "MetadataId" uuid DEFAULT public.uuid_generate_v4() NOT NULL,
     "FileId" uuid NOT NULL,
     "Value" text NOT NULL,
     "Datetime" timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
