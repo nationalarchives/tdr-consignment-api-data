@@ -4,7 +4,7 @@ import ReleaseTransformations._
 import xerial.sbt.Sonatype.autoImport.sonatypePublishToBundle
 import java.io.FileWriter
 
-ThisBuild / scalaVersion     := "2.13.12"
+ThisBuild / scalaVersion     := "2.13.13"
 ThisBuild / version := (ThisBuild / version).value
 ThisBuild / organization     := "uk.gov.nationalarchives"
 ThisBuild / organizationName := "National Archives"
