@@ -4,7 +4,7 @@ import ReleaseTransformations._
 import xerial.sbt.Sonatype.autoImport.sonatypePublishToBundle
 import java.io.FileWriter
 
-ThisBuild / scalaVersion     := "2.13.12"
+ThisBuild / scalaVersion     := "2.13.13"
 ThisBuild / version := (ThisBuild / version).value
 ThisBuild / organization     := "uk.gov.nationalarchives"
 ThisBuild / organizationName := "National Archives"
@@ -28,7 +28,7 @@ ThisBuild / description := "Slick classes generated from the database schema for
 ThisBuild / licenses := List("MIT" -> new URL("https://choosealicense.com/licenses/mit/"))
 ThisBuild / homepage := Some(url("https://github.com/nationalarchives/tdr-consignment-api-data"))
 
-val slickVersion = "3.4.1"
+val slickVersion = "3.5.0"
 
 lazy val databasePort = sys.env.getOrElse("DB_PORT", "5432")
 lazy val databaseUrl = s"jdbc:postgresql://localhost:$databasePort/consignmentapi"
