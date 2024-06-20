@@ -8,7 +8,6 @@ DO $$
 
         -- Use the returned bodyUuid value for the series insert
         INSERT INTO "Series" ("SeriesId", "BodyId", "Code", "Name", "Description") VALUES
-            (uuid_generate_v4(), bodyUuid, 'LD 5', 'LD 5', 'LD 5'),
             (uuid_generate_v4(), bodyUuid, 'LD 5', 'LD 5', 'LD 5');
 
     END $$;
