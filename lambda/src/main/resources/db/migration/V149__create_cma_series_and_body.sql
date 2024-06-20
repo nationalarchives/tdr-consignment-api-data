@@ -2,7 +2,7 @@ DO $$
     DECLARE
         bodyUuid "Body"."BodyId"%TYPE;
     BEGIN
-        -- Insert OFWAT body into the  Body Table
+        -- Insert CMA body into the  Body Table
         INSERT INTO "Body" ("BodyId", "Name", "Description", "TdrCode") VALUES
             (uuid_generate_v4(), 'Competition and Markets Authority (Cma)', 'Competition and Markets Authority (Cma)', 'TDR-CMA') RETURNING "BodyId" INTO bodyUuid;
 
