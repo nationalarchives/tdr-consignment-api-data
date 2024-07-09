@@ -1,6 +1,6 @@
 DO $$
     DECLARE
-        -- Retrieve Electoral body uuid
+        -- Retrieve Electoral Commission body uuid
         EcBodyUuid "Body"."BodyId"%TYPE := (SELECT "BodyId" FROM "Body" WHERE "TdrCode" = 'TDR-EC');
     BEGIN
         -- Use the returned EcBodyUuid value for the series insert
