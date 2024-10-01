@@ -34,8 +34,8 @@ jobs:
         id: publish
         run: |
             PGPASSWORD=password psql -U tdr -h localhost -d consignmentapi -f .github/scripts/create-user.sql
-            git config --global user.email digitalpreservation@nationalarchives.gov.uk
-            git config --global user.name tna-digital-archiving-jenkins
+            git config --global user.email s-GitHubDABot@nationalarchives.gov.uk
+            git config --global user.name tna-da-bot
             git checkout -b $BRANCH_NAME
             git push -u origin $BRANCH_NAME
             sbt flywayMigrate slickCodegen 'release with-defaults'
