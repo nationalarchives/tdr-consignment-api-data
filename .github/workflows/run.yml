@@ -13,6 +13,9 @@ on:
         default: 'intg'
 permissions:
   id-token: write
+
+run-name: Run DB Migrations to ${{inputs.environment}}
+
 jobs:
   run-lambda:
     environment: ${{ github.event.inputs.environment }}
