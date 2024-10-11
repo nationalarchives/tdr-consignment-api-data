@@ -32,3 +32,11 @@ jobs:
       MANAGEMENT_ACCOUNT: ${{ secrets.MANAGEMENT_ACCOUNT }}
       WORKFLOW_PAT: ${{ secrets.WORKFLOW_PAT }}
       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+  db-migration:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: gh workflow run run.yml -f environment=${{inputs.environment}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.WORKFLOW_PAT }}
