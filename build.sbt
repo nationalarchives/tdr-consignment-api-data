@@ -107,7 +107,6 @@ lazy val lambda = (project in file("lambda"))
     )
 
 enablePlugins(FlywayPlugin)
-javacOptions ++= Seq("-source", "17", "-target", "17")
 
 flywayUrl := s"jdbc:postgresql://localhost:$databasePort/consignmentapi"
 flywayUser := "tdr"
