@@ -23,6 +23,10 @@ jobs:
       - uses: actions/checkout@v3
         with:
           ref: 'master'
+      - uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: 'temurin'
       - name: Create migrations user
         run: PGPASSWORD=password psql -U tdr -h localhost -d consignmentapi -f .github/scripts/create-user.sql
       - name: Run migrate for master
