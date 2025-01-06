@@ -86,13 +86,15 @@ lazy val root = (project in file("."))
     )
   ).enablePlugins(CodegenPlugin)
 
+val flywayVersion = "11.1.0"
 
 lazy val lambda = (project in file("lambda"))
     .settings(
       name := "tdr-database-migration-lambda",
       libraryDependencies ++= Seq(
-        "org.flywaydb" % "flyway-core" % "11.0.1",
-        "software.amazon.awssdk" % "rds" % "2.29.32",
+        "org.flywaydb" % "flyway-core" % flywayVersion,
+        "org.flywaydb" % "flyway-database-postgresql" % flywayVersion,
+        "software.amazon.awssdk" % "rds" % "2.29.45",
         "org.postgresql" % "postgresql" % "42.7.4",
         "com.github.pureconfig" %% "pureconfig" % "0.17.8"
       ),

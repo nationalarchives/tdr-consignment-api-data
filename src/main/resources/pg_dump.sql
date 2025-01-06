@@ -2,12 +2,13 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 14.12 (Debian 14.12-1.pgdg120+1)
--- Dumped by pg_dump version 14.12 (Ubuntu 14.12-1.pgdg22.04+1)
+-- Dumped from database version 17.2 (Debian 17.2-1.pgdg120+1)
+-- Dumped by pg_dump version 17.2 (Ubuntu 17.2-1.pgdg22.04+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
+SET transaction_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
@@ -346,7 +347,7 @@ CREATE SEQUENCE public.consignment_sequence_id
     CACHE 1;
 
 
-ALTER TABLE public.consignment_sequence_id OWNER TO tdr;
+ALTER SEQUENCE public.consignment_sequence_id OWNER TO tdr;
 
 --
 -- Name: flyway_schema_history; Type: TABLE; Schema: public; Owner: tdr
@@ -728,6 +729,28 @@ ALTER TABLE ONLY public."File"
 
 ALTER TABLE ONLY public."Series"
     ADD CONSTRAINT "Series_Body_fkey" FOREIGN KEY ("BodyId") REFERENCES public."Body"("BodyId");
+
+
+--
+-- Name: SCHEMA public; Type: ACL; Schema: -; Owner: pg_database_owner
+--
+
+GRANT USAGE ON SCHEMA public TO migrations_user;
+GRANT USAGE ON SCHEMA public TO consignment_api_user;
+
+
+--
+-- Name: DEFAULT PRIVILEGES FOR SEQUENCES; Type: DEFAULT ACL; Schema: public; Owner: migrations_user
+--
+
+ALTER DEFAULT PRIVILEGES FOR ROLE migrations_user IN SCHEMA public GRANT ALL ON SEQUENCES TO consignment_api_user;
+
+
+--
+-- Name: DEFAULT PRIVILEGES FOR TABLES; Type: DEFAULT ACL; Schema: public; Owner: migrations_user
+--
+
+ALTER DEFAULT PRIVILEGES FOR ROLE migrations_user IN SCHEMA public GRANT SELECT,INSERT,DELETE,UPDATE ON TABLES TO consignment_api_user;
 
 
 --
