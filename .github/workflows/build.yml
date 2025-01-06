@@ -11,6 +11,7 @@ jobs:
       repo-name: tdr-consignment-api-data
       artifact-name: db-migrations
       artifact-path: lambda/target/scala-2.13
+      java-version: '17'
       build-command: |
         wget -O lambda/src/main/resources/rds-eu-west-2-bundle.pem https://truststore.pki.rds.amazonaws.com/eu-west-2/eu-west-2-bundle.pem
         sbt lambda/assembly
