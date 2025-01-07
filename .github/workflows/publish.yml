@@ -37,30 +37,4 @@ jobs:
       - name: Publish
         id: publish
         run: |
-            PGPASSWORD=password psql -U tdr -h localhost -d consignmentapi -f .github/scripts/create-user.sql
-            git config --global user.email 181243999+tna-da-bot@users.noreply.github.com
-            git config --global user.name tna-da-bot
-            git checkout -b $BRANCH_NAME
-            git push -u origin $BRANCH_NAME
-            sbt flywayMigrate slickCodegen 'release with-defaults'
-        env:
-          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
-          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
-      - name: Release to GitHub
-        run: gh release create --generate-notes ${{ steps.publish.outputs.latest-tag}} lambda/target/scala-2.13/db-migrations.jar
-        env:
-          GITHUB_TOKEN: ${{ secrets.WORKFLOW_PAT }}
-      - name: Send success message
-        uses: nationalarchives/tdr-github-actions/.github/actions/slack-send@main
-        with:
-          message: "*Database schema* :arrow_up: The database package has been published"
-          slack-url: ${{ secrets.SLACK_WEBHOOK }}
-      - name: Publish new sql file
-        run: |
-            PGPASSWORD=password pg_dump -s -d consignmentapi -U tdr -h localhost > src/main/resources/pg_dump.sql
-            git add src/main/resources/pg_dump.sql
-            git commit -m 'Add the latest sql script' || true
-            git push -u origin $BRANCH_NAME
-            gh pr create --fill --label 'Version bump'
-        env:
-          GITHUB_TOKEN: ${{ secrets.WORKFLOW_PAT }}
+            pg_dump --version    
