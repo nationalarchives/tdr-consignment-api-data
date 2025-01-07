@@ -37,4 +37,5 @@ jobs:
       - name: Publish
         id: publish
         run: |
-            pg_dump --version    
+            pg_dump --version
+            postgres --version
