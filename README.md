@@ -24,6 +24,43 @@ To run migrations locally, run `sbt flywayMigrate`.
 
 To undo what was done by the migrations, run `sbt flywayClean`.
 
+## Running locally from Jar
+
+Running locally from the jar reproduces how the lambda functions on AWS.
+
+This can be useful for testing changes and debugging issues.
+
+To do this:
+1. Set up locally running Postgres DB: 
+  ```
+     docker run --name postgres -p 5432:5432 -e POSTGRES_USER=tdr -e POSTGRES_PASSWORD=password -e POSTGRES_DB=consignmentapi -d postgres:{version}
+  ```
+2. Adjust the lambda code to point to the locally running DB:
+  * In the `Main.scala` change the code to:
+    ```
+      ...
+        val url = s"jdbc:postgresql://localhost:5432/consignmentapi"
+        val flyway = Flyway.configure()
+          .dataSource(url, "tdr", "password")
+          .load()
+
+        flyway.migrate()        
+      }
+    }
+    ...
+    object Main extends App {
+      val lambda: Unit = new Main().runMigration()
+    }
+    ```
+  * Add the `host` value to the `application.conf` to allow the build to run: `host = "localhost"`    
+3. Build the jar locally:
+  ```
+    sbt lambda/assembly
+  ```
+4. Then run the jar either:
+  * From the command line: `java -jar db-migrations.jar`; or
+  * In Intellij. Running in Intellij allows for debugging of the jar code.
+
 ### Deployment
 
 Run the following GitHub actions: 
