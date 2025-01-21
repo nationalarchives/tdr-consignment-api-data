@@ -4,7 +4,7 @@ import ReleaseTransformations._
 import xerial.sbt.Sonatype.autoImport.sonatypePublishToBundle
 import java.io.FileWriter
 
-ThisBuild / scalaVersion     := "2.13.15"
+ThisBuild / scalaVersion     := "2.13.16"
 ThisBuild / version := (ThisBuild / version).value
 ThisBuild / organization     := "uk.gov.nationalarchives"
 ThisBuild / organizationName := "National Archives"
@@ -93,7 +93,7 @@ lazy val lambda = (project in file("lambda"))
       libraryDependencies ++= Seq(
         "org.flywaydb" % "flyway-core" % "9.4.0",
         "software.amazon.awssdk" % "rds" % "2.17.289",
-        "org.postgresql" % "postgresql" % "42.7.4",
+        "org.postgresql" % "postgresql" % "42.7.5",
         "com.github.pureconfig" %% "pureconfig" % "0.17.1"
       ),
       (assembly / assemblyMergeStrategy) := {
