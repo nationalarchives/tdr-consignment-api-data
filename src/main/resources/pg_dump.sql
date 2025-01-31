@@ -102,7 +102,8 @@ CREATE TABLE public."Consignment" (
     "IncludeTopLevelFolder" boolean,
     "SeriesName" text,
     "TransferringBodyName" text,
-    "TransferringBodyTdrCode" text
+    "TransferringBodyTdrCode" text,
+    "SchemaLibraryVersion" text
 );
 
 
