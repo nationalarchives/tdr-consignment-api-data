@@ -1,3 +1,3 @@
 ALTER TABLE "Consignment"
-    ADD COLUMN "SchemaLibraryVersion" text;
+    ADD COLUMN "MetadataSchemaLibraryVersion" text;
 
