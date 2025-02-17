@@ -3,7 +3,7 @@
 --
 
 -- Dumped from database version 17.2 (Debian 17.2-1.pgdg120+1)
--- Dumped by pg_dump version 17.2 (Ubuntu 17.2-1.pgdg22.04+1)
+-- Dumped by pg_dump version 17.2 (Ubuntu 17.2-1.pgdg24.04+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -102,7 +102,8 @@ CREATE TABLE public."Consignment" (
     "IncludeTopLevelFolder" boolean,
     "SeriesName" text,
     "TransferringBodyName" text,
-    "TransferringBodyTdrCode" text
+    "TransferringBodyTdrCode" text,
+    "MetadataSchemaLibraryVersion" text
 );
 
 

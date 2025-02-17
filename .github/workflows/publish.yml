@@ -21,6 +21,7 @@ jobs:
         ports:
           - 5432:5432
     steps:
+      - uses: sbt/setup-sbt@v1
       - uses: actions/checkout@v3
       - uses: actions/setup-java@v3
         with:
@@ -58,7 +59,6 @@ jobs:
       - name: Upgrade PG Dump
         id: upgrade_pg_dump
         run: |
-          sudo apt-get purge --auto-remove postgresql-14
           sudo apt install curl ca-certificates
           sudo install -d /usr/share/postgresql-common/pgdg
           sudo curl -o /usr/share/postgresql-common/pgdg/apt.postgresql.org.asc --fail https://www.postgresql.org/media/keys/ACCC4CF8.asc
