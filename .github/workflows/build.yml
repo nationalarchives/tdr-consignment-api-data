@@ -8,6 +8,7 @@ jobs:
     uses: nationalarchives/tdr-github-actions/.github/workflows/lambda_build.yml@main
     if: ${{ github.base_ref == 'master' && github.event.pull_request.merged == true && !contains(github.event.pull_request.labels.*.name, 'Version bump') }}
     with:
+      lambda-name: database-migrations
       repo-name: tdr-consignment-api-data
       artifact-name: db-migrations
       artifact-path: lambda/target/scala-2.13
