@@ -28,7 +28,7 @@ ThisBuild / description := "Slick classes generated from the database schema for
 ThisBuild / licenses := List("MIT" -> new URL("https://choosealicense.com/licenses/mit/"))
 ThisBuild / homepage := Some(url("https://github.com/nationalarchives/tdr-consignment-api-data"))
 
-val slickVersion = "3.5.2"
+val slickVersion = "3.6.0"
 
 lazy val databasePort = sys.env.getOrElse("DB_PORT", "5432")
 lazy val databaseUrl = s"jdbc:postgresql://localhost:$databasePort/consignmentapi"
@@ -86,7 +86,7 @@ lazy val root = (project in file("."))
     )
   ).enablePlugins(CodegenPlugin)
 
-val flywayVersion = "11.3.4"
+val flywayVersion = "11.4.0"
 
 lazy val lambda = (project in file("lambda"))
     .settings(
