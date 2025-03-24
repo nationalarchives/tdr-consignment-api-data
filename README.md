@@ -1,7 +1,7 @@
 # Consignment API data
 
 This project is part of [Transfer Digital Records][tdr]. It provides tools for working with the consignment database:
- 
+
 * Database migrations
 * Scala code generation
 
@@ -14,7 +14,7 @@ This project is part of [Transfer Digital Records][tdr]. It provides tools for w
 * Add a sql file to `lambda/src/main/resources/db/migration` with a prefix of `V\d__something.sql`
 
 The name of the migration should use snake_case, e.g. V123__add_date_column_to_series_table, because Flyway expects this
-format when it generates the migration name. 
+format when it generates the migration name.
 
 To see the list of migrations detected and ensure that your migration will be run, run `sbt flywayInfo`.
 
@@ -31,39 +31,38 @@ Running locally from the jar reproduces how the lambda functions on AWS.
 This can be useful for testing changes and debugging issues.
 
 To do this:
-1. Set up locally running Postgres DB: 
-  ```
-     docker run --name postgres -p 5432:5432 -e POSTGRES_USER=tdr -e POSTGRES_PASSWORD=password -e POSTGRES_DB=consignmentapi -d postgres:{version}
-  ```
+1. Set up locally running Postgres DB:
+    ```bash
+    docker run --name postgres -p 5432:5432 -e POSTGRES_USER=tdr -e POSTGRES_PASSWORD=password -e POSTGRES_DB=consignmentapi -d postgres:{version}
+    ```
 2. Adjust the lambda code to point to the locally running DB:
-  * In the `Main.scala` change the code to:
-    ```
-      ...
-        val url = s"jdbc:postgresql://localhost:5432/consignmentapi"
-        val flyway = Flyway.configure()
-          .dataSource(url, "tdr", "password")
-          .load()
-
-        flyway.migrate()        
-      }
-    }
+    * In the `Main.scala` change the code to:
+    ```scala
     ...
+    val url = s"jdbc:postgresql://localhost:5432/consignmentapi"
+    val flyway = Flyway.configure()
+        .dataSource(url, "tdr", "password")
+        .load()
+
+    flyway.migrate()        
+    }
+
     object Main extends App {
-      val lambda: Unit = new Main().runMigration()
+        val lambda: Unit = new Main().runMigration()
     }
     ```
-  * Add the `host` value to the `application.conf` to allow the build to run: `host = "localhost"`    
+    * Add the `host` value to the `application.conf` to allow the build to run: `host = "localhost"`
 3. Build the jar locally:
-  ```
+    ```bash
     sbt lambda/assembly
-  ```
+    ```
 4. Then run the jar either:
-  * From the command line: `java -jar db-migrations.jar`; or
-  * In Intellij. Running in Intellij allows for debugging of the jar code.
+    * From the command line: `java -jar db-migrations.jar`; or
+    * In Intellij. Running in Intellij allows for debugging of the jar code.
 
 ### Deployment
 
-Run the following GitHub actions: 
+Run the following GitHub actions:
 
 * TDR Deploy Data Migration Lambda: this builds the migration code and deploys it
   to the Lambda which will run the migrations.
@@ -75,7 +74,7 @@ manually on other environments with the `TDR Deploy Data Migration Lambda` GitHu
 
 * Run a lambda which updates the database within that environment.
 * Use slick codegen to generate slick files based on the database schema.
-* Deploy this code to the S3 release bucket. 
+* Deploy this code to the S3 release bucket.
 
 ## Code generation
 
@@ -99,7 +98,7 @@ This will place a snapshot version of the built project jar in the local .ivy ca
 
 Other sbt projects that have this project as a dependency can access the local snapshot version by changing the version number in their build.sbt file, for example:
 
-```
+```scala
 ... other dependencies...
 "uk.gov.nationalarchives" %% "consignment-api-db" % "[version number]-SNAPSHOT"
 ... other dependences...
