@@ -10,7 +10,7 @@ on:
           - intg
           - staging
           - prod
-          - -test
+          - test
         default: 'test'
       to-deploy:
         description: 'Version to deploy'
