@@ -7,7 +7,6 @@ on:
 jobs:
   pre-deploy:
     uses: nationalarchives/tdr-github-actions/.github/workflows/lambda_build.yml@main
-    if: ${{ github.base_ref == 'test-deploy' && github.event.pull_request.merged == true && !contains(github.event.pull_request.labels.*.name, 'Version bump') }}
     with:
       lambda-name: database-migrations
       repo-name: tdr-consignment-api-data
