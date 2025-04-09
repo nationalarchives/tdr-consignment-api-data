@@ -1,5 +1,6 @@
 name: TDR Tag and pre deploy
 on:
+  workflow_dispatch:
   pull_request:
     types:
       - closed
@@ -24,6 +25,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - run: gh workflow run deploy.yml -f environment=intg -f to-deploy=${{ needs.pre-deploy.outputs.next-version }}
+      - run: gh workflow run --ref=test-deploy deploy.yml -f environment=test -f to-deploy=${{ needs.pre-deploy.outputs.next-version }}
         env:
           GITHUB_TOKEN: ${{ secrets.WORKFLOW_PAT }}
