@@ -36,7 +36,7 @@ jobs:
     needs: deploy
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
       - run: gh workflow run run.yml -f environment=${{inputs.environment}}
         env:
           GITHUB_TOKEN: ${{ secrets.WORKFLOW_PAT }}
