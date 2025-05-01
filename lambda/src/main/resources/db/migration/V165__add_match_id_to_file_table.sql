@@ -1,2 +1,2 @@
 ALTER TABLE "File"
-    ADD COLUMN "matchId" text;
+    ADD COLUMN "UploadMatchId" text;
