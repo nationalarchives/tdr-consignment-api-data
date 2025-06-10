@@ -35,7 +35,7 @@ DO $$
                        codes."FileId",
                        codes.combined_value,
                        codes.latest_datetime,
-                       CAST(codes."UserId" AS text)::uuid,
+                       codes."UserId",
                        'FoiExemptionCode'
                 FROM combine_foi_exemption_codes codes;
 
@@ -72,7 +72,7 @@ DO $$
                        cl."FileId",
                        cl.combined_value,
                        cl.latest_datetime,
-                       CAST(cl."UserId" AS text)::uuid,
+                       cl."UserId",
                        'Language'
                 FROM combine_languages cl;
 
