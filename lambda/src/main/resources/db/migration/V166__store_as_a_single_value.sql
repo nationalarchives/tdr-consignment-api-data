@@ -22,7 +22,7 @@ DO $$
                                         GROUP BY "FileId", "UserId"),
 
         -- Delete the old FoiExemptionCode rows
-        deleted_exemptions AS (
+        deleted_foi_exemption_codes AS (
             DELETE FROM "FileMetadata"
                 WHERE "PropertyName" = 'FoiExemptionCode'
                     AND "FileId" IN (SELECT "FileId" FROM multi_foi_exemption_codes)
@@ -59,7 +59,7 @@ DO $$
                               GROUP BY "FileId", "UserId"),
 
         -- Delete the old Language rows
-        deleted_rows AS (
+        deleted_languages AS (
             DELETE FROM "FileMetadata"
                 WHERE "PropertyName" = 'Language'
                     AND "FileId" IN (SELECT "FileId" FROM multi_languages)
