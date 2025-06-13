@@ -95,7 +95,7 @@ lazy val lambda = (project in file("lambda"))
         "org.flywaydb" % "flyway-core" % flywayVersion,
         "org.flywaydb" % "flyway-database-postgresql" % flywayVersion,
         "software.amazon.awssdk" % "rds" % "2.29.45",
-        "org.postgresql" % "postgresql" % "42.7.6",
+        "org.postgresql" % "postgresql" % "42.7.7",
         "com.github.pureconfig" %% "pureconfig" % "0.17.8"
       ),
       (assembly / assemblyMergeStrategy) := {
