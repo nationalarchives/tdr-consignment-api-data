@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 17.4 (Debian 17.4-1.pgdg120+2)
--- Dumped by pg_dump version 17.4 (Ubuntu 17.4-1.pgdg24.04+2)
+-- Dumped from database version 17.5 (Debian 17.5-1.pgdg120+1)
+-- Dumped by pg_dump version 17.5 (Ubuntu 17.5-1.pgdg24.04+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -169,20 +169,6 @@ CREATE TABLE public."DisallowedPuids" (
 
 
 ALTER TABLE public."DisallowedPuids" OWNER TO tdr;
-
---
--- Name: DisplayProperties; Type: TABLE; Schema: public; Owner: tdr
---
-
-CREATE TABLE public."DisplayProperties" (
-    "PropertyName" text,
-    "Attribute" text,
-    "Value" text,
-    "AttributeType" text
-);
-
-
-ALTER TABLE public."DisplayProperties" OWNER TO tdr;
 
 --
 -- Name: FFIDMetadata; Type: TABLE; Schema: public; Owner: tdr
@@ -652,14 +638,6 @@ ALTER TABLE ONLY public."Consignment"
 
 ALTER TABLE ONLY public."Consignment"
     ADD CONSTRAINT "Consignment_Series_fkey" FOREIGN KEY ("SeriesId") REFERENCES public."Series"("SeriesId");
-
-
---
--- Name: DisplayProperties DisplayProperties_FileProperty_PropertyName_fkey; Type: FK CONSTRAINT; Schema: public; Owner: tdr
---
-
-ALTER TABLE ONLY public."DisplayProperties"
-    ADD CONSTRAINT "DisplayProperties_FileProperty_PropertyName_fkey" FOREIGN KEY ("PropertyName") REFERENCES public."FileProperty"("Name");
 
 
 --
