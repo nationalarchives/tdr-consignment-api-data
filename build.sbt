@@ -1,7 +1,7 @@
 import com.github.tototoshi.sbt.slick.CodegenPlugin.autoImport.slickCodegenDatabaseUrl
 import sbt.Keys.{libraryDependencies, publishTo}
 import ReleaseTransformations._
-import xerial.sbt.Sonatype.autoImport.sonatypePublishToBundle
+import sbt.internal.librarymanagement.Publishing.sonaRelease
 import java.io.FileWriter
 
 ThisBuild / scalaVersion     := "2.13.16"
@@ -43,10 +43,6 @@ setLatestTagOutput := {
   fileWriter.close()
 }
 
-resolvers +=
-  "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
-
-
 lazy val root = (project in file("."))
   .settings(
 
@@ -66,7 +62,11 @@ lazy val root = (project in file("."))
     slickCodegenOutputDir := (Compile / scalaSource).value,
     releaseIgnoreUntrackedFiles := true,
     useGpgPinentry := true,
-    publishTo := sonatypePublishToBundle.value,
+    publishTo := {
+      val centralSnapshots = "https://central.sonatype.com/repository/maven-snapshots/"
+      if (isSnapshot.value) Some("central-snapshots" at centralSnapshots)
+      else localStaging.value
+    },
     publishMavenStyle := true,
     releaseProcess := Seq[ReleaseStep](
       releaseStepTask(lambda / assembly),
@@ -79,7 +79,7 @@ lazy val root = (project in file("."))
       commitReleaseVersion,
       pushChanges,
       releaseStepCommand("publishSigned"),
-      releaseStepCommand("sonatypeBundleRelease"),
+      releaseStepCommand("sonaRelease"),
       setNextVersion,
       commitNextVersion,
       pushChanges
