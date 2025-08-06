@@ -310,6 +310,21 @@ CREATE TABLE public."FileStatus" (
 ALTER TABLE public."FileStatus" OWNER TO tdr;
 
 --
+-- Name: MetadataReviewLog; Type: TABLE; Schema: public; Owner: tdr
+--
+
+CREATE TABLE public."MetadataReviewLog" (
+    "MetadataReviewLogId" uuid NOT NULL,
+    "ConsignmentId" uuid NOT NULL,
+    "UserId" uuid NOT NULL,
+    "Action" text NOT NULL,
+    "EventTime" timestamp with time zone DEFAULT now() NOT NULL
+);
+
+
+ALTER TABLE public."MetadataReviewLog" OWNER TO tdr;
+
+--
 -- Name: Series; Type: TABLE; Schema: public; Owner: tdr
 --
 
@@ -452,6 +467,14 @@ ALTER TABLE ONLY public."FileStatus"
 
 ALTER TABLE ONLY public."File"
     ADD CONSTRAINT "File_pkey" PRIMARY KEY ("FileId");
+
+
+--
+-- Name: MetadataReviewLog MetadataReviewLog_pkey; Type: CONSTRAINT; Schema: public; Owner: tdr
+--
+
+ALTER TABLE ONLY public."MetadataReviewLog"
+    ADD CONSTRAINT "MetadataReviewLog_pkey" PRIMARY KEY ("MetadataReviewLogId");
 
 
 --
@@ -702,6 +725,14 @@ ALTER TABLE ONLY public."FileStatus"
 
 ALTER TABLE ONLY public."File"
     ADD CONSTRAINT "File_Consignment_fkey" FOREIGN KEY ("ConsignmentId") REFERENCES public."Consignment"("ConsignmentId");
+
+
+--
+-- Name: MetadataReviewLog MetadataReviewLog_Consignment_fkey; Type: FK CONSTRAINT; Schema: public; Owner: tdr
+--
+
+ALTER TABLE ONLY public."MetadataReviewLog"
+    ADD CONSTRAINT "MetadataReviewLog_Consignment_fkey" FOREIGN KEY ("ConsignmentId") REFERENCES public."Consignment"("ConsignmentId");
 
 
 --
