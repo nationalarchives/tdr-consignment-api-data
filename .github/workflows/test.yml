@@ -21,7 +21,7 @@ jobs:
           - 5432:5432
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
-      - uses: sbt/setup-sbt@234370af1319038bf8dc432f8a7e4b83078a1781
+      - uses: sbt/setup-sbt@f20dc1bc1f8be605c44ffbcec6f17f708a4af9d1
         with:
           ref: 'master'
       - uses: actions/setup-java@ae2b61dbc685e60e4427b2e8ed4f0135c6ea8597
