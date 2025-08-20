@@ -20,7 +20,7 @@ jobs:
         ports:
           - 5432:5432
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
       - uses: sbt/setup-sbt@f20dc1bc1f8be605c44ffbcec6f17f708a4af9d1
         with:
           ref: 'master'
@@ -32,6 +32,6 @@ jobs:
         run: PGPASSWORD=password psql -U tdr -h localhost -d consignmentapi -f .github/scripts/create-user.sql
       - name: Run migrate for master
         run: sbt flywayMigrate
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
       - name: Test
         run: sbt flywayMigrate
