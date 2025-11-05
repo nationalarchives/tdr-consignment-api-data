@@ -21,7 +21,7 @@ permissions:
   contents: write
 jobs:
   deploy:
-    uses: nationalarchives/tdr-github-actions/.github/workflows/lambda_deploy.yml@77d3f5c03ca72725da44436301b496b29fd5fbda
+    uses: nationalarchives/tdr-github-actions/.github/workflows/lambda_deploy.yml@1c56dd1e838340ab53c7dc55dbbb974a062a6ae9 # v0.0.6
     with:
       lambda-name: database-migrations
       deployment-package: db-migrations.jar
@@ -36,7 +36,7 @@ jobs:
     needs: deploy
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       - run: gh workflow run run.yml -f environment=${{inputs.environment}}
         env:
           GITHUB_TOKEN: ${{ secrets.WORKFLOW_PAT }}
