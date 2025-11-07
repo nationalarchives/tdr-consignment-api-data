@@ -2,8 +2,10 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 17.5 (Debian 17.5-1.pgdg120+1)
--- Dumped by pg_dump version 17.5 (Ubuntu 17.5-1.pgdg24.04+1)
+\restrict fLULqfI3uLormtJbbGNbzM0nGd0NSDUwJ1pheo6hYexOeg3esbrgoL3lH8aJ1X5
+
+-- Dumped from database version 17.6 (Debian 17.6-2.pgdg13+1)
+-- Dumped by pg_dump version 17.6 (Ubuntu 17.6-2.pgdg24.04+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -502,6 +504,14 @@ ALTER TABLE ONLY public."Consignment"
 
 
 --
+-- Name: FileMetadata UniqueFileMetadataFileIdPropertyName; Type: CONSTRAINT; Schema: public; Owner: tdr
+--
+
+ALTER TABLE ONLY public."FileMetadata"
+    ADD CONSTRAINT "UniqueFileMetadataFileIdPropertyName" UNIQUE ("FileId", "PropertyName");
+
+
+--
 -- Name: ConsignmentStatus consignment_status; Type: CONSTRAINT; Schema: public; Owner: tdr
 --
 
@@ -746,4 +756,6 @@ ALTER TABLE ONLY public."Series"
 --
 -- PostgreSQL database dump complete
 --
+
+\unrestrict fLULqfI3uLormtJbbGNbzM0nGd0NSDUwJ1pheo6hYexOeg3esbrgoL3lH8aJ1X5
 
