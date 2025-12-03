@@ -22,7 +22,7 @@ jobs:
           - 5432:5432
     steps:
       - uses: sbt/setup-sbt@3e125ece5c3e5248e18da9ed8d2cce3d335ec8dd # v1.1.14
-      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
       - uses: actions/setup-java@dded0888837ed1f317902acf8a20df0ad188d165 # v5.0.0
         with:
           java-version: 17
@@ -52,7 +52,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.WORKFLOW_PAT }}
       - name: Send success message
-        uses: nationalarchives/tdr-github-actions/.github/actions/slack-send@77d3f5c03ca72725da44436301b496b29fd5fbda
+        uses: nationalarchives/tdr-github-actions/.github/actions/slack-send@5d4fee21ed08f053613a7706e28623c0adc0f5f4
         with:
           message: "*Database schema* :arrow_up: The database package has been published"
           slack-url: ${{ secrets.SLACK_WEBHOOK }}
