@@ -2,10 +2,10 @@
 -- PostgreSQL database dump
 --
 
-\restrict fLULqfI3uLormtJbbGNbzM0nGd0NSDUwJ1pheo6hYexOeg3esbrgoL3lH8aJ1X5
+\restrict T9dfuyh38k1dQ5NDBc7gWCCUJCTny8eyUAWGuP5Ns6IHOcbRNc4ZEw9jfDm5Alm
 
--- Dumped from database version 17.6 (Debian 17.6-2.pgdg13+1)
--- Dumped by pg_dump version 17.6 (Ubuntu 17.6-2.pgdg24.04+1)
+-- Dumped from database version 17.7 (Debian 17.7-3.pgdg13+1)
+-- Dumped by pg_dump version 17.7 (Ubuntu 17.7-3.pgdg24.04+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -254,47 +254,11 @@ CREATE TABLE public."FileProperty" (
     "FullName" text,
     "CreatedDatetime" timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
     "ModifiedDatetime" timestamp with time zone,
-    "PropertyType" text,
-    "Datatype" text,
-    "Editable" boolean,
-    "MultiValue" boolean,
-    "PropertyGroup" text,
-    "UIOrdinal" integer,
-    "ExportOrdinal" smallint,
-    "AllowExport" boolean DEFAULT false NOT NULL
+    "Datatype" text
 );
 
 
 ALTER TABLE public."FileProperty" OWNER TO tdr;
-
---
--- Name: FilePropertyDependencies; Type: TABLE; Schema: public; Owner: tdr
---
-
-CREATE TABLE public."FilePropertyDependencies" (
-    "GroupId" integer NOT NULL,
-    "PropertyName" text NOT NULL,
-    "Default" text
-);
-
-
-ALTER TABLE public."FilePropertyDependencies" OWNER TO tdr;
-
---
--- Name: FilePropertyValues; Type: TABLE; Schema: public; Owner: tdr
---
-
-CREATE TABLE public."FilePropertyValues" (
-    "PropertyName" text NOT NULL,
-    "PropertyValue" text NOT NULL,
-    "Default" boolean,
-    "Dependencies" integer,
-    "SecondaryValue" integer,
-    "Ordinal" integer
-);
-
-
-ALTER TABLE public."FilePropertyValues" OWNER TO tdr;
 
 --
 -- Name: FileStatus; Type: TABLE; Schema: public; Owner: tdr
@@ -591,20 +555,6 @@ CREATE INDEX filemetadata_fileid_propertyname_idx ON public."FileMetadata" USING
 
 
 --
--- Name: fileproperty_allowexport_idx; Type: INDEX; Schema: public; Owner: tdr
---
-
-CREATE INDEX fileproperty_allowexport_idx ON public."FileProperty" USING btree ("AllowExport");
-
-
---
--- Name: fileproperty_exportordinal_idx; Type: INDEX; Schema: public; Owner: tdr
---
-
-CREATE INDEX fileproperty_exportordinal_idx ON public."FileProperty" USING btree ("ExportOrdinal");
-
-
---
 -- Name: filestatus_allfields_idx; Type: INDEX; Schema: public; Owner: tdr
 --
 
@@ -706,22 +656,6 @@ ALTER TABLE ONLY public."FileMetadata"
 
 
 --
--- Name: FilePropertyDependencies FilePropertyDependencies_FileProperty_PropertyName_fkey; Type: FK CONSTRAINT; Schema: public; Owner: tdr
---
-
-ALTER TABLE ONLY public."FilePropertyDependencies"
-    ADD CONSTRAINT "FilePropertyDependencies_FileProperty_PropertyName_fkey" FOREIGN KEY ("PropertyName") REFERENCES public."FileProperty"("Name");
-
-
---
--- Name: FilePropertyValues FilePropertyValues_FileProperty_PropertyName_fkey; Type: FK CONSTRAINT; Schema: public; Owner: tdr
---
-
-ALTER TABLE ONLY public."FilePropertyValues"
-    ADD CONSTRAINT "FilePropertyValues_FileProperty_PropertyName_fkey" FOREIGN KEY ("PropertyName") REFERENCES public."FileProperty"("Name");
-
-
---
 -- Name: FileStatus FileStatus_File_fkey; Type: FK CONSTRAINT; Schema: public; Owner: tdr
 --
 
@@ -757,5 +691,5 @@ ALTER TABLE ONLY public."Series"
 -- PostgreSQL database dump complete
 --
 
-\unrestrict fLULqfI3uLormtJbbGNbzM0nGd0NSDUwJ1pheo6hYexOeg3esbrgoL3lH8aJ1X5
+\unrestrict T9dfuyh38k1dQ5NDBc7gWCCUJCTny8eyUAWGuP5Ns6IHOcbRNc4ZEw9jfDm5Alm
 
