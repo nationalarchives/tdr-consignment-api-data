@@ -4,7 +4,7 @@ import ReleaseTransformations._
 import sbt.internal.librarymanagement.Publishing.sonaRelease
 import java.io.FileWriter
 
-ThisBuild / scalaVersion     := "2.13.17"
+ThisBuild / scalaVersion     := "2.13.18"
 ThisBuild / version := (ThisBuild / version).value
 ThisBuild / organization     := "uk.gov.nationalarchives"
 ThisBuild / organizationName := "National Archives"
@@ -86,7 +86,7 @@ lazy val root = (project in file("."))
     )
   ).enablePlugins(CodegenPlugin)
 
-val flywayVersion = "11.16.0"
+val flywayVersion = "11.19.0"
 
 lazy val lambda = (project in file("lambda"))
     .settings(
