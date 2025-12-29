@@ -5,7 +5,7 @@ libraryDependencies ++= Seq(
   "javax.xml.bind" % "jaxb-api" % "2.4.0-b180830.0359",
   "org.postgresql" % "postgresql" % "42.7.8",
   "com.sun.activation" % "javax.activation" % "1.2.0",
-  "org.flywaydb" % "flyway-database-postgresql" % "11.19.0"
+  "org.flywaydb" % "flyway-database-postgresql" % "11.20.0"
 )
 addSbtPlugin("com.github.tototoshi" % "sbt-slick-codegen" % "2.2.0")
 addSbtPlugin("com.github.sbt" % "sbt-release" % "1.4.0")
