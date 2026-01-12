@@ -94,9 +94,9 @@ lazy val lambda = (project in file("lambda"))
       libraryDependencies ++= Seq(
         "org.flywaydb" % "flyway-core" % flywayVersion,
         "org.flywaydb" % "flyway-database-postgresql" % flywayVersion,
-        "software.amazon.awssdk" % "rds" % "2.29.45",
+        "software.amazon.awssdk" % "rds" % "2.41.3",
         "org.postgresql" % "postgresql" % "42.7.8",
-        "com.github.pureconfig" %% "pureconfig" % "0.17.8"
+        "com.github.pureconfig" %% "pureconfig" % "0.17.9"
       ),
       (assembly / assemblyMergeStrategy) := {
         case PathList("META-INF", "services", xs @ _*) => MergeStrategy.concat
