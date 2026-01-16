@@ -86,7 +86,7 @@ lazy val root = (project in file("."))
     )
   ).enablePlugins(CodegenPlugin)
 
-val flywayVersion = "11.20.1"
+val flywayVersion = "11.20.2"
 
 lazy val lambda = (project in file("lambda"))
     .settings(
@@ -95,7 +95,7 @@ lazy val lambda = (project in file("lambda"))
         "org.flywaydb" % "flyway-core" % flywayVersion,
         "org.flywaydb" % "flyway-database-postgresql" % flywayVersion,
         "software.amazon.awssdk" % "rds" % "2.29.45",
-        "org.postgresql" % "postgresql" % "42.7.8",
+        "org.postgresql" % "postgresql" % "42.7.9",
         "com.github.pureconfig" %% "pureconfig" % "0.17.8"
       ),
       (assembly / assemblyMergeStrategy) := {
