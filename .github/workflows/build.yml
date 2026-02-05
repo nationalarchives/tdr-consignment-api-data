@@ -5,7 +5,7 @@ on:
       - closed
 jobs:
   pre-deploy:
-    uses: nationalarchives/tdr-github-actions/.github/workflows/lambda_build.yml@f52edf22c81f568202369a3b31da0277541b0507 # v0.0.11
+    uses: nationalarchives/tdr-github-actions/.github/workflows/lambda_build.yml@cd362ffa9386c007c816bfd15a25b6f0a3c3b3d6 # v0.0.14
     if: ${{ github.base_ref == 'master' && github.event.pull_request.merged == true && !contains(github.event.pull_request.labels.*.name, 'Version bump') }}
     with:
       lambda-name: database-migrations
