@@ -21,7 +21,7 @@ permissions:
   contents: write
 jobs:
   deploy:
-    uses: nationalarchives/tdr-github-actions/.github/workflows/lambda_deploy.yml@b6ba669dcee7fd4ac089c2e9fb234c48ddd93ab5 # v0.0.15
+    uses: nationalarchives/tdr-github-actions/.github/workflows/lambda_deploy.yml@e4f98cd6bbf1281fd0e859fd1457274baf11ac0d # v0.0.18
     with:
       lambda-name: database-migrations
       deployment-package: db-migrations.jar
