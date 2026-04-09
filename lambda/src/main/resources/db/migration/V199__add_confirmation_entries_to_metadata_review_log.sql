@@ -13,4 +13,9 @@ WHERE cs."StatusType" = 'ConfirmTransfer'
     SELECT 1 FROM "MetadataReviewLog" mrl
     WHERE mrl."ConsignmentId" = cs."ConsignmentId"
       AND mrl."Action" = 'Approval'
+)
+  AND NOT EXISTS (
+    SELECT 1 FROM "MetadataReviewLog" mrl
+    WHERE mrl."ConsignmentId" = cs."ConsignmentId"
+      AND mrl."Action" = 'Confirmation'
 );
