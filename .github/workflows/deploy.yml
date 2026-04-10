@@ -16,11 +16,12 @@ on:
         required: true
 
 run-name: Deploying Data Migration Lambda ${{inputs.to-deploy}} to ${{inputs.environment}}
-permissions:
-  id-token: write
-  contents: write
+permissions: {}
 jobs:
   deploy:
+    permissions:
+      id-token: write
+      contents: write
     uses: nationalarchives/tdr-github-actions/.github/workflows/lambda_deploy.yml@27efbc03aaaa9696eea85ab7a9363d6f92733471 # v0.0.34
     with:
       lambda-name: database-migrations
