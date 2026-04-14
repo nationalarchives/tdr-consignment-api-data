@@ -16,12 +16,13 @@ on:
         required: true
 
 run-name: Deploying Data Migration Lambda ${{inputs.to-deploy}} to ${{inputs.environment}}
-permissions:
-  id-token: write
-  contents: write
+permissions: {}
 jobs:
   deploy:
-    uses: nationalarchives/tdr-github-actions/.github/workflows/lambda_deploy.yml@b6ba669dcee7fd4ac089c2e9fb234c48ddd93ab5 # v0.0.15
+    permissions:
+      id-token: write
+      contents: write
+    uses: nationalarchives/tdr-github-actions/.github/workflows/lambda_deploy.yml@27efbc03aaaa9696eea85ab7a9363d6f92733471 # v0.0.34
     with:
       lambda-name: database-migrations
       deployment-package: db-migrations.jar
@@ -34,9 +35,13 @@ jobs:
       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
   db-migration:
     needs: deploy
+    permissions: {}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-      - run: gh workflow run run.yml -f environment=${{inputs.environment}}
+        with:
+          persist-credentials: false
+      - run: gh workflow run run.yml -f environment="$ENVIRONMENT"
         env:
           GITHUB_TOKEN: ${{ secrets.WORKFLOW_PAT }}
+          ENVIRONMENT: ${{ inputs.environment }}
