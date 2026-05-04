@@ -2,10 +2,10 @@
 -- PostgreSQL database dump
 --
 
-\restrict T9dfuyh38k1dQ5NDBc7gWCCUJCTny8eyUAWGuP5Ns6IHOcbRNc4ZEw9jfDm5Alm
+\restrict OLhEtkChlwf4nu9W7Heo9UQJY9ZlAwDaBSehiVTf5oql6p9bxb9p2VYUSsyuPik
 
--- Dumped from database version 17.7 (Debian 17.7-3.pgdg13+1)
--- Dumped by pg_dump version 17.7 (Ubuntu 17.7-3.pgdg24.04+1)
+-- Dumped from database version 17.9 (Debian 17.9-1.pgdg13+1)
+-- Dumped by pg_dump version 17.9 (Ubuntu 17.9-1.pgdg24.04+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -52,21 +52,6 @@ CREATE TABLE public."AVMetadata" (
 
 
 ALTER TABLE public."AVMetadata" OWNER TO tdr;
-
---
--- Name: AllowedPuids; Type: TABLE; Schema: public; Owner: tdr
---
-
-CREATE TABLE public."AllowedPuids" (
-    "PUID" text NOT NULL,
-    "PUID Description" text NOT NULL,
-    "Created Date" timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    "Modified Date" timestamp with time zone,
-    "ConsignmentType" text NOT NULL
-);
-
-
-ALTER TABLE public."AllowedPuids" OWNER TO tdr;
 
 --
 -- Name: Body; Type: TABLE; Schema: public; Owner: tdr
@@ -155,22 +140,6 @@ CREATE TABLE public."ConsignmentStatus" (
 
 
 ALTER TABLE public."ConsignmentStatus" OWNER TO tdr;
-
---
--- Name: DisallowedPuids; Type: TABLE; Schema: public; Owner: tdr
---
-
-CREATE TABLE public."DisallowedPuids" (
-    "PUID" text NOT NULL,
-    "PUID Description" text NOT NULL,
-    "Created Date" timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    "Modified Date" timestamp with time zone,
-    "Reason" text NOT NULL,
-    "Active" boolean DEFAULT true NOT NULL
-);
-
-
-ALTER TABLE public."DisallowedPuids" OWNER TO tdr;
 
 --
 -- Name: FFIDMetadata; Type: TABLE; Schema: public; Owner: tdr
@@ -284,7 +253,8 @@ CREATE TABLE public."MetadataReviewLog" (
     "ConsignmentId" uuid NOT NULL,
     "UserId" uuid NOT NULL,
     "Action" text NOT NULL,
-    "EventTime" timestamp with time zone DEFAULT now() NOT NULL
+    "EventTime" timestamp with time zone DEFAULT now() NOT NULL,
+    "MetadataReviewNotes" character varying(1300)
 );
 
 
@@ -691,5 +661,5 @@ ALTER TABLE ONLY public."Series"
 -- PostgreSQL database dump complete
 --
 
-\unrestrict T9dfuyh38k1dQ5NDBc7gWCCUJCTny8eyUAWGuP5Ns6IHOcbRNc4ZEw9jfDm5Alm
+\unrestrict OLhEtkChlwf4nu9W7Heo9UQJY9ZlAwDaBSehiVTf5oql6p9bxb9p2VYUSsyuPik
 
