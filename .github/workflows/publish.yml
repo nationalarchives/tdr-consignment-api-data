@@ -22,7 +22,7 @@ jobs:
         ports:
           - 5432:5432
     steps:
-      - uses: sbt/setup-sbt@508b753e53cb6095967669e0911487d2b9bc9f41 # v1.1.22
+      - uses: sbt/setup-sbt@93e926cbdb4a428e41b4ef754124ec82925ffdc2 # v1.1.23
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           persist-credentials: false
@@ -60,7 +60,7 @@ jobs:
           LATEST_TAG: ${{ steps.publish.outputs.latest-tag }}
         run: gh release create --generate-notes "$LATEST_TAG" lambda/target/scala-2.13/db-migrations.jar
       - name: Send success message
-        uses: nationalarchives/tdr-github-actions/.github/actions/slack-send@27efbc03aaaa9696eea85ab7a9363d6f92733471
+        uses: nationalarchives/tdr-github-actions/.github/actions/slack-send@c130d20af544843b70e2a0e1a44759d4fabf3a5d
         with:
           message: "*Database schema* :arrow_up: The database package has been published"
           slack-url: ${{ secrets.SLACK_WEBHOOK }}
