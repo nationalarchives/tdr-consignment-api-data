@@ -8,5 +8,5 @@ libraryDependencies ++= Seq(
   "org.flywaydb" % "flyway-database-postgresql" % "12.5.0"
 )
 addSbtPlugin("com.github.tototoshi" % "sbt-slick-codegen" % "2.2.0")
-addSbtPlugin("com.github.sbt" % "sbt-release" % "1.4.0")
+addSbtPlugin("com.github.sbt" % "sbt-release" % "1.5.0")
 addSbtPlugin("com.github.sbt" % "sbt-pgp" % "2.3.1")
