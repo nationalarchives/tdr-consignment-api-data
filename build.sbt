@@ -86,7 +86,7 @@ lazy val root = (project in file("."))
     )
   ).enablePlugins(CodegenPlugin)
 
-val flywayVersion = "12.6.2"
+val flywayVersion = "12.7.0"
 
 lazy val lambda = (project in file("lambda"))
     .settings(
