@@ -10,6 +10,7 @@ on:
           - intg
           - staging
           - prod
+          - dev
         default: 'intg'
 permissions:
   id-token: write
