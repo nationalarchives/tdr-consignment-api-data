@@ -3,22 +3,18 @@ queue_rules:
     batch_size: 1
     queue_conditions:
       - "check-success=test"
-      - "check-success=security/snyk (nationalarchives)"
 pull_request_rules:
-  - name: automatic merge for Scala Steward
+  - name: automatic merge for dependency bots
     conditions:
-      - author=tna-da-bot
-      - "check-success=test"
-      - "check-success=security/snyk (nationalarchives)"
       - or:
-          - files=build.sbt
-          - files~=^(!?project/)
+          - author=tna-da-bot
+          - author=dependabot[bot]
+      - "check-success=test"
     actions:
       review:
         type: APPROVE
-        message: Automatically approving Scala Steward
+        message: Automatically approving dependency bot updates
       queue:
         name: default
 merge_queue:
   max_parallel_checks: 1
-
