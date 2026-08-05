@@ -2,10 +2,10 @@
 -- PostgreSQL database dump
 --
 
-\restrict OLhEtkChlwf4nu9W7Heo9UQJY9ZlAwDaBSehiVTf5oql6p9bxb9p2VYUSsyuPik
+\restrict GEkuBZ8qhvTbArNqqNXhu1hrVZ3V1TehLXlJO0ce9cjHEbBW97IfeEwIvUEbHDE
 
--- Dumped from database version 17.9 (Debian 17.9-1.pgdg13+1)
--- Dumped by pg_dump version 17.9 (Ubuntu 17.9-1.pgdg24.04+1)
+-- Dumped from database version 17.10 (Debian 17.10-1.pgdg13+1)
+-- Dumped by pg_dump version 17.10 (Ubuntu 17.10-1.pgdg24.04+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -191,6 +191,7 @@ CREATE TABLE public."File" (
     "FileReference" text,
     "ParentReference" text,
     "UploadMatchId" text,
+    "AssetId" uuid,
     CONSTRAINT "chk_FileType" CHECK (("FileType" = ANY (ARRAY['File'::text, 'Folder'::text])))
 );
 
@@ -318,6 +319,14 @@ ALTER TABLE ONLY public."Body"
 
 
 --
+-- Name: Series Code_unique; Type: CONSTRAINT; Schema: public; Owner: tdr
+--
+
+ALTER TABLE ONLY public."Series"
+    ADD CONSTRAINT "Code_unique" UNIQUE ("Code");
+
+
+--
 -- Name: ConsignmentMetadata ConMetadataId_pkey; Type: CONSTRAINT; Schema: public; Owner: tdr
 --
 
@@ -419,6 +428,14 @@ ALTER TABLE ONLY public."MetadataReviewLog"
 
 ALTER TABLE ONLY public."Series"
     ADD CONSTRAINT "Series_pkey" PRIMARY KEY ("SeriesId");
+
+
+--
+-- Name: Body TdrCode_unique; Type: CONSTRAINT; Schema: public; Owner: tdr
+--
+
+ALTER TABLE ONLY public."Body"
+    ADD CONSTRAINT "TdrCode_unique" UNIQUE ("TdrCode");
 
 
 --
@@ -661,5 +678,5 @@ ALTER TABLE ONLY public."Series"
 -- PostgreSQL database dump complete
 --
 
-\unrestrict OLhEtkChlwf4nu9W7Heo9UQJY9ZlAwDaBSehiVTf5oql6p9bxb9p2VYUSsyuPik
+\unrestrict GEkuBZ8qhvTbArNqqNXhu1hrVZ3V1TehLXlJO0ce9cjHEbBW97IfeEwIvUEbHDE
 
