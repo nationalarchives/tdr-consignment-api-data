@@ -2,10 +2,10 @@
 -- PostgreSQL database dump
 --
 
-\restrict GEkuBZ8qhvTbArNqqNXhu1hrVZ3V1TehLXlJO0ce9cjHEbBW97IfeEwIvUEbHDE
+\restrict VxTfD3jj2fy7FupCd4flaT8AGSnS7z5qvdcApX3x9WdXa6ryBLQjit3Tx1sxuNR
 
--- Dumped from database version 17.10 (Debian 17.10-1.pgdg13+1)
--- Dumped by pg_dump version 17.10 (Ubuntu 17.10-1.pgdg24.04+1)
+-- Dumped from database version 17.11 (Debian 17.11-1.pgdg13+2)
+-- Dumped by pg_dump version 17.11 (Ubuntu 17.11-1.pgdg24.04+2)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -84,7 +84,7 @@ CREATE TABLE public."Consignment" (
     "ConsignmentSequence" bigint NOT NULL,
     "ConsignmentReference" text NOT NULL,
     "ConsignmentType" text NOT NULL,
-    "BodyId" uuid NOT NULL,
+    "BodyId" uuid,
     "ExportVersion" text,
     "IncludeTopLevelFolder" boolean,
     "SeriesName" text,
@@ -678,5 +678,5 @@ ALTER TABLE ONLY public."Series"
 -- PostgreSQL database dump complete
 --
 
-\unrestrict GEkuBZ8qhvTbArNqqNXhu1hrVZ3V1TehLXlJO0ce9cjHEbBW97IfeEwIvUEbHDE
+\unrestrict VxTfD3jj2fy7FupCd4flaT8AGSnS7z5qvdcApX3x9WdXa6ryBLQjit3Tx1sxuNR
 
