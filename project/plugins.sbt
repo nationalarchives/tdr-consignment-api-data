@@ -1,4 +1,4 @@
-addSbtPlugin("com.eed3si9n" % "sbt-assembly" % "2.4.1")
+addSbtPlugin("com.eed3si9n" % "sbt-assembly" % "2.4.2")
 addSbtPlugin("org.scalastyle" %% "scalastyle-sbt-plugin" % "1.0.0")
 addSbtPlugin("com.github.sbt" % "flyway-sbt" % "12.0.0")
 libraryDependencies ++= Seq(
