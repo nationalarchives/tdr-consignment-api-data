@@ -1,12 +1,12 @@
-addSbtPlugin("com.eed3si9n" % "sbt-assembly" % "2.4.1")
+addSbtPlugin("com.eed3si9n" % "sbt-assembly" % "2.4.2")
 addSbtPlugin("org.scalastyle" %% "scalastyle-sbt-plugin" % "1.0.0")
 addSbtPlugin("com.github.sbt" % "flyway-sbt" % "12.0.0")
 libraryDependencies ++= Seq(
   "javax.xml.bind" % "jaxb-api" % "2.4.0-b180830.0359",
   "org.postgresql" % "postgresql" % "42.7.13",
   "com.sun.activation" % "javax.activation" % "1.2.0",
-  "org.flywaydb" % "flyway-database-postgresql" % "13.2.0"
+  "org.flywaydb" % "flyway-database-postgresql" % "13.5.0"
 )
 addSbtPlugin("com.github.tototoshi" % "sbt-slick-codegen" % "2.2.0")
 addSbtPlugin("com.github.sbt" % "sbt-release" % "1.5.0")
-addSbtPlugin("com.github.sbt" % "sbt-pgp" % "2.3.1")
+addSbtPlugin("com.github.sbt" % "sbt-pgp" % "2.3.2")
