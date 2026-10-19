@@ -1,7 +1,7 @@
 import com.github.tototoshi.sbt.slick.CodegenPlugin.autoImport.slickCodegenDatabaseUrl
 import sbt.Keys.{libraryDependencies, publishTo}
-import ReleaseTransformations._
-import sbt.internal.librarymanagement.Publishing.sonaRelease
+import sbtrelease.ReleasePlugin.autoImport.ReleaseTransformations.*
+
 import java.io.FileWriter
 
 ThisBuild / scalaVersion     := "2.13.18"
@@ -25,7 +25,7 @@ developers := List(
 )
 
 ThisBuild / description := "Slick classes generated from the database schema for the Transfer Digital Records service"
-ThisBuild / licenses := List("MIT" -> new URL("https://choosealicense.com/licenses/mit/"))
+ThisBuild / licenses := List(License.MIT)
 ThisBuild / homepage := Some(url("https://github.com/nationalarchives/tdr-consignment-api-data"))
 
 val slickVersion = "3.6.1"
@@ -86,7 +86,7 @@ lazy val root = (project in file("."))
     )
   ).enablePlugins(CodegenPlugin)
 
-val flywayVersion = "13.5.0"
+val flywayVersion = "13.10.3"
 
 lazy val lambda = (project in file("lambda"))
     .settings(
@@ -94,9 +94,9 @@ lazy val lambda = (project in file("lambda"))
       libraryDependencies ++= Seq(
         "org.flywaydb" % "flyway-core" % flywayVersion,
         "org.flywaydb" % "flyway-database-postgresql" % flywayVersion,
-        "software.amazon.awssdk" % "rds" % "2.51.0",
-        "org.postgresql" % "postgresql" % "42.7.13",
-        "com.github.pureconfig" %% "pureconfig" % "0.17.10"
+        "software.amazon.awssdk" % "rds" % "2.56.0",
+        "org.postgresql" % "postgresql" % "42.7.14",
+        "com.github.pureconfig" %% "pureconfig" % "0.17.11"
       ),
       (assembly / assemblyMergeStrategy) := {
         case PathList("META-INF", "services", xs @ _*) => MergeStrategy.concat
