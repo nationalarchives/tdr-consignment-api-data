@@ -1,7 +1,7 @@
 import com.github.tototoshi.sbt.slick.CodegenPlugin.autoImport.slickCodegenDatabaseUrl
 import sbt.Keys.{libraryDependencies, publishTo}
-import ReleaseTransformations._
-import sbt.internal.librarymanagement.Publishing.sonaRelease
+import sbtrelease.ReleasePlugin.autoImport.ReleaseTransformations.*
+
 import java.io.FileWriter
 
 ThisBuild / scalaVersion     := "2.13.18"
@@ -25,7 +25,7 @@ developers := List(
 )
 
 ThisBuild / description := "Slick classes generated from the database schema for the Transfer Digital Records service"
-ThisBuild / licenses := List("MIT" -> new URL("https://choosealicense.com/licenses/mit/"))
+ThisBuild / licenses := List(License.MIT)
 ThisBuild / homepage := Some(url("https://github.com/nationalarchives/tdr-consignment-api-data"))
 
 val slickVersion = "3.6.1"
