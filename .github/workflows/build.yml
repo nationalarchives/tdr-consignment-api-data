@@ -9,7 +9,7 @@ jobs:
     permissions:
       id-token: write
       contents: write
-    uses: nationalarchives/tdr-github-actions/.github/workflows/lambda_build.yml@51a06bbc08eb65018238b144d0ad8bfd707a8ffa # v0.0.50
+    uses: nationalarchives/tdr-github-actions/.github/workflows/lambda_build.yml@5a96b84cf82bce1371168cc31cb89f88cad86763 # v0.0.53
     if: ${{ github.base_ref == 'master' && github.event.pull_request.merged == true && !contains(github.event.pull_request.labels.*.name, 'Version bump') }}
     with:
       lambda-name: database-migrations
