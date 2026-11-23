@@ -60,7 +60,7 @@ jobs:
           LATEST_TAG: ${{ steps.publish.outputs.latest-tag }}
         run: gh release create --generate-notes "$LATEST_TAG" lambda/target/scala-2.13/db-migrations.jar
       - name: Send success message
-        uses: nationalarchives/tdr-github-actions/.github/actions/slack-send@f563794aa48b4ea16cae01caf704aa241a37539f
+        uses: nationalarchives/tdr-github-actions/.github/actions/slack-send@51a06bbc08eb65018238b144d0ad8bfd707a8ffa
         with:
           message: "*Database schema* :arrow_up: The database package has been published"
           slack-url: ${{ secrets.SLACK_WEBHOOK }}
