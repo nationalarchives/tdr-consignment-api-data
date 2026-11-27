@@ -1,5 +1,23 @@
 name: TDR Tag and pre deploy
 on:
+  workflow_dispatch:
+    inputs:
+      snapshot:
+        description: 'Build a dev snapshot from the current branch instead of the next release version'
+        type: boolean
+        required: false
+        default: false
+      environment:
+        type: choice
+        description: 'Environment'
+        required: true
+        options:
+          - intg
+          - staging
+          - prod
+          - dev
+          - drdev
+        default: 'drdev'
   pull_request:
     types:
       - closed
@@ -9,13 +27,15 @@ jobs:
     permissions:
       id-token: write
       contents: write
-    uses: nationalarchives/tdr-github-actions/.github/workflows/lambda_build.yml@51a06bbc08eb65018238b144d0ad8bfd707a8ffa # v0.0.50
-    if: ${{ github.base_ref == 'master' && github.event.pull_request.merged == true && !contains(github.event.pull_request.labels.*.name, 'Version bump') }}
+    uses: nationalarchives/tdr-github-actions/.github/workflows/lambda_build.yml@714115ab533f9f6b0b4fed5a4293e9d57c2b89d8 # v0.0.50
+#    if: ${{ github.base_ref == 'master' && github.event.pull_request.merged == true && !contains(github.event.pull_request.labels.*.name, 'Version bump') }}
     with:
       lambda-name: database-migrations
       repo-name: tdr-consignment-api-data
       artifact-name: db-migrations
       artifact-path: lambda/target/scala-2.13
+      environment: ${{ inputs.environment }}
+      snapshot: ${{ inputs.snapshot }}
       java-version: '17'
       build-command: |
         wget -O lambda/src/main/resources/rds-eu-west-2-bundle.pem https://truststore.pki.rds.amazonaws.com/eu-west-2/eu-west-2-bundle.pem
@@ -23,16 +43,16 @@ jobs:
     secrets:
       MANAGEMENT_ACCOUNT: ${{ secrets.MANAGEMENT_ACCOUNT }}
       WORKFLOW_PAT: ${{ secrets.WORKFLOW_PAT }}
-  deploy:
-    needs: pre-deploy
-    permissions:
-      contents: read
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          persist-credentials: false
-      - run: gh workflow run deploy.yml -f environment=intg -f to-deploy="$NEXT_VERSION"
-        env:
-          GITHUB_TOKEN: ${{ secrets.WORKFLOW_PAT }}
-          NEXT_VERSION: ${{ needs.pre-deploy.outputs.next-version }}
+#  deploy:
+#    needs: pre-deploy
+#    permissions:
+#      contents: read
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+#        with:
+#          persist-credentials: false
+#      - run: gh workflow run deploy.yml -f environment=intg -f to-deploy="$NEXT_VERSION"
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.WORKFLOW_PAT }}
+#          NEXT_VERSION: ${{ needs.pre-deploy.outputs.next-version }}
