@@ -24,26 +24,27 @@ jobs:
     permissions:
       id-token: write
       contents: write
-    uses: nationalarchives/tdr-github-actions/.github/workflows/lambda_deploy.yml@51a06bbc08eb65018238b144d0ad8bfd707a8ffa # v0.0.50
+    uses: nationalarchives/tdr-github-actions/.github/workflows/lambda_deploy.yml@714115ab533f9f6b0b4fed5a4293e9d57c2b89d8 # v0.0.50
     with:
       lambda-name: database-migrations
       deployment-package: db-migrations.jar
       environment: ${{ github.event.inputs.environment }}
       to-deploy: ${{ github.event.inputs.to-deploy }}
+      account-regional-code-bucket: true
     secrets:
       ACCOUNT_NUMBER: ${{ secrets.ACCOUNT_NUMBER }}
       MANAGEMENT_ACCOUNT: ${{ secrets.MANAGEMENT_ACCOUNT }}
       WORKFLOW_PAT: ${{ secrets.WORKFLOW_PAT }}
       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-  db-migration:
-    needs: deploy
-    permissions: {}
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          persist-credentials: false
-      - run: gh workflow run run.yml -f environment="$ENVIRONMENT"
-        env:
-          GITHUB_TOKEN: ${{ secrets.WORKFLOW_PAT }}
-          ENVIRONMENT: ${{ inputs.environment }}
+#  db-migration:
+#    needs: deploy
+#    permissions: {}
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+#        with:
+#          persist-credentials: false
+#      - run: gh workflow run run.yml -f environment="$ENVIRONMENT"
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.WORKFLOW_PAT }}
+#          ENVIRONMENT: ${{ inputs.environment }}
