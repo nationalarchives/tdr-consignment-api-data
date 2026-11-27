@@ -30,6 +30,7 @@ jobs:
     uses: nationalarchives/tdr-github-actions/.github/workflows/lambda_build.yml@714115ab533f9f6b0b4fed5a4293e9d57c2b89d8 # v0.0.50
 #    if: ${{ github.base_ref == 'master' && github.event.pull_request.merged == true && !contains(github.event.pull_request.labels.*.name, 'Version bump') }}
     with:
+      account-regional-code-bucket: true
       lambda-name: database-migrations
       repo-name: tdr-consignment-api-data
       artifact-name: db-migrations
